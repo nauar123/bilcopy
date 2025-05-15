@@ -1,12 +1,5 @@
 package com.example.bil.service;
 
-public class bilService {
-
-
-
-
-
-
-
-
+public class KundeService {
 }
+//a

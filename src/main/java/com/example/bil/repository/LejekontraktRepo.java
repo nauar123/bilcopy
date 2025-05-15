@@ -1,4 +1,5 @@
 package com.example.bil.repository;
 
-public class bilRepo {
+public class LejekontraktRepo {
 }
+//ae
