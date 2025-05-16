@@ -7,15 +7,15 @@ import java.util.Date;
 public class Tilstandsrapport
 {
     private int tilstandsrapportId;
-    private int bilId;
-    private int kontraktId;
+    private Bil bilId;
+    private Lejekontrakt kontraktId;
     private Date tilstandsrapportDato;
     private boolean erSkadet;
 
 
 
 
-    public Tilstandsrapport (int tilstandsrapportId, int bilId, int kontraktId, Date tilstandsrapportDato, boolean erSkadet )
+    public Tilstandsrapport (int tilstandsrapportId, Bil bilId, Lejekontrakt kontraktId, Date tilstandsrapportDato, boolean erSkadet )
     {
         this.tilstandsrapportId = tilstandsrapportId;
         this.bilId = bilId;
@@ -31,16 +31,16 @@ public class Tilstandsrapport
     public void setTilstandsrapportId(int tilstandsrapportId) {
         this.tilstandsrapportId = tilstandsrapportId;
     }
-    public int getBilId() {
+    public Bil getBilId() {
         return bilId;
     }
-    public void setBilId(int bilId) {
+    public void setBilId(Bil bilId) {
         this.bilId = bilId;
     }
-    public int getKontraktId() {
+    public Lejekontrakt getKontraktId() {
         return kontraktId;
     }
-    public void setKontraktId(int kontraktId) {
+    public void setKontraktId(Lejekontrakt kontraktId) {
         this.kontraktId = kontraktId;
     }
     public Date getTilstandsrapportDato() {

@@ -7,8 +7,8 @@ import java.util.Date;
 public class Lejekontrakt
 {
     private int kontraktid;
-    private int kundeId;
-    private int bilId;
+    private Kunde kundeId;
+    private Bil bilId;
     private Date startDato;
     private Date slutDato;
     private AbonnementType abonnementType;
@@ -18,7 +18,7 @@ public class Lejekontrakt
     public enum AbonnementType {
         limited, unlimited
     }
-    public Lejekontrakt(int kontraktId, int kundeId, int bilId, Date startDato, Date slutDato, AbonnementType abonnementType, double pris  )
+    public Lejekontrakt(int kontraktId, Kunde kundeId, Bil bilId, Date startDato, Date slutDato, AbonnementType abonnementType, double pris  )
     {
         this.kontraktid = kontraktId;
         this.kundeId = kundeId;
@@ -35,13 +35,13 @@ public class Lejekontrakt
         return kontraktid;
     }
 
-    public int getKundeId()
+    public Kunde getKundeId()
     {
         return kundeId;
     }
 
 
-    public int getBilId()
+    public Bil getBilId()
     {
         return bilId;
     }
@@ -76,12 +76,12 @@ public class Lejekontrakt
     }
 
 
-    public void setKundeId(int kundeId) {
+    public void setKundeId(Kunde kundeId) {
         this.kundeId = kundeId;
     }
 
 
-    public void setBilId(int bilId) {this.bilId = bilId;
+    public void setBilId(Bil bilId) {this.bilId = bilId;
     }
 
 
