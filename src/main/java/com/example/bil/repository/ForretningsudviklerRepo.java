@@ -10,3 +10,4 @@ public interface ForretningsudviklerRepo extends JpaRepository<Forretningsudvikl
     // finder alle biler med status "ledig"
     List<Forretningsudvikler> findByStatus(String status);
 }
+a

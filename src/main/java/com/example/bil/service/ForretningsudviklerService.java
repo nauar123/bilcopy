@@ -29,3 +29,4 @@ public class ForretningsudviklerService
         return biler.stream().mapToDouble(Forretningsudvikler::getSamletIndtaegt).sum();
     }
 }
+a
