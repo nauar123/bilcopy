@@ -34,7 +34,7 @@ public class BilRepo {
         String sql = "INSERT INTO bil (bilId, stelNr, maerke, model, udstyrsniveau, status, regAfgift, co2Udledning) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         template.update(sql, bil.getBilId(), bil.getStelNr(), bil.getMaerke(), bil.getModel(), bil.getUdstyrsniveau(),
-                bil.status().name(), bil.getRegAfgift(), bil.getCo2Udledning());
+                bil.getStatus().name(), bil.getRegAfgift(), bil.getCo2Udledning());
     }
 
     // Opdater en eksisterende bil
@@ -42,7 +42,7 @@ public class BilRepo {
         String sql = "UPDATE bil SET stelNr = ?, maerke = ?, model = ?, udstyrsniveau = ?, status = ?, regAfgift = ?, co2Udledning = ? " +
                 "WHERE bilId = ?";
         template.update(sql, bil.getStelNr(), bil.getMaerke(), bil.getModel(), bil.getUdstyrsniveau(),
-                bil.status().name(), bil.getRegAfgift(), bil.getCo2Udledning(), bil.getBilId());
+                bil.getStatus().name(), bil.getRegAfgift(), bil.getCo2Udledning(), bil.getBilId());
     }
 
     // Slet en bil efter id

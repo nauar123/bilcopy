@@ -10,6 +10,7 @@
 
 <table>
     <tr>
+        <th>Bilnummer</th>
         <th>Stelnummer</th>
         <th>Mærke</th>
         <th>Model</th>
@@ -17,6 +18,7 @@
         <th>Indtægt</th>
     </tr>
     <tr th:each="bil : ${biler}">
+        <td th:text="${bil.bilId}"></td>
         <td th:text="${bil.stelNr}"></td>
         <td th:text="${bil.maerke}"></td>
         <td th:text="${bil.model}"></td>
@@ -25,8 +27,24 @@
     </tr>
 </table>
 
+<h2>Biler klar til udlejning</h2>
+
+<table>
+    <tr>
+        <th>Bilnummer</th>
+        <th>Stelnummer</th>
+        <th>Mærke</th>
+        <th>Model</th>
+    </tr>
+    <tr th:each="bil : ${ledigeBiler}">
+        <td th:text="${bil.bilId}"></td>
+        <td th:text="${bil.stelNr}"></td>
+        <td th:text="${bil.maerke}"></td>
+        <td th:text="${bil.model}"></td>
+    </tr>
+</table>
+
 <h2>Samlet indtægt: <span th:text="${#numbers.formatDecimal(samletIndtaegt, 0, 'POINT', 2, 'COMMA')} + ' kr'"></span></h2>
 
 </body>
 </html>
-a
