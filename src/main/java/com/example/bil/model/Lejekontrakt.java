@@ -1,16 +1,17 @@
 package com.example.bil.model;
 
+import java.time.LocalDate;
 
-import java.util.Date;
+
 
 
 public class Lejekontrakt
 {
     private int kontraktid;
-    private Kunde kundeId;
-    private Bil bilId;
-    private Date startDato;
-    private Date slutDato;
+    private int kundeId;
+    private int bilId;
+    private LocalDate startDato;
+    private LocalDate slutDato;
     private AbonnementType abonnementType;
     private double pris;
 
@@ -18,7 +19,8 @@ public class Lejekontrakt
     public enum AbonnementType {
         limited, unlimited
     }
-    public Lejekontrakt(int kontraktId, Kunde kundeId, Bil bilId, Date startDato, Date slutDato, AbonnementType abonnementType, double pris  )
+    public Lejekontrakt(){}
+    public Lejekontrakt(int kontraktId, int kundeId, int bilId, LocalDate startDato, LocalDate slutDato, AbonnementType abonnementType, double pris  )
     {
         this.kontraktid = kontraktId;
         this.kundeId = kundeId;
@@ -35,25 +37,25 @@ public class Lejekontrakt
         return kontraktid;
     }
 
-    public Kunde getKundeId()
+    public int getKundeId()
     {
         return kundeId;
     }
 
 
-    public Bil getBilId()
+    public int getBilId()
     {
         return bilId;
     }
 
 
-    public Date getStartDato()
+    public LocalDate getStartDato()
     {
         return startDato;
     }
 
 
-    public Date getSlutDato()
+    public LocalDate getSlutDato()
     {
         return slutDato;
     }
@@ -76,21 +78,21 @@ public class Lejekontrakt
     }
 
 
-    public void setKundeId(Kunde kundeId) {
+    public void setKundeId(int kundeId) {
         this.kundeId = kundeId;
     }
 
 
-    public void setBilId(Bil bilId) {this.bilId = bilId;
+    public void setBilId(int bilId) {this.bilId = bilId;
     }
 
 
-    public void setStartDato(Date startDato) {
+    public void setStartDato(LocalDate startDato) {
         this.startDato = startDato;
     }
 
 
-    public void setSlutDato (Date slutDato) {
+    public void setSlutDato (LocalDate slutDato) {
         this.slutDato = slutDato;}
 
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Opret en lejekontrakt</title>
+</head>
+
+<body>
+<div class="intro-opretKontrakt">
+    <h1>Opret ny lejekontrakt</h1>
+</div>
+<div class="tabel-opretLejekontrakt">
+    <form action="/opret-lejekontrakt" method="post">
+        <label>Lejekontrakt ID</label>
+        <input type="text" title="kontraktId">
+        <label>Kunde ID</label>
+        <input type="text" title="kundeId">
+        <label>Bil ID</label>
+        <input type="text" title="bilId">
+        <label>Start dato</label>
+        <input type="text" title="startDato">
+        <label>Slut Dato</label>
+        <input type="text" title="slutDato">
+        <label>Abonnementstype</label>
+        <input type="text" title="abonnementType">
+        <label>Pris</label>
+        <input type="text" title="pris">
+        <input type="submit" title="Opret">
+    </form>
+</div>
+
+<div class="tilbage-knap">
+    <a href="/lejekontraktOverblik"></a> <button>Tilbage til liste</button>
+
+</div>
+</body>
+
+</html>

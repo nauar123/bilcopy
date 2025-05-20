@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Overblik over lejekontrakterne</title>
+</head>
+
+<body>
+<div class="intro-kontraktListe">
+    <h1>Liste over lejekontrakter</h1>
+</div>
+
+<div class="tabelOverskrift-lejekontrakt">
+    <table>
+        <thead>
+        <tr>
+            <th>Lejekontrakt ID</th>
+            <th>Kunde ID</th>
+            <th>Bil ID</th>
+            <th>Start dato</th>
+            <th>Slut dato</th>
+            <th>Abonnementstype</th>
+            <th>Pris</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lejekontrakt : ${lejekontraktListe}"><!-- Det er en slags for loop bare i HTML den kører listen igennen-->
+            <td th:text="${lejekontrakt.kontraktId}"></td> <!-- Erstatter tekstindholdet i et HTML-element med den værdi, der er angivet i udtrykket.-->
+            <td th:text="${lejekontrakt.kundeId}"></td> <!-- $ betyder thymeleaf henter data fra at hente data fra modelobjekter og indsætter det i HTML.-->
+            <td th:text="${lejekontrakt.bilId}"></td>
+            <td th:text="${lejekontrakt.startDato}"></td>
+            <td th:text="${lejekontrakt.slutDato}"></td>
+            <td th:text="${lejekontrakt.abonnementType}"></td>
+            <td th:text="${lejekontrakt.pris}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<br>
+<a href="/opretLejekontrakt"><button> Opret ny lejekontrakt</button></a>
+
+</body>
+</html>
