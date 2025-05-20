@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Overblik over biler</title>
+</head>
+<body>
+
+<h1>Overblik over alle biler</h1>
+
+<table>
+    <tr>
+        <th>Stelnummer</th>
+        <th>Mærke</th>
+        <th>Model</th>
+        <th>Status</th>
+        <th>Indtægt</th>
+    </tr>
+    <tr th:each="bil : ${biler}">
+        <td th:text="${bil.stelNr}"></td>
+        <td th:text="${bil.maerke}"></td>
+        <td th:text="${bil.model}"></td>
+        <td th:text="${bil.status}"></td>
+        <td th:text="${#numbers.formatDecimal(bil.samletIndtaegt, 0, 'POINT', 2, 'COMMA')} + ' kr'"></td>
+    </tr>
+</table>
+
+<h2>Samlet indtægt: <span th:text="${#numbers.formatDecimal(samletIndtaegt, 0, 'POINT', 2, 'COMMA')} + ' kr'"></span></h2>
+
+</body>
+</html>
+a

@@ -39,6 +39,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- spring data jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
         <!-- MySQL JDBC Driver -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -68,3 +74,4 @@
         </plugins>
     </build>
 </project>
+a
