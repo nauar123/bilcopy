@@ -1,5 +1,4 @@
 package com.example.bil.model;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -15,7 +14,7 @@ public class Forretningsudvikler
     protected String status; // fx "ledig", "ikke ledig"
     protected double samletIndtaegt;
 
-    protected int getBilId()
+    public int getBilId()
     {
         return bilId;
     }
@@ -69,4 +68,3 @@ public class Forretningsudvikler
     }
 
 }
-a

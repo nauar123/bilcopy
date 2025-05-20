@@ -20,8 +20,9 @@ public class Bil {
         skadet,
         tilbageleveret
     }
+    public Bil() {}
 
-    public Bil(int bilId,String stelNr, String maerke,String model, String udstyrsniveau, Status status, double regAfgift, double co2Udledning)
+    public Bil(int bilId, String stelNr, String maerke, String model, String udstyrsniveau, Status status, double regAfgift, double co2Udledning)
     {
         this.bilId = bilId;
         this.stelNr = stelNr;
@@ -58,7 +59,7 @@ public class Bil {
         return  udstyrsniveau;
     }
 
-    public Status status()
+    public Status getStatus()
     {
         return status;
     }
@@ -73,42 +74,42 @@ public class Bil {
         return co2Udledning;
     }
 
-    public void setBilId()
+    public void setBilId(int bilId)
     {
         this.bilId = bilId;
     }
 
-    public void setStelNr()
+    public void setStelNr(String stelNr)
     {
         this.stelNr = stelNr;
     }
 
-    public void setMaerke()
+    public void setMaerke(String maerke)
     {
         this.maerke = maerke;
     }
 
-    public void setModel()
+    public void setModel(String model)
     {
         this.model= model;
     }
     
-    public void setUdstyrsniveau()
+    public void setUdstyrsniveau(String udstyrsniveau)
     {
         this.udstyrsniveau = udstyrsniveau;
     }
 
-    public void setStatus()
+    public void setStatus(Status status)
     {
         this.status = status;
     }
 
-    public void setCo2Udledning()
+    public void setCo2Udledning(double co2Udledning)
     {
         this.co2Udledning = co2Udledning;
     }
 
-    public void setRegAfgift()
+    public void setRegAfgift(double regAfgift)
     {
         this.regAfgift = regAfgift;
     }

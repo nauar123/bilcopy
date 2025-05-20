@@ -18,9 +18,16 @@ public class ForretningsudviklerService
         return forretningsudviklerRepo.findAll();
     }
 
+    // find ledige biler
     public List<Forretningsudvikler> findAlleLedigeBiler()
     {
         return forretningsudviklerRepo.findByStatus("ledig");
+    }
+
+    // find uledige biler
+    public List<Forretningsudvikler> findUdlejedeBiler()
+    {
+        return forretningsudviklerRepo.findByStatus("ikke ledig");
     }
 
     public double beregnSamletIndtaegt()
@@ -29,4 +36,3 @@ public class ForretningsudviklerService
         return biler.stream().mapToDouble(Forretningsudvikler::getSamletIndtaegt).sum();
     }
 }
-a
