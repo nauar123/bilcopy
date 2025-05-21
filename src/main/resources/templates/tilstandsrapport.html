@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tilstandsrapporter</title>
+
+</head>
+<body>
+<h1>Tilstandsrapporter</h1>
+
+<a href="opretTilstandsrapport" class="button">Opret ny tilstandsrapport</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>RapportID</th>
+        <th>Bil ID</th>
+        <th>Kontrakt ID</th>
+        <th>Dato</th>
+        <th>Medarbejder ID</th>
+        <th>Skadet</th>
+        <th>Handlinger</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rapport : ${rapporter}">
+        <td th:text="${rapport.tilstandsrapportId}"></td>
+        <td th:text="${rapport.bilId}"></td>
+        <td th:text="${rapport.kontraktId}"></td>
+        <td th:text="${#dates.format(rapport.tilstandsrapportDato, 'dd-MM-yyyy')}"></td>
+        <td th:text="${rapport.medarbejderId}"></td>
+        <td th:text="${rapport.erSkadet ? 'Ja' : 'Nej'}"></td>
+        <td>
+            <form th:action="@{/tilstandsrapport/slet}" method="post">
+                <input type="hidden" name="id" th:value="${rapport.tilstandsrapportId}" />
+                <button type="submit" class="delete-btn">Slet</button>
+                <a th:href="@{'/tilstandsrapport/opdater/' + ${rapport.tilstandsrapportId}}"
+                   class="button" style="background-color: #ffc107; padding: 6px 12px; margin-right: 5px; border-radius: 4px; color: black; text-decoration:none;">
+                    Opdater
+                </a>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
