@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Opret Skaderapport</title>
+
+</head>
+<body>
+
+<h1>Opret Skaderapport</h1>
+
+<form th:action="@{/skaderapport/gem}" th:object="${skaderapport}" method="post">
+
+    <label for="tilstandsrapportId">Tilstandsrapport ID</label>
+    <input type="number" id="tilstandsrapportId" th:field="*{tilstandsrapportId}" required />
+
+    <label for="medarbejderId">Medarbejder ID</label>
+    <input type="number" id="medarbejderId" th:field="*{medarbejderId}" required />
+
+    <label for="antalSkader">Antal skader</label>
+    <input type="number" id="antalSkader" th:field="*{antalSkader}" required />
+
+    <label for="prisPrSkade">Pris pr. skade</label>
+    <input type="number" id="prisPrSkade" th:field="*{prisPrSkade}" required />
+
+    <label for="prisTotal">Pris total</label>
+    <input type="number" id="prisTotal" th:field="*{prisTotal}" required />
+
+    <label for="beskrivelse">Beskrivelse</label>
+    <input type="text" id="beskrivelse" th:field="*{beskrivelse}" required />
+
+    <button type="submit">Gem</button>
+</form>
+
+</body>
+</html>
