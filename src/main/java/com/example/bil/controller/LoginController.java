@@ -1,7 +1,6 @@
 package com.example.bil.controller;
 
 import com.example.bil.model.LoginForm;
-import org.springframework.web.bind.annotation.RequestParam;
 import com.example.bil.model.Medarbejder;
 import com.example.bil.service.MedarbejderService;
 import jakarta.servlet.http.HttpSession;
@@ -9,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
@@ -30,24 +29,9 @@ public class LoginController {
                                HttpSession session,
                                Model model) {
 
-        System.out.println("Login controller modtog login forsøg via @RequestParam: " + email + ", " + adgangskode);
+        System.out.println("Login controller modtog login forsøg via @RequestParam: " + email);
 
-        // Direkte hardcoded check
-        if ("anders@bilabonnement.dk".equals(email) &&
-                "test123".equals(adgangskode)) {
-
-            System.out.println("*** HARDCODED LOGIN MATCH I CONTROLLER - LOGIN GODKENDT ***");
-
-            // Sæt session-variable manuelt
-            session.setAttribute("medarbejderId", 1);
-            session.setAttribute("medarbejderNavn", "Anders Andersen");
-            session.setAttribute("medarbejderRolle", "dataregistrering");
-            session.setAttribute("loggedIn", true);
-
-            return "redirect:/dashboard";
-        }
-
-        // Normal validering gennem service
+        // Validering gennem service
         boolean isValid = medarbejderService.validateLogin(email, adgangskode);
         System.out.println("Service validering resultat: " + isValid);
 
@@ -59,6 +43,8 @@ public class LoginController {
             session.setAttribute("medarbejderNavn", medarbejder.getNavn());
             session.setAttribute("medarbejderRolle", medarbejder.getRolle());
             session.setAttribute("loggedIn", true);
+
+            System.out.println("*** LOGIN GODKENDT FOR: " + medarbejder.getNavn() + " ***");
 
             // Omdiriger baseret på rolle
             return "redirect:/dashboard";

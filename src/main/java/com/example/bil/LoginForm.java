@@ -11,7 +11,7 @@ public class LoginForm {
         this.email = email;
         this.adgangskode = adgangskode;
     }
-//test
+
     public String getEmail() {
         return email;
     }
