@@ -34,8 +34,9 @@
             <td th:text="${lejekontrakt.bilId}"></td> <!-- ${lejekontrakt.bilId en expression, der henter id’et fra det enkelte lejekontrakt-objekt.}-->
             <td th:text="${lejekontrakt.startDato}"></td>
             <td th:text="${lejekontrakt.slutDato}"></td>
-            <td th:text="${lejekontrakt.abonnementType}"></td>
+            <td th:text="${lejekontrakt.abonnementType ? 'Limeted' : 'onlimeted'}"></td>
             <td th:text="${lejekontrakt.pris}"></td>
+
         </tr>
         </tbody>
     </table>
