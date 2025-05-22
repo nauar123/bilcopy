@@ -19,12 +19,12 @@ public class LejekontraktController {
     public String visLejekontrakter(Model model) {
         List<Lejekontrakt> lejekontraktListe = lejekontraktService.fetchAll();
         model.addAttribute("lejekontraktListe", lejekontraktListe);
-        return "lejekontraktOverblik"; // returner filnavn uden "/"
+        return "lejekontraktOverblik";
     }
 
     @GetMapping("/opretLejekontrakt")
     public String visOpretFormular(Model model) {
-        model.addAttribute("lejekontrakt", new Lejekontrakt()); // klasse med stort L
+        model.addAttribute("lejekontrakt", new Lejekontrakt());
         return "opretLejekontrakt";
     }
 
@@ -54,10 +54,4 @@ public class LejekontraktController {
         return "redirect:/lejekontrakter";
     }
 
-    @GetMapping("/soeg-lejekontrakter")
-    public String soegLejekontrakter(@RequestParam("soegeord") String soegeord, Model model) {
-        List<Lejekontrakt> resultat = lejekontraktService.searchLejekontrakter(soegeord);
-        model.addAttribute("lejekontraktListe", resultat);
-        return "lejekontraktOverblik";
     }
-}
