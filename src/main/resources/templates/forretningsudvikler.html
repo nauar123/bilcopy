@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="da">
+
 <head>
     <meta charset="UTF-8">
     <title>Overblik over biler</title>
 </head>
+
+
 <body>
 
 <h1>Overblik over alle biler</h1>
@@ -43,6 +46,7 @@
         <td th:text="${bil.model}"></td>
     </tr>
 </table>
+
 
 <h2>Samlet indtægt: <span th:text="${#numbers.formatDecimal(samletIndtaegt, 0, 'POINT', 2, 'COMMA')} + ' kr'"></span></h2>
 

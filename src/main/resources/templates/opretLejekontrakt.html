@@ -13,23 +13,32 @@
     <h1>Opret ny lejekontrakt</h1>
 </div>
 <div class="tabel-opretLejekontrakt">
-    <form action="/opret-lejekontrakt" method="post">
-        <label>Lejekontrakt ID</label>
-        <input type="text" title="kontraktId">
-        <label>Kunde ID</label>
-        <input type="text" title="kundeId">
-        <label>Bil ID</label>
-        <input type="text" title="bilId">
-        <label>Start dato</label>
-        <input type="text" title="startDato">
-        <label>Slut Dato</label>
-        <input type="text" title="slutDato">
-        <label>Abonnementstype</label>
-        <input type="text" title="abonnementType">
-        <label>Pris</label>
-        <input type="text" title="pris">
-        <input type="submit" title="Opret">
+    <form th:action="@{/opret-lejekontrakt}" method="post" th:object="${lejekontrakt}">
+
+        <label for="kontraktId">Lejekontrakt ID</label>
+        <input type="text" id="kontraktId" th:field="*{kontraktId}" required> <!-- Hvis der ikke skrives noget i feltet vil browsereen vise at der skal skrives noget-->
+
+        <label for="kundeId">Kunde ID</label>
+        <input type="text" id="kundeId" th:field="*{kundeId}" required>
+
+        <label for="bilId">Bil ID</label>
+        <input type="text" id="bilId" th:field="*{bilId}" required>
+
+        <label for="startDato">Start dato</label>
+        <input type="date" id="startDato" th:field="*{startDato}" required>
+
+        <label for="slutDato">Slut dato</label>
+        <input type="date" id="slutDato" th:field="*{slutDato}" required>
+
+        <label for="abonnementType">Abonnementstype</label>
+        <input type="text" id="abonnementType" th:field="*{abonnementType}" required>
+
+        <label for="pris">Pris</label>
+        <input type="number" id="pris" th:field="*{pris}" step="0.01" required>
+
+        <input type="submit" value="Opret">
     </form>
+
 </div>
 
 <div class="tilbage-knap">
