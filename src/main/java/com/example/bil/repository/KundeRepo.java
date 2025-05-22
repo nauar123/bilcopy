@@ -15,7 +15,7 @@ public class KundeRepo {
     private JdbcTemplate jdbcTemplate;
 
     // Henter alle kunder
-    public List<Kunde> findAll() {
+    public List<Kunde> fetchAll() {
         String sql = "SELECT * FROM kunde";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Kunde.class));
     }
