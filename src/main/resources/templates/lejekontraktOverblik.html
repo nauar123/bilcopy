@@ -25,6 +25,8 @@
             <th>Pris</th>
         </tr>
         </thead>
+
+
         <tbody>
         <tr th:each="lejekontrakt : ${lejekontraktListe}"><!-- Det er en slags for loop bare i HTML den kører listen igennen-->
             <td th:text="${lejekontrakt.kontraktId}"></td> <!-- Erstatter tekstindholdet i et HTML-element med den værdi, der er angivet i udtrykket.-->
@@ -35,13 +37,35 @@
             <td th:text="${lejekontrakt.abonnementType}"></td>
             <td th:text="${lejekontrakt.pris}"></td>
         </tr>
-
         </tbody>
     </table>
 </div>
 
-<br>
-<a href="/opretLejekontrakt"><button> Opret ny lejekontrakt</button></a>
+
+
+<div class="opret-knaplejekontrakt">
+    <a href="/opretLejekontrakt">
+        <button class="opret-knap">Opret ny lejekontrakt</button>
+    </a>
+</div>
+
+
+
+<div class="update-knapLejekontrakt">
+    <a href="/updateLejekontrakt">
+        <button class="update-knap">Opdater en lejekontrakt</button>
+    </a>
+</div>
+
+
+
+<div class="slet-knapLejekontrakt">
+    <form th:action="@{'/slet-lejekontrakt/' + ${lejekontrakt.kontraktId}}" method="get"
+          onsubmit="return confirm('Er du sikker på, at du vil slette denne lejekontrakt?');">
+        <button type="submit" class="slet-knap">Slet</button>
+    </form>
+</div>
+
 
 </body>
 </html>

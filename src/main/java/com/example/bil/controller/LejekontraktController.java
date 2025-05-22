@@ -15,33 +15,34 @@ public class LejekontraktController {
     @Autowired
     private LejekontraktService lejekontraktService;
 
-    @GetMapping("/lejekontrakter") // lowercase URL anbefales
+    @GetMapping("/lejekontraktOverblik")
     public String visLejekontrakter(Model model) {
         List<Lejekontrakt> lejekontraktListe = lejekontraktService.fetchAll();
         model.addAttribute("lejekontraktListe", lejekontraktListe);
         return "lejekontraktOverblik"; // returner filnavn uden "/"
     }
 
-    @GetMapping("/opret-lejekontrakt")
+    @GetMapping("/opretLejekontrakt")
     public String visOpretFormular(Model model) {
         model.addAttribute("lejekontrakt", new Lejekontrakt()); // klasse med stort L
         return "opretLejekontrakt";
     }
 
-    @PostMapping("/opret-lejekontrakt")
+    @PostMapping("/opretLejekontrakt")
     public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt) {
         lejekontraktService.addLejekontrakt(lejekontrakt);
         return "redirect:/lejekontrakter";
     }
 
-    @GetMapping("/opdater-lejekontrakt/{id}")
+
+    @GetMapping("/updateLejekontrakt/{id}")
     public String visOpdaterFormular(@PathVariable("id") int kontraktId, Model model) {
         Lejekontrakt lejekontrakt = lejekontraktService.findLejekontraktById(kontraktId);
-        model.addAttribute("lejekontrakt", lejekontrakt);
-        return "opdaterLejekontrakt";
+        model.addAttribute("updateLejekontrakt", lejekontrakt);
+        return "updateLejekontrakt";
     }
 
-    @PostMapping("/opdater-lejekontrakt")
+    @PostMapping("/updateLejekontrakt")
     public String opdaterLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt) {
         lejekontraktService.updateLejekontrakt(lejekontrakt);
         return "redirect:/lejekontrakter";
