@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Opdater lejekontrakt</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<div class="intro-updateLejekontrakt">
+    <h1>Opdater lejekontrakt</h1>
+</div>
+
+<div class="tabel-updateLejekontrakt">
+    <form th:action="@{/updateLejekontrakt}"th:object="${updateLejekontrakt}" method="post">
+
+        <label>Kontrakt ID</label>
+        <input type="text" th:field="*{kontraktId}" readonly><br>
+        <!-- readonly: Låser feltet, så ID'et ikke kan ændres -->
+
+        <label>Kunde ID</label>
+        <input type="text" th:field="*{kundeId}"><br>
+        <!-- th:field="*{...}" binder input til Java-objektet -->
+
+        <label>Bil ID</label>
+        <input type="text" th:field="*{bilId}"><br>
+
+        <label>Start dato</label>
+        <input type="date" th:field="*{startDato}"><br>
+
+        <label>Slut dato</label>
+        <input type="date" th:field="*{slutDato}"><br>
+
+        <label>Abonnementstype</label>
+        <input type="text" th:field="*{abonnementType}"><br>
+
+        <label>Pris</label>
+        <input type="text" th:field="*{pris}"><br>
+
+        <button type="submit">Opdater</button>
+
+    </form>
+</div>
+</body>
+
+</html>
