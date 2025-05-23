@@ -1,22 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title>Opret Tilstandsrapport</title>
-    <style>
-
-    </style>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+
+<!-- MENUBAR -->
+<nav class="menubar">
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+
+        <li class="dropdown">
+            <a href="/biloverblik">Biler</a>
+            <div class="dropdown-content">
+                <a href="/biloverblik">Overblik over biler</a>
+                <a href="/bil/opret">Opret ny bil</a>
+            </div>
+        </li>
+
+        <li class="dropdown">
+            <a href="/lejekontraktOverblik">Lejekontrakter</a>
+            <div class="dropdown-content">
+                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
+                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
+                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
+            </div>
+        </li>
+
+        <li><a href="/kundeoverblik">Kunder</a></li>
+
+        <li class="dropdown">
+            <a href="/tilstandsrapport">Rapporter</a>
+            <div class="dropdown-content">
+                <a href="/tilstandsrapport">Tilstandsrapporter</a>
+                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
+                <a href="/skaderapport">Skaderapporter</a>
+                <a href="/opretskaderapport">Opret skaderapport</a>
+            </div>
+        </li>
+
+        <li><a href="/logout">Log ud</a></li>
+    </ul>
+</nav>
+<!-- SLUT MENUBAR -->
 
 <h1>Opret Tilstandsrapport</h1>
 
 <form th:action="@{/tilstandsrapport/gem}" th:object="${rapport}" method="post">
 
-
     <label for="bilId">Bil ID (nummer)</label>
     <input type="number" id="bilId" th:field="*{bilId}" required />
-
 
     <label for="kontraktId">Lejekontrakt ID (nummer)</label>
     <input type="number" id="kontraktId" th:field="*{kontraktId}" required />
@@ -33,13 +68,11 @@
 
     <button type="submit">Gem</button>
 
-
 </form>
 
-    <div class="tilbage-knap">
-        <a href="/tilstandsrapport"></a><button>Tilbage</button>
-    </div>
-
+<div class="tilbage-knap">
+    <a href="/tilstandsrapport"><button>Tilbage</button></a>
+</div>
 
 </body>
 </html>

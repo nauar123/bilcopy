@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 public class HomeController
@@ -88,10 +89,81 @@ public class HomeController
         return "dashboard";
     }
 
-
     //       ---- BIL ----
     @Autowired
     protected BilService bilService;
+
+    // RETTET: Biloverblik side med error handling
+    @GetMapping("/biloverblik")
+    public String biloverblik(HttpSession session, Model model)
+    {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        try {
+            // Hent bil data via forretningsudvikler service
+            List<Forretningsudvikler> biler = forretningsudviklerService.findUdlejedeBiler();
+            List<Forretningsudvikler> ledigeBiler = forretningsudviklerService.findAlleLedigeBiler();
+            double samletIndtaegt = forretningsudviklerService.beregnSamletIndtaegt();
+
+            // Sørg for at listerne ikke er null
+            if (biler == null) biler = new ArrayList<>();
+            if (ledigeBiler == null) ledigeBiler = new ArrayList<>();
+
+            model.addAttribute("biler", biler);
+            model.addAttribute("ledigeBiler", ledigeBiler);
+            model.addAttribute("samletIndtaegt", samletIndtaegt);
+
+        } catch (Exception e) {
+            // Log fejlen og send tomme lister
+            System.out.println("Fejl i biloverblik: " + e.getMessage());
+            model.addAttribute("biler", new ArrayList<>());
+            model.addAttribute("ledigeBiler", new ArrayList<>());
+            model.addAttribute("samletIndtaegt", 0.0);
+        }
+
+        return "biloverblik";
+    }
+
+    // TILFØJET: Manglende bil/opret mapping
+    @GetMapping("/bil/opret")
+    public String opretBil(HttpSession session, Model model) {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("bil", new Bil());
+        return "opretBil"; // Du skal oprette opretBil.html fil
+    }
+
+    // TILFØJ: POST mapping for bil/opret
+    @PostMapping("/bil/opret")
+    public String gemNyBil(@ModelAttribute Bil bil, HttpSession session) {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        bilService.addBil(bil);
+        return "redirect:/biloverblik";
+    }
+
+    // TILFØJET: Kundeoverblik side (matcher menubar URL)
+    @GetMapping("/kundeoverblik")
+    public String kundeoverblik(HttpSession session, Model model)
+    {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        return "kundeoverblik";
+    }
 
     // Hent alle biler
     @GetMapping("/biler")
@@ -156,16 +228,37 @@ public class HomeController
     @Autowired
     protected LejekontraktService lejekontraktService;
 
+    // RETTET: lejekontraktOverblik med error handling
     @GetMapping("/lejekontraktOverblik")
-    public String visLejekontrakter(Model model)
+    public String visLejekontrakter(HttpSession session, Model model)
     {
-        model.addAttribute("lejekontraktListe", lejekontraktService.fetchAll());
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        try {
+            List<Lejekontrakt> kontrakter = lejekontraktService.fetchAll();
+            if (kontrakter == null) kontrakter = new ArrayList<>();
+            model.addAttribute("lejekontraktListe", kontrakter);
+        } catch (Exception e) {
+            System.out.println("Fejl i lejekontraktOverblik: " + e.getMessage());
+            model.addAttribute("lejekontraktListe", new ArrayList<>());
+        }
+
         return "lejekontraktOverblik";
     }
 
     @GetMapping("/opretLejekontrakt")
-    public String visOpretFormular(Model model)
+    public String visOpretFormular(HttpSession session, Model model)
     {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
         model.addAttribute("lejekontrakt", new Lejekontrakt());
         return "opretLejekontrakt";
     }
@@ -174,7 +267,22 @@ public class HomeController
     public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt)
     {
         lejekontraktService.addLejekontrakt(lejekontrakt);
-        return "redirect:/lejekontrakter";
+        return "redirect:/lejekontraktOverblik";
+    }
+
+    // TILFØJET: Generel updateLejekontrakt side (matcher menubar URL)
+    @GetMapping("/updateLejekontrakt")
+    public String updateLejekontraktOversigt(HttpSession session, Model model)
+    {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        // Vis en tom form eller en liste til at vælge kontrakt at opdatere
+        model.addAttribute("updateLejekontrakt", new Lejekontrakt());
+        return "updateLejekontrakt";
     }
 
     @GetMapping("/updateLejekontrakt/{id}")
@@ -189,32 +297,52 @@ public class HomeController
     public String opdaterLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt)
     {
         lejekontraktService.updateLejekontrakt(lejekontrakt);
-        return "redirect:/lejekontrakter";
+        return "redirect:/lejekontraktOverblik";
     }
 
     @GetMapping("/slet-lejekontrakt/{id}")
     public String sletLejekontrakt(@PathVariable("id") int kontraktId)
     {
         lejekontraktService.deleteLejekontrakt(kontraktId);
-        return "redirect:/lejekontrakter";
+        return "redirect:/lejekontraktOverblik";
     }
 
     //      ---- SKADERAPPORT ----
     @Autowired
     protected SkaderapportService skaderapportService;
 
-    // Oversigt over skaderapporter
-    @GetMapping("/skaderapport/liste")
-    public String visAlleRapporter(Model model)
+    // RETTET: Matcher menubar URL "/skaderapport"
+    @GetMapping("/skaderapport")
+    public String visAlleRapporter(HttpSession session, Model model)
     {
-        model.addAttribute("skaderapporter", skaderapportService.getAllSkaderapporter());
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        try {
+            List<Skaderapport> rapporter = skaderapportService.getAllSkaderapporter();
+            if (rapporter == null) rapporter = new ArrayList<>();
+            model.addAttribute("rapporter", rapporter);
+        } catch (Exception e) {
+            System.out.println("Fejl i skaderapport: " + e.getMessage());
+            model.addAttribute("rapporter", new ArrayList<>());
+        }
+
         return "skaderapport";
     }
 
-    // Opret skaderapport
-    @GetMapping("/skaderapport/opret")
-    public String visOpretSkadeForm(Model model)
+    // RETTET: Matcher menubar URL "/opretskaderapport"
+    @GetMapping("/opretskaderapport")
+    public String visOpretSkadeForm(HttpSession session, Model model)
     {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
         model.addAttribute("skaderapport", new Skaderapport(0, 0, 0, 0, 0, 0, ""));
         return "opretSkaderapport";
     }
@@ -224,7 +352,7 @@ public class HomeController
     public String opretSkaderapport(@ModelAttribute Skaderapport skaderapport)
     {
         skaderapportService.opretSkaderapport(skaderapport);
-        return "redirect:skaderapport";
+        return "redirect:/skaderapport";
     }
 
     // Slet skaderapport
@@ -232,7 +360,7 @@ public class HomeController
     public String sletSkaderapport(@RequestParam("id") int id)
     {
         skaderapportService.sletSkaderapport(id);
-        return "redirect:skaderapport";
+        return "redirect:/skaderapport";
     }
 
     // Opdater skaderapport id
@@ -248,7 +376,7 @@ public class HomeController
     public String opdaterSkaderapport(@ModelAttribute Skaderapport skaderapport)
     {
         skaderapportService.updateSkaderapport(skaderapport);
-        return "redirect:skaderapport";
+        return "redirect:/skaderapport";
     }
 
     //      ---- TILSTANDSRAPPORT ----
@@ -264,30 +392,48 @@ public class HomeController
         return "redirect:/tilstandsrapport";
     }
 
-    // Vis liste over alle tilstandsrapporter
+    // Vis liste over alle tilstandsrapporter (matcher menubar URL)
     @GetMapping("/tilstandsrapport")
-    public String listTilstandsrapporter(Model model)
+    public String listTilstandsrapporter(HttpSession session, Model model)
     {
-        List<Tilstandsrapport> rapporter = tilstandservice.getAllTilstandsrapporter();
-        model.addAttribute("rapporter", rapporter);
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        try {
+            List<Tilstandsrapport> rapporter = tilstandservice.getAllTilstandsrapporter();
+            if (rapporter == null) rapporter = new ArrayList<>();
+            model.addAttribute("rapporter", rapporter);
+        } catch (Exception e) {
+            System.out.println("Fejl i tilstandsrapport: " + e.getMessage());
+            model.addAttribute("rapporter", new ArrayList<>());
+        }
+
         return "tilstandsrapport";
     }
 
-    // Vis form til at oprette en ny tilstandsrapport
-    @GetMapping("/tilstandsrapport/opret")
-    public String visOpretTilstandsForm(Model model)
+    // RETTET: Matcher menubar URL "/opretTilstandsrapport"
+    @GetMapping("/opretTilstandsrapport")
+    public String visOpretTilstandsForm(HttpSession session, Model model)
     {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
         model.addAttribute("rapport", new Tilstandsrapport());
         return "opretTilstandsrapport";
     }
 
     // Slet tilstandsrapport via id
-    @PostMapping("/tilstandsrapport/slet")
-    public String sletTilstandsrapport(@RequestParam("id") int id)
+    @GetMapping("/tilstandsrapport/slet/{id}")
+    public String sletTilstandsrapport(@PathVariable("id") int id)
     {
         tilstandservice.deleteTilstandsrapport(id);
         return "redirect:/tilstandsrapport";
     }
-
 
 }
