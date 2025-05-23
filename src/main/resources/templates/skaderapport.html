@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title>Skaderapporter</title>
-
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+
+<!-- MENUBAR -->
+<nav class="menubar">
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+
+        <li class="dropdown">
+            <a href="/biloverblik">Biler</a>
+            <div class="dropdown-content">
+                <a href="/biloverblik">Overblik over biler</a>
+                <a href="/bil/opret">Opret ny bil</a>
+            </div>
+        </li>
+
+        <li class="dropdown">
+            <a href="/lejekontraktOverblik">Lejekontrakter</a>
+            <div class="dropdown-content">
+                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
+                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
+                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
+            </div>
+        </li>
+
+        <li><a href="/kundeoverblik">Kunder</a></li>
+
+        <li class="dropdown">
+            <a href="/tilstandsrapport">Rapporter</a>
+            <div class="dropdown-content">
+                <a href="/tilstandsrapport">Tilstandsrapporter</a>
+                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
+                <a href="/skaderapport">Skaderapporter</a>
+                <a href="/opretskaderapport">Opret skaderapport</a>
+            </div>
+        </li>
+
+        <li><a href="/logout">Log ud</a></li>
+    </ul>
+</nav>
+<!-- SLUT MENUBAR -->
+
 <h1>Skaderapporter</h1>
 
 <a href="opretskaderapport" class="button">Opret ny skaderapport</a>
@@ -45,5 +85,6 @@
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

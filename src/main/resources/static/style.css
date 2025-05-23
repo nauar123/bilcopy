@@ -8,6 +8,101 @@ body {
     background-color: #f5f5f5;
 }
 
+/* ===== MENUBAR STYLES ===== */
+
+/* Hovedmenubar container */
+.menubar {
+    background-color: #2c3e50;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Menubar liste */
+.menubar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Menubar liste elementer */
+.menubar li {
+    position: relative;
+}
+
+/* Menubar links */
+.menubar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+/* Hover effekt på menubar links */
+.menubar a:hover {
+    background-color: #34495e;
+}
+
+/* Aktiv menubar link */
+.menubar .active {
+    background-color: #3498db;
+}
+
+/* Dropdown container */
+.menubar .dropdown {
+    position: relative;
+}
+
+/* Dropdown indhold */
+.menubar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #34495e;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;
+    top: 100%;
+    left: 0;
+}
+
+/* Dropdown links */
+.menubar .dropdown-content a {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2c3e50;
+}
+
+/* Sidste dropdown link uden border */
+.menubar .dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+/* Vis dropdown ved hover */
+.menubar .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Mobile responsiv menubar */
+@media screen and (max-width: 768px) {
+    .menubar ul {
+        flex-direction: column;
+    }
+
+    .menubar .dropdown-content {
+        position: static;
+        display: none;
+        box-shadow: none;
+        background-color: #2c3e50;
+    }
+
+    .menubar .dropdown:hover .dropdown-content {
+        display: block;
+    }
+}
+
 /* ===== LOGIN SIDE STYLES ===== */
 
 /* Body specifikt for login siden - centrerer login-boksen */
@@ -98,73 +193,4 @@ input {
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 20px;
-}
-
-/* ===== DASHBOARD SIDE STYLES ===== */
-
-/* Header bar i toppen af dashboard - sort baggrund med logo og brugerinfo */
-.header {
-    background-color: #333;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Logo i header på dashboard */
-.header .logo img {
-    height: 40px;
-}
-
-/* Brugerinfo sektion i header (navn og log ud knap) */
-.user-info {
-    display: flex;
-    align-items: center;
-}
-
-/* Brugernavnet i header */
-.user-info span {
-    margin-right: 15px;
-}
-
-/* Log ud knap i header */
-.user-info a {
-    color: white;
-    text-decoration: none;
-    background-color: #555;
-    padding: 8px 12px;
-    border-radius: 4px;
-}
-
-/* Hovedcontainer der centrerer indhold på dashboard */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Velkomstboks på dashboard - hvid boks med skygge */
-.welcome-box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Overskrift på dashboard og generelt */
-h1 {
-    color: #333;
-    margin-top: 0;
-}
-
-/* Rolle badge der viser brugerens rolle */
-.role-badge {
-    display: inline-block;
-    background-color: #e7f3ff;
-    color: #0066cc;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 14px;
 }

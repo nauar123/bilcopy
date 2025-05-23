@@ -1,19 +1,59 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>Opdater lejekontrakt</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <body>
+
+<!-- MENUBAR -->
+<nav class="menubar">
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+
+        <li class="dropdown">
+            <a href="/biloverblik">Biler</a>
+            <div class="dropdown-content">
+                <a href="/biloverblik">Overblik over biler</a>
+                <a href="/bil/opret">Opret ny bil</a>
+            </div>
+        </li>
+
+        <li class="dropdown">
+            <a href="/lejekontraktOverblik">Lejekontrakter</a>
+            <div class="dropdown-content">
+                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
+                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
+                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
+            </div>
+        </li>
+
+        <li><a href="/kundeoverblik">Kunder</a></li>
+
+        <li class="dropdown">
+            <a href="/tilstandsrapport">Rapporter</a>
+            <div class="dropdown-content">
+                <a href="/tilstandsrapport">Tilstandsrapporter</a>
+                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
+                <a href="/skaderapport">Skaderapporter</a>
+                <a href="/opretskaderapport">Opret skaderapport</a>
+            </div>
+        </li>
+
+        <li><a href="/logout">Log ud</a></li>
+    </ul>
+</nav>
+<!-- SLUT MENUBAR -->
+
 <div class="intro-updateLejekontrakt">
     <h1>Opdater lejekontrakt</h1>
 </div>
 
 <div class="tabel-updateLejekontrakt">
-    <form th:action="@{/updateLejekontrakt}"th:object="${updateLejekontrakt}" method="post">
+    <form th:action="@{/updateLejekontrakt}" th:object="${updateLejekontrakt}" method="post">
 
         <label>Kontrakt ID</label>
         <input type="text" th:field="*{kontraktId}" readonly><br>
@@ -43,11 +83,9 @@
     </form>
 </div>
 
-
 <div class="tilbage-knap">
-    <a href="/lejekontraktOverblik"></a> <button>Tilbage til liste</button>
+    <a href="/lejekontraktOverblik"><button>Tilbage til liste</button></a>
 </div>
-
 
 </body>
 

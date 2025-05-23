@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Opret ny bil</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<!-- MENUBAR HER -->
+
+<h1>Opret ny bil</h1>
+<form th:action="@{/bil/opret}" th:object="${bil}" method="post">
+  <label for="stelNr">Stelnummer:</label>
+  <input type="text" id="stelNr" th:field="*{stelNr}" required>
+
+  <label for="maerke">Mærke:</label>
+  <input type="text" id="maerke" th:field="*{maerke}" required>
+
+  <label for="model">Model:</label>
+  <input type="text" id="model" th:field="*{model}" required>
+
+  <button type="submit">Opret bil</button>
+</form>
+
+</body>
+</html>
