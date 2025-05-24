@@ -10,6 +10,7 @@ public class Kunde {
 
 
 
+    public Kunde(){}
     public Kunde (int kundeId, String navn, String adresse, String telefonnr,String email)
     {
         this.kundeId = kundeId;
