@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Opdater kunde</title>
+</head>
+
+
+<body>
+    <div class="intro-updateKunde">
+        <h1>Opdater Kunde</h1>
+    </div>
+    <div class="tabel-updateKunde">
+        <form th:action="@{/updateKunde}" th:object="${updateKunde}" method="post">
+
+            <label>Kunde ID</label>
+            <input type="text" th:field="*{kundeId}" readonly><br>
+
+            <label>Navn</label>
+            <input type="text" th:field="*{navn}"><br>
+
+            <label>Adresse</label>
+            <input type="text" th:field="*{adresse}"><br>
+
+            <label>Telefonnummer</label>
+            <input type="text" th:field="*{telefonnr}"><br>
+
+            <label>Email</label>
+            <input type="email" th:field="*{email}"><br>
+
+            <button type="submit">Opdater</button>
+
+        </form>
+    </div>
+
+</body>
+
+
+<div class="tilbage-knap">
+    <a href="/kundeOversigt"><button>Tilbage</button></a>
+</div>
+
+</html>

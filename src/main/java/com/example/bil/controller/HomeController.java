@@ -224,9 +224,93 @@ public class HomeController
         return "forretningsudvikler";
     }
 
+
+    //            -----KUNDE-----
+
+    @Autowired
+    private KundeService kundeService;
+
+
+    @GetMapping("/kundeOverblik")
+    public String visKunder(HttpSession session, Model model) //Http et midlertidigt hukommelsesrum for én bestemt bruger varer indtil brugeren logger ud eller lukker browseren.
+    {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
+        {
+            return "redirect:/login";
+        }
+
+        try {
+            List<Kunde> kunder = kundeService.fetchAll();
+            if (kunder == null) kunder = new ArrayList<>();
+            model.addAttribute("kundeListe", kunder);
+        } catch (Exception e) {
+            System.out.println("Fejl i kundeOverblik: " + e.getMessage());
+            model.addAttribute("kundeListe", new ArrayList<>());
+        }
+
+        return "kundeOverblik";
+    }
+
+
+    // Viser kundeoprettelsesformular
+    @GetMapping("/opretKunde")
+    public String visOpretKunde(HttpSession session, Model model) {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+        model.addAttribute("kunde", new Kunde());
+        return "opretKunde";
+    }
+
+    // Modtager kundeoprettelse
+    @PostMapping("/opretKunde")
+    public String opretKunde(@ModelAttribute Kunde kunde) {
+        kundeService.opretKunde(kunde);
+        return "redirect:/kundeOverblik";
+    }
+
+    @GetMapping("/updateKunde")
+    public String updateKundeOversigt(HttpSession session, Model model) {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+        model.addAttribute("updateKunde", new Kunde());
+        return "updateKunde";
+    }
+
+    @GetMapping("/updateKunde/{id}")
+    public String visOpdaterKundeFormular(@PathVariable("id") int kundeId, Model model) {
+        // @PathVariable binder værdien fra URL'en (fx /updateKunde/5) til metoden parameter kundeId
+        Kunde kunde = kundeService.findKundeById(kundeId);
+        model.addAttribute("updateKunde", kunde);
+        return "updateKunde";
+    }
+
+    @PostMapping("/updateKunde")
+    public String opdaterKunde(@ModelAttribute Kunde kunde) {
+        // @ModelAttribute binder formularens data til et Kunde-objekt
+        kundeService.opdaterKunde(kunde);
+        return "redirect:/kundeOverblik";
+    }
+
+    @GetMapping("/slet-kunde/{id}")
+    public String sletKunde(@PathVariable("id") int kundeId) {
+        kundeService.sletKunde(kundeId);
+        return "redirect:/kundeOverblik";
+    }
+
+
+
+
+
+
+
+
+
     //      ---- LEJEKONTRAKT ----
     @Autowired
-    protected LejekontraktService lejekontraktService;
+    private LejekontraktService lejekontraktService;
 
     // RETTET: lejekontraktOverblik med error handling
     @GetMapping("/lejekontraktOverblik")
@@ -240,8 +324,8 @@ public class HomeController
 
         try {
             List<Lejekontrakt> kontrakter = lejekontraktService.fetchAll();
-            if (kontrakter == null) kontrakter = new ArrayList<>();
-            model.addAttribute("lejekontraktListe", kontrakter);
+            if (kontrakter == null) kontrakter = new ArrayList<>(); //  kommer null tilbage (hvilket ikke bør ske), laves en tom liste for at undgå fejl i HTML'en.
+            model.addAttribute("lejekontraktListe", kontrakter); // Tilføjer listen til Thymeleaf igennem ${lejekontraktListe} i HTML.
         } catch (Exception e) {
             System.out.println("Fejl i lejekontraktOverblik: " + e.getMessage());
             model.addAttribute("lejekontraktListe", new ArrayList<>());
