@@ -1,7 +1,6 @@
 package com.example.bil.service;
 
 import com.example.bil.model.Bil;
-import com.example.bil.repository.BilRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
