@@ -11,7 +11,7 @@ import java.util.List;
 public class ForretningsudviklerService
 {
     @Autowired
-    private ForretningsudviklerRepo forretningsudviklerRepo;
+    protected ForretningsudviklerRepo forretningsudviklerRepo;
 
     public List<Forretningsudvikler> findAlle()
     {

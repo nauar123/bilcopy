@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 public class Forretningsudvikler
 {
     @Id
-
     protected int bilId;
     protected String stelNr;
     protected String maerke;
