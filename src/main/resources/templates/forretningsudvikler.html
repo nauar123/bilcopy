@@ -1,92 +1,37 @@
 <!DOCTYPE html>
-<html lang="da" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Overblik over biler</title>
+    <title>Forretningsudvikler - Overblik</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
-
 <body>
 
-<!-- MENUBAR -->
-<nav class="menubar">
-    <ul>
-        <li><a href="/dashboard">Dashboard</a></li>
+<div class="container">
 
-        <li class="dropdown">
-            <a href="/biloverblik">Biler</a>
-            <div class="dropdown-content">
-                <a href="/biloverblik">Overblik over biler</a>
-                <a href="/bil/opret">Opret ny bil</a>
-            </div>
-        </li>
+    <!-- ikke ledige biler -->
+    <div class="boks udlejede-biler">
+        <h2>Udlejede biler</h2>
+        <ul>
+            <li th:each="bil : ${udlejedeBiler}" th:text="${bil.model}">Bilnavn</li>
+        </ul>
+    </div>
 
-        <li class="dropdown">
-            <a href="/lejekontraktOverblik">Lejekontrakter</a>
-            <div class="dropdown-content">
-                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
-                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
-                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
-            </div>
-        </li>
+    <!-- ledige biler -->
+    <div class="boks ledige-biler">
+        <h2>Biler klar til udlejning</h2>
+        <ul>
+            <li th:each="bil : ${ledigeBiler}" th:text="${bil.model}">Bilnavn</li>
+        </ul>
+    </div>
 
-        <li><a href="/kundeoverblik">Kunder</a></li>
+    <!-- samlet indtaegt -->
+    <div class="boks samlet-indtaegt">
+        <h2>Samlet indtægt</h2>
+        <p th:text="${indtjening + ' kr.'}">0 kr.</p>
+    </div>
 
-        <li class="dropdown">
-            <a href="/tilstandsrapport">Rapporter</a>
-            <div class="dropdown-content">
-                <a href="/tilstandsrapport">Tilstandsrapporter</a>
-                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
-                <a href="/skaderapport">Skaderapporter</a>
-                <a href="/opretskaderapport">Opret skaderapport</a>
-            </div>
-        </li>
-
-        <li><a href="/logout">Log ud</a></li>
-    </ul>
-</nav>
-<!-- SLUT MENUBAR -->
-
-<h1>Overblik over alle biler</h1>
-
-<table>
-    <tr>
-        <th>Bilnummer</th>
-        <th>Stelnummer</th>
-        <th>Mærke</th>
-        <th>Model</th>
-        <th>Status</th>
-        <th>Indtægt</th>
-    </tr>
-    <tr th:each="bil : ${biler}">
-        <td th:text="${bil.bilId}"></td>
-        <td th:text="${bil.stelNr}"></td>
-        <td th:text="${bil.maerke}"></td>
-        <td th:text="${bil.model}"></td>
-        <td th:text="${bil.status}"></td>
-        <td th:text="${#numbers.formatDecimal(bil.samletIndtaegt, 0, 'POINT', 2, 'COMMA')} + ' kr'"></td>
-    </tr>
-</table>
-
-<h2>Biler klar til udlejning</h2>
-
-<table>
-    <tr>
-        <th>Bilnummer</th>
-        <th>Stelnummer</th>
-        <th>Mærke</th>
-        <th>Model</th>
-    </tr>
-    <tr th:each="bil : ${ledigeBiler}">
-        <td th:text="${bil.bilId}"></td>
-        <td th:text="${bil.stelNr}"></td>
-        <td th:text="${bil.maerke}"></td>
-        <td th:text="${bil.model}"></td>
-    </tr>
-</table>
-
-<h2>Samlet indtægt: <span th:text="${#numbers.formatDecimal(samletIndtaegt, 0, 'POINT', 2, 'COMMA')} + ' kr'"></span></h2>
+</div>
 
 </body>
 </html>
