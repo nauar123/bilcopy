@@ -1,10 +1,8 @@
 package com.example.bil.service;
-
 import com.example.bil.model.Forretningsudvikler;
 import com.example.bil.repository.ForretningsudviklerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
