@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
+
 <head>
     <meta charset="UTF-8" />
     <title>Tilstandsrapporter</title>
-    <link rel="stylesheet" th:href="@{/static/style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<!-- MENUBAR -->
+
+<!-- MENUBAR  -->
 <nav class="menubar">
     <ul>
         <li><a href="/dashboard">Dashboard</a></li>
+
 
         <li class="dropdown">
             <a href="/biloverblik">Biler</a>
@@ -20,6 +23,7 @@
                 <a href="/bil/opret">Opret ny bil</a>
             </div>
         </li>
+
 
         <li class="dropdown">
             <a href="/lejekontraktOverblik">Lejekontrakter</a>
@@ -30,7 +34,9 @@
             </div>
         </li>
 
+
         <li><a href="/kundeoverblik">Kunder</a></li>
+
 
         <li class="dropdown">
             <a href="/tilstandsrapport">Rapporter</a>
@@ -42,47 +48,58 @@
             </div>
         </li>
 
+
         <li><a href="/logout">Log ud</a></li>
     </ul>
 </nav>
-<!-- SLUT MENUBAR -->
+<!-- SLUT MENUBAR ---->
 
-<h1>Tilstandsrapporter</h1>
+
+
+
+<div class="intro-tsrapportlist">
+    <h1>Tilstandsrapporter</h1>
+</div>
+
 
 <a href="opretTilstandsrapport" class="button">Opret ny tilstandsrapport</a>
 
-<table>
-    <thead>
-    <tr>
-        <th>RapportID</th>
-        <th>Bil ID</th>
-        <th>Kontrakt ID</th>
-        <th>Dato</th>
-        <th>Medarbejder ID</th>
-        <th>Skadet</th>
-        <th>Handlinger</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    <tr th:each="rapport : ${rapporter}">
-        <td th:text="${rapport.tilstandsrapportId}"></td>
-        <td th:text="${rapport.bilId}"></td>
-        <td th:text="${rapport.kontraktId}"></td>
-        <td th:text="${#dates.format(rapport.tilstandsrapportDato, 'dd-MM-yyyy')}"></td>
-        <td th:text="${rapport.medarbejderId}"></td>
-        <td th:text="${rapport.erSkadet ? 'Ja' : 'Nej'}"></td>
-        <td>
-            <div class="slet-knapTilstandsrapport">
-                <form th:action="@{'/tilstandsrapport/slet/' + ${rapport.tilstandsrapportId}}" method="get"
-                      onsubmit="return confirm('Er du sikker på, at du vil slette denne tilstandsrapport?');">
-                    <button type="submit" class="slet-knap">Slet</button>
-                </form>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="ts-oversigt">
+    <table>
+        <thead>
+        <tr>
+            <th>RapportID</th>
+            <th>Bil ID</th>
+            <th>Kontrakt ID</th>
+            <th>Dato</th>
+            <th>Medarbejder ID</th>
+            <th>Skadet</th>
+            <th>Handlinger</th>
+        </tr>
+        </thead>
 
+
+        <tbody>
+        <tr th:each="rapport : ${rapporter}">
+            <td th:text="${rapport.tilstandsrapportId}"></td>
+            <td th:text="${rapport.bilId}"></td>
+            <td th:text="${rapport.kontraktId}"></td>
+            <td th:text="${#dates.format(rapport.tilstandsrapportDato, 'dd-MM-yyyy')}"></td>
+            <td th:text="${rapport.medarbejderId}"></td>
+            <td th:text="${rapport.erSkadet ? 'Ja' : 'Nej'}"></td>
+            <td>
+                <div class="slet-knapTilstandsrapport">
+                    <form th:action="@{'/tilstandsrapport/slet/' + ${rapport.tilstandsrapportId}}" method="get"
+                          onsubmit="return confirm('Er du sikker på, at du vil slette denne tilstandsrapport?');">
+                        <button type="submit" class="slet-knap">Slet</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
+</html>
 </html>

@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <title>Skaderapporter</title>
-    <link rel="stylesheet" th:href="@{/static/style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<!-- MENUBAR -->
+
+<!-- MENUBAR- -->
 <nav class="menubar">
     <ul>
         <li><a href="/dashboard">Dashboard</a></li>
+
 
         <li class="dropdown">
             <a href="/biloverblik">Biler</a>
@@ -19,6 +21,7 @@
                 <a href="/bil/opret">Opret ny bil</a>
             </div>
         </li>
+
 
         <li class="dropdown">
             <a href="/lejekontraktOverblik">Lejekontrakter</a>
@@ -29,7 +32,9 @@
             </div>
         </li>
 
+
         <li><a href="/kundeoverblik">Kunder</a></li>
+
 
         <li class="dropdown">
             <a href="/tilstandsrapport">Rapporter</a>
@@ -41,50 +46,53 @@
             </div>
         </li>
 
+
         <li><a href="/logout">Log ud</a></li>
     </ul>
 </nav>
-<!-- SLUT MENUBAR -->
-
-<h1>Skaderapporter</h1>
-
+<!-- SLUT MENUBAR- -->
+<div class="intro-sr">
+    <h1>Skaderapporter</h1>
+</div>
 <a href="opretskaderapport" class="button">Opret ny skaderapport</a>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Tilstandsrapport ID</th>
-        <th>Medarbejder ID</th>
-        <th>Antal skader</th>
-        <th>Pris pr. skade</th>
-        <th>Total pris</th>
-        <th>Beskrivelse</th>
-        <th>Handlinger</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="rapport : ${rapporter}">
-        <td th:text="${rapport.skadeId}"></td>
-        <td th:text="${rapport.tilstandsrapportId}"></td>
-        <td th:text="${rapport.medarbejderId}"></td>
-        <td th:text="${rapport.antalSkader}"></td>
-        <td th:text="${rapport.prisPrSkade}"></td>
-        <td th:text="${rapport.prisTotal}"></td>
-        <td th:text="${rapport.beskrivelse}"></td>
-        <td>
-            <form th:action="@{/skaderapport/slet}" method="post">
-                <input type="hidden" name="id" th:value="${rapport.skadeId}" />
-                <button type="submit" class="delete-btn">Slet</button>
-                <a th:href="@{'/skaderapport/opdater/' + ${rapport.skadeId}}"
-                   class="button" style="background-color: #ffc107; padding: 6px 12px; border-radius: 4px; color: black; text-decoration:none;">
-                    Opdater
-                </a>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
 
+<div class="sr-oversigt">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tilstandsrapport ID</th>
+            <th>Medarbejder ID</th>
+            <th>Antal skader</th>
+            <th>Pris pr. skade</th>
+            <th>Total pris</th>
+            <th>Beskrivelse</th>
+            <th>Handlinger</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rapport : ${rapporter}">
+            <td th:text="${rapport.skadeId}"></td>
+            <td th:text="${rapport.tilstandsrapportId}"></td>
+            <td th:text="${rapport.medarbejderId}"></td>
+            <td th:text="${rapport.antalSkader}"></td>
+            <td th:text="${rapport.prisPrSkade}"></td>
+            <td th:text="${rapport.prisTotal}"></td>
+            <td th:text="${rapport.beskrivelse}"></td>
+            <td>
+                <form th:action="@{/skaderapport/slet}" method="post">
+                    <input type="hidden" name="id" th:value="${rapport.skadeId}" />
+                    <button type="submit" class="delete-btn">Slet</button>
+                    <a th:href="@{'/skaderapport/opdater/' + ${rapport.skadeId}}"
+                       class="button" style="background-color: #ffc107; padding: 6px 12px; border-radius: 4px; color: black; text-decoration:none;">
+                        Opdater
+                    </a>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
