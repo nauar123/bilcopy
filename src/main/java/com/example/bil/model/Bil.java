@@ -1,7 +1,7 @@
 package com.example.bil.model;
 
 public class Bil {
-
+//test12
 
     private int bilId;
     private String stelNr;

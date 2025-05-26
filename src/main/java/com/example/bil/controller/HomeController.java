@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Controller
 public class HomeController
 {
-
+//test
     //       ---- LOGIN ----
     @Autowired
     protected MedarbejderService medarbejderService;
@@ -23,7 +23,7 @@ public class HomeController
     public String showLoginForm(Model model)
     {
         model.addAttribute("loginForm", new LoginForm());
-        return "/login";
+        return "login";
     }
 
     @PostMapping("/login")
