@@ -15,7 +15,7 @@ import java.util.List;
 public class LejekontraktRepo {
     @Autowired
     JdbcTemplate template;
-
+//test
 
     // Retunere en liste af lejekontrakter fra databasen
     public List<Lejekontrakt> fetchAll()
