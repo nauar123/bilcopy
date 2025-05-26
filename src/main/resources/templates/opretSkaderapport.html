@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <title>Opret Skaderapport</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<!-- MENUBAR -->
+
+<!-- MENUBAR --->
 <nav class="menubar">
     <ul>
         <li><a href="/dashboard">Dashboard</a></li>
+
 
         <li class="dropdown">
             <a href="/biloverblik">Biler</a>
@@ -19,6 +21,7 @@
                 <a href="/bil/opret">Opret ny bil</a>
             </div>
         </li>
+
 
         <li class="dropdown">
             <a href="/lejekontraktOverblik">Lejekontrakter</a>
@@ -29,7 +32,9 @@
             </div>
         </li>
 
+
         <li><a href="/kundeoverblik">Kunder</a></li>
+
 
         <li class="dropdown">
             <a href="/tilstandsrapport">Rapporter</a>
@@ -41,39 +46,55 @@
             </div>
         </li>
 
+
         <li><a href="/logout">Log ud</a></li>
     </ul>
 </nav>
-<!-- SLUT MENUBAR -->
+<!-- SLUT MENUBAR --->
 
-<h1>Opret Skaderapport</h1>
 
-<form th:action="@{/skaderapport/gem}" th:object="${skaderapport}" method="post">
+<div class="intro-sr">
+    <h1>Opret Skaderapport</h1>
+</div>
 
-    <label for="tilstandsrapportId">Tilstandsrapport ID</label>
-    <input type="number" id="tilstandsrapportId" th:field="*{tilstandsrapportId}" required />
 
-    <label for="medarbejderId">Medarbejder ID</label>
-    <input type="number" id="medarbejderId" th:field="*{medarbejderId}" required />
 
-    <label for="antalSkader">Antal skader</label>
-    <input type="number" id="antalSkader" th:field="*{antalSkader}" required />
 
-    <label for="prisPrSkade">Pris pr. skade</label>
-    <input type="number" id="prisPrSkade" th:field="*{prisPrSkade}" required />
+<div class="sr-formular">
+    <form th:action="@{/skaderapport/gem}" th:object="${skaderapport}" method="post">
 
-    <label for="prisTotal">Pris total</label>
-    <input type="number" id="prisTotal" th:field="*{prisTotal}" required />
 
-    <label for="beskrivelse">Beskrivelse</label>
-    <input type="text" id="beskrivelse" th:field="*{beskrivelse}" required />
+        <label for="tilstandsrapportId">Tilstandsrapport ID</label>
+        <input type="number" id="tilstandsrapportId" th:field="*{tilstandsrapportId}" required />
 
-    <button type="submit">Gem</button>
-</form>
 
+        <label for="medarbejderId">Medarbejder ID</label>
+        <input type="number" id="medarbejderId" th:field="*{medarbejderId}" required />
+
+
+        <label for="antalSkader">Antal skader</label>
+        <input type="number" id="antalSkader" th:field="*{antalSkader}" required />
+
+
+        <label for="prisPrSkade">Pris pr. skade</label>
+        <input type="number" id="prisPrSkade" th:field="*{prisPrSkade}" required />
+
+
+        <label for="prisTotal">Pris total</label>
+        <input type="number" id="prisTotal" th:field="*{prisTotal}" required />
+
+
+        <label for="beskrivelse">Beskrivelse</label>
+        <input type="text" id="beskrivelse" th:field="*{beskrivelse}" required />
+
+
+        <button type="submit">Gem</button>
+    </form>
+</div>
 <div class="tilbage-knap">
     <a href="/skaderapport"><button>Tilbage</button></a>
 </div>
+
 
 </body>
 </html>

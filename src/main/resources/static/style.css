@@ -194,3 +194,82 @@ input {
     border-radius: 4px;
     margin-bottom: 20px;
 }
+/* ===== FORMULAR START ===== */
+/* Styling til titel sektionen */
+.intro-tsrapportlist, .intro-tsformular,.intro-opretKontrakt {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* boxen til formularen */
+.ts-formular form,.tabel-opretLejekontrakt {
+    background-color: white;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+/* labels i formularen */
+.ts-formular label,.tabel-opretLejekontrakt {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+
+/* Input felter i formularen */
+.ts-formular,.tabel-opretLejekontrakt input[type="text"],
+.ts-formular input[type="number"],
+.ts-formular input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+/* Checkbox styling (tilstandsrapport) */
+.ts-formular input[type="checkbox"] {
+    margin-top: 10px;
+    transform: scale(1.2);
+    margin-right: 5px;
+}
+
+
+/*tilbage Knap styling  */
+.tilbage-knap button {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* alle grønne knapper*/
+.ts-formular button
+{
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+/* Knap hover effekt */
+.ts-formular button:hover,
+.tilbage-knap button:hover {
+    background-color: palegreen;
+}
+
+
+/* ===== FORMULAR SLUT ===== */
