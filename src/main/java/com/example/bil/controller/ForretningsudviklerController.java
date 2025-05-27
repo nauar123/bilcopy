@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 public class ForretningsudviklerController {
-
+//nn
     //       ---- FORRETNINGSUDVIKLER ----
     @Autowired
     protected ForretningsudviklerService forretningsudviklerService;
