@@ -62,10 +62,11 @@
         <div class="bil-grid">
             <div th:each="bil : ${udlejedeBiler}" class="bil-card udlejet">
                 <div class="bil-status-badge udlejet-badge">UDLEJET</div>
-                <!-- Billede baseret på bilmærke og ID -->
-                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase()} + ${bil.bilId} + '.jpg'}"
+                <!-- RETTET: Bedre håndtering af special characters og fallback -->
+                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase().replace('ë', 'e').replace('ö', 'o').replace('å', 'a').replace('æ', 'ae').replace('ø', 'o')} + ${bil.bilId} + '.jpg'}"
                      th:alt="${bil.maerke + ' ' + bil.model}"
-                     onerror="this.src='/images/default_car.jpg'">
+                     onerror="this.src='/images/default_car.jpg'"
+                     loading="lazy">
                 <div class="bil-info">
                     <h4 th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</h4>
                     <p><strong>ID:</strong> <span th:text="${bil.bilId}">ID</span></p>
@@ -81,10 +82,11 @@
         <div class="bil-grid">
             <div th:each="bil : ${ledigeBiler}" class="bil-card ledig">
                 <div class="bil-status-badge ledig-badge">LEDIG</div>
-                <!-- Billede baseret på bilmærke og ID -->
-                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase()} + ${bil.bilId} + '.jpg'}"
+                <!-- RETTET: Bedre håndtering af special characters og fallback -->
+                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase().replace('ë', 'e').replace('ö', 'o').replace('å', 'a').replace('æ', 'ae').replace('ø', 'o')} + ${bil.bilId} + '.jpg'}"
                      th:alt="${bil.maerke + ' ' + bil.model}"
-                     onerror="this.src='/images/default_car.jpg'">
+                     onerror="this.src='/images/default_car.jpg'"
+                     loading="lazy">
                 <div class="bil-info">
                     <h4 th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</h4>
                     <p><strong>ID:</strong> <span th:text="${bil.bilId}">ID</span></p>

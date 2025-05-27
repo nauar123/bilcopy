@@ -352,7 +352,7 @@ form {
     margin: 0 auto;
 }
 
-/* Din eksisterende CSS + nye tilføjelser */
+/* bil billeder og css/
 
 /* Bil Grid Layout */
 .bil-grid {
@@ -373,6 +373,7 @@ form {
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid transparent;
+    min-height: 300px; /* Sikrer konsistent højde */
 }
 
 .bil-card:hover {
@@ -391,6 +392,7 @@ form {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    z-index: 2;
 }
 
 .udlejet-badge {
@@ -414,29 +416,45 @@ form {
     background: linear-gradient(135deg, #fff 0%, #e6ffe6 100%);
 }
 
-/* Bil Images */
+/* Bil Images - RETTET for bedre visning */
 .bil-card img {
     width: 100%;
-    max-width: 200px;
+    max-width: 180px;
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
-    margin: 10px 0 15px 0;
+    margin: 15px 0 15px 0;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: block;
+    background-color: #f0f0f0; /* Fallback baggrund hvis billede ikke loader */
+    border: 1px solid #ddd;
+}
+
+/* Hvis billede ikke kan loades, vis en placeholder */
+.bil-card img[src*="default_car.jpg"] {
+    background-color: #e9ecef;
+    border: 2px dashed #6c757d;
+    position: relative;
 }
 
 /* Bil Info */
+.bil-info {
+    margin-top: 10px;
+}
+
 .bil-info h4 {
     margin: 10px 0 15px 0;
     color: #333;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
+    line-height: 1.3;
 }
 
 .bil-info p {
-    margin: 8px 0;
+    margin: 6px 0;
     color: #666;
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.4;
 }
 
 .bil-info strong {
@@ -509,10 +527,20 @@ form {
 
     .bil-card {
         padding: 15px;
+        min-height: 250px;
     }
 
     .bil-card img {
         height: 100px;
+        max-width: 150px;
+    }
+
+    .bil-info h4 {
+        font-size: 14px;
+    }
+
+    .bil-info p {
+        font-size: 12px;
     }
 
     .container {
