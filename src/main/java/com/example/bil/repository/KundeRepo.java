@@ -26,29 +26,21 @@ public class KundeRepo {
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Kunde.class), kundeId);
     }
 
-    // RETTET: Tilføj ny kunde - to versioner alt efter om I bruger auto-increment
-
-    // Brug denne hvis kundeId er AUTO_INCREMENT i databasen
-    public void addKundeAutoIncrement(Kunde kunde) {
-        String sql = "INSERT INTO kunde (navn, adresse, telefonnr, email) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, kunde.getNavn(), kunde.getAdresse(), kunde.getTelefonnr(), kunde.getEmail());
-    }
-
-    // Brug denne hvis I selv angiver kundeId
-    public void addKundeManualId(Kunde kunde) {
-        String sql = "INSERT INTO kunde (kundeId, navn, adresse, telefonnr, email) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, kunde.getKundeId(), kunde.getNavn(), kunde.getAdresse(), kunde.getTelefonnr(), kunde.getEmail());
-    }
-
-    // Hovedmetode - vælg den rigtige baseret på jeres database-setup
+    // Tilføj ny kunde
     public void addKunde(Kunde kunde) {
-        // VÆLG EN AF DISSE TO LINJER:
+        System.out.println("KundeRepo: Forsøger at indsætte kunde i database");
+        System.out.println("Repo - SQL bliver udført...");
 
-        // Hvis kundeId er AUTO_INCREMENT i database:
-        addKundeAutoIncrement(kunde);
-
-        // Hvis I selv angiver kundeId:
-        // addKundeManualId(kunde);
+        try {
+            // Prøver UDEN kundeId (auto increment)
+            String sql = "INSERT INTO kunde (navn, adresse, telefonnr, email) VALUES (?, ?, ?, ?)";
+            int rowsAffected = jdbcTemplate.update(sql, kunde.getNavn(), kunde.getAdresse(), kunde.getTelefonnr(), kunde.getEmail());
+            System.out.println("KundeRepo: " + rowsAffected + " række(r) påvirket");
+        } catch (Exception e) {
+            System.out.println("KundeRepo FEJL: " + e.getMessage());
+            System.out.println("SQL: INSERT INTO kunde (navn, adresse, telefonnr, email) VALUES (?, ?, ?, ?)");
+            throw e;
+        }
     }
 
     // Opdater eksisterende kunde
