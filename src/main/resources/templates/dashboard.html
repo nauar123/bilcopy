@@ -11,7 +11,7 @@
 <!-- MENUBAR -->
 <nav class="menubar">
     <ul>
-        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+        <li><a th:href="@{/dashboard}" class="active">Dashboard</a></li>
 
         <li class="dropdown">
             <a th:href="@{/biloverblik}">Biler</a>
@@ -35,10 +35,9 @@
             <div class="dropdown-content">
                 <a th:href="@{/kundeOverblik}">Overblik over kunder</a>
                 <a th:href="@{/opretKunde}">Opret kunde</a>
-                <a th:href="@{/updateKxunde}">Opdater kunde</a>
+                <a th:href="@{/updateKunde}">Opdater kunde</a>
             </div>
         </li>
-
 
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
@@ -55,25 +54,146 @@
 </nav>
 <!-- SLUT MENUBAR -->
 
-<div class="header">
-    <div class="logo">
-        <img src="https://bilabonnement.dk/wp-content/uploads/2020/06/Logo_2.svg" alt="Bilabonnement A/S Logo">
-    </div>
-    <div class="user-info">
-        <span th:text="${medarbejderNavn}">Medarbejder Navn</span>
-        <a href="/logout">Log ud</a>
+<!-- HERO SECTION med logo og slideshow -->
+<div class="hero-section">
+    <div class="hero-content">
+        <div class="logo-section">
+            <img src="/images/images/logo.jpg" alt="Bilabonnement A/S Logo" class="dashboard-logo">
+            <h1 class="hero-title">Bilabonnement A/S</h1>
+            <p class="hero-subtitle">Premium bilabonnement løsninger</p>
+        </div>
+
+        <!-- Bil slideshow -->
+        <div class="slideshow-container">
+            <div class="slide active">
+                <img src="/images/images/dacia1.jpg" alt="Dacia Sandero">
+                <div class="slide-content">
+                    <h3>Dacia Sandero</h3>
+                    <p>Økonomisk og pålidelig</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="/images/images/mitsubishi2.jpg" alt="Mitsubishi Space Star">
+                <div class="slide-content">
+                    <h3>Mitsubishi Space Star</h3>
+                    <p>Rummeligt og komfortabelt</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="/images/images/citroen3.jpg" alt="Citroën C3">
+                <div class="slide-content">
+                    <h3>Citroën C3</h3>
+                    <p>Stilfuld og moderne</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="/images/images/fiat4.jpg" alt="Fiat 500 Cabriolet">
+                <div class="slide-content">
+                    <h3>Fiat 500 Cabriolet</h3>
+                    <p>Ikonisk italiensk design</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="/images/images/nissan11.jpg" alt="Nissan ARIYA">
+                <div class="slide-content">
+                    <h3>Nissan ARIYA</h3>
+                    <p>Fremtidens elbil</p>
+                </div>
+            </div>
+
+            <!-- Navigation dots -->
+            <div class="slideshow-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+                <span class="dot" data-slide="3"></span>
+                <span class="dot" data-slide="4"></span>
+            </div>
+        </div>
     </div>
 </div>
 
+<!-- DASHBOARD CONTENT -->
 <div class="container">
-    <div class="welcome-box">
-        <h1>Velkommen til systemet</h1>
-        <p>Du er logget ind som <span class="role-badge" th:text="${medarbejderRolle}">rolle</span></p>
-        <p>Vælg en af funktionerne i systemet for at komme i gang.</p>
+    <!-- Velkommen sektion -->
+    <div class="welcome-box modern">
+        <div class="user-info">
+            <h2>Velkommen tilbage!</h2>
+            <p>Du er logget ind som <span class="role-badge" th:text="${medarbejderRolle}">Forretningsudvikler</span></p>
+            <span class="user-name" th:text="${medarbejderNavn}">Dorthe</span>
+        </div>
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-number">11</div>
+                <div class="stat-label">Biler tilgængelige</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Aktive kontrakter</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0 kr</div>
+                <div class="stat-label">Månedlig omsætning</div>
+            </div>
+        </div>
     </div>
 
-    <!-- Her kan du indsætte mere indhold baseret på brugerens rolle -->
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <h3>Hurtige handlinger</h3>
+        <div class="action-grid">
+            <a href="/biloverblik" class="action-card cars">
+                <div class="action-icon">🚗</div>
+                <h4>Se alle biler</h4>
+                <p>Få overblik over bilparken</p>
+            </a>
+            <a href="/opretLejekontrakt" class="action-card contracts">
+                <div class="action-icon">📋</div>
+                <h4>Opret kontrakt</h4>
+                <p>Start ny lejekontrakt</p>
+            </a>
+            <a href="/opretKunde" class="action-card customers">
+                <div class="action-icon">👥</div>
+                <h4>Ny kunde</h4>
+                <p>Registrer ny kunde</p>
+            </a>
+            <a href="/tilstandsrapport" class="action-card reports">
+                <div class="action-icon">📊</div>
+                <h4>Rapporter</h4>
+                <p>Se status og rapporter</p>
+            </a>
+        </div>
+    </div>
 </div>
+
+<!-- JavaScript til slideshow -->
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+
+        currentSlide = (n + slides.length) % slides.length;
+
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    // Auto slideshow
+    setInterval(nextSlide, 4000);
+
+    // Click handlers for dots
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+    });
+</script>
 
 </body>
 </html>
