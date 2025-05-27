@@ -197,27 +197,29 @@ input {
 
 
 
-/* ===== FORMULAR START ===== */
+
 /* Styling til titel sektionen */
-.intro-tsrapportlist, .intro-tsformular,.intro-opretKontrakt {
+.intro-tsrapportlist, .intro-tsformular,.intro-lejekontraktOverblik, .intro-opretKontrakt, .intro-updateLejekontrakt .intro-sr, .intro-opretKunde, .intro-kundeOverblik, .intro-updateKunde {
     margin-bottom: 20px;
     text-align: center;
 }
 
+/* ===== FORMULAR START ===== */
 
 /* boxen til formularen */
-.ts-formular form,.tabel-opretLejekontrakt {
+.ts-formular form,.tabel-opretLejekontrakt, .sr-formular {
     background-color: white;
     padding: 20px;
     max-width: 500px;
     margin: 0 auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
 }
 
 
 /* labels i formularen */
-.ts-formular label,.tabel-opretLejekontrakt {
+.ts-formular label,.tabel-opretLejekontrakt, .sr-formular {
     display: block;
     margin-top: 15px;
     font-weight: bold;
@@ -225,8 +227,8 @@ input {
 
 
 /* Input felter i formularen */
-.ts-formular,.tabel-opretLejekontrakt input[type="text"],
-.ts-formular input[type="number"],
+.ts-formular,.tabel-opretLejekontrakt, .sr-formular input[type="text"],
+.ts-formular, .sr-formular input[type="number"],
 .ts-formular input[type="date"] {
     width: 100%;
     padding: 8px;
@@ -257,7 +259,7 @@ input {
 }
 
 
-/* alle grønne knapper*/
+/* alle grønne knapper(gem )*/
 .ts-formular button
 {
     margin-top: 20px;
@@ -268,6 +270,7 @@ input {
     border-radius: 6px;
     cursor: pointer;
 }
+
 /* Knap hover effekt */
 .ts-formular button:hover,
 .tilbage-knap button:hover {
@@ -279,5 +282,63 @@ input {
 
 
 /*===== OVERBLIK START=====*/
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+
+a.button {
+    display: inline-block;
+    margin: 20px 0;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+a.button:hover {
+    background-color: #218838;
+}
+
+form {
+    display: inline;
+}
+
+button.delete-btn {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Tabel containere */
+.sr-oversigt, .ts-oversigt,.tabelOversigt-lejekontrakt, .tabelOversigt-kunde {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
 
 
