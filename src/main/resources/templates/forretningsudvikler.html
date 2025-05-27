@@ -2,37 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Forretningsudvikler - Test</title>
+    <title>Forretningsudvikler - Biloverblik</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-
-<h1>TEST - Forretningsudvikler Side</h1>
+<h1>Biloverblik - Forretningsudvikler</h1>
 
 <div class="container">
     <div class="boks udlejede-biler">
         <h2>Udlejede biler</h2>
         <p>Antal biler: <span th:text="${#lists.size(biler)}">0</span></p>
-        <ul>
-            <li th:each="bil : ${biler}" th:text="${bil.model}">Ingen biler</li>
+        <div th:if="${#lists.isEmpty(biler)}">
+            <p>Ingen udlejede biler fundet</p>
+        </div>
+        <ul th:unless="${#lists.isEmpty(biler)}">
+            <!-- Hvis biler er Forretningsudvikler objekter, brug de rigtige felter -->
+            <li th:each="bil : ${biler}">
+                <span th:text="${bil.navn}">Navn</span> -
+                <span th:text="${bil.email}">Email</span>
+            </li>
         </ul>
     </div>
 
     <div class="boks ledige-biler">
         <h2>Biler klar til udlejning</h2>
         <p>Antal biler: <span th:text="${#lists.size(ledigeBiler)}">0</span></p>
-        <ul>
-            <li th:each="bil : ${ledigeBiler}" th:text="${bil.model}">Ingen biler</li>
+        <div th:if="${#lists.isEmpty(ledigeBiler)}">
+            <p>Ingen ledige biler fundet</p>
+        </div>
+        <ul th:unless="${#lists.isEmpty(ledigeBiler)}">
+            <li th:each="bil : ${ledigeBiler}">
+                <span th:text="${bil.navn}">Navn</span> -
+                <span th:text="${bil.email}">Email</span>
+            </li>
         </ul>
     </div>
 
     <div class="boks samlet-indtaegt">
         <h2>Samlet indtægt</h2>
-        <p th:text="${samletIndtaegt + ' kr.'}">0 kr.</p>
+        <p><span th:text="${samletIndtaegt}">0</span> kr.</p>
     </div>
 </div>
 
-<a href="/dashboard">Tilbage til Dashboard</a>
+<div class="navigation">
+    <a href="/dashboard" class="btn">Tilbage til Dashboard</a>
+    <a href="/bil/opret" class="btn">Opret ny bil</a>
+</div>
 
 </body>
 </html>

@@ -22,7 +22,6 @@ public class BilController {
     @Autowired
     protected ForretningsudviklerService forretningsudviklerService;
 
-    // SIMPEL TEST VERSION - uden database kald
     @GetMapping("/biloverblik")
     public String forretningsudvikler(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
@@ -30,13 +29,59 @@ public class BilController {
             return "redirect:/login";
         }
 
-        // HARDCODED TEST DATA - ingen database kald
-        model.addAttribute("biler", new ArrayList<>());
-        model.addAttribute("ledigeBiler", new ArrayList<>());
-        model.addAttribute("samletIndtaegt", 0.0);
+        // Start med tomme lister som fallback
+        List<Forretningsudvikler> biler = new ArrayList<>();
+        List<Forretningsudvikler> ledigeBiler = new ArrayList<>();
+        double samletIndtaegt = 0.0;
 
-        System.out.println("*** BILOVERBLIK KALDT - TEST DATA SENDT ***");
+        try {
+            System.out.println("*** STARTER BILOVERBLIK DATA HENTNING ***");
 
+            // Test om service er tilgængelig
+            if (forretningsudviklerService == null) {
+                System.out.println("ERROR: forretningsudviklerService er null!");
+                throw new RuntimeException("ForretningsudviklerService er ikke tilgængelig");
+            }
+
+            // Hent data en ad gangen med individuel fejlhåndtering
+            try {
+                biler = forretningsudviklerService.findUdlejedeBiler();
+                System.out.println("✓ Udlejede biler hentet: " + (biler != null ? biler.size() : "null"));
+            } catch (Exception e) {
+                System.out.println("FEJL ved hentning af udlejede biler: " + e.getMessage());
+                biler = new ArrayList<>();
+            }
+
+            try {
+                ledigeBiler = forretningsudviklerService.findAlleLedigeBiler();
+                System.out.println("✓ Ledige biler hentet: " + (ledigeBiler != null ? ledigeBiler.size() : "null"));
+            } catch (Exception e) {
+                System.out.println("FEJL ved hentning af ledige biler: " + e.getMessage());
+                ledigeBiler = new ArrayList<>();
+            }
+
+            try {
+                samletIndtaegt = forretningsudviklerService.beregnSamletIndtaegt();
+                System.out.println("✓ Samlet indtægt beregnet: " + samletIndtaegt);
+            } catch (Exception e) {
+                System.out.println("FEJL ved beregning af indtægt: " + e.getMessage());
+                samletIndtaegt = 0.0;
+            }
+
+        } catch (Exception e) {
+            System.out.println("GENEREL FEJL i biloverblik: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Sørg for at listerne aldrig er null
+        if (biler == null) biler = new ArrayList<>();
+        if (ledigeBiler == null) ledigeBiler = new ArrayList<>();
+
+        model.addAttribute("biler", biler);
+        model.addAttribute("ledigeBiler", ledigeBiler);
+        model.addAttribute("samletIndtaegt", samletIndtaegt);
+
+        System.out.println("*** BILOVERBLIK DATA SENDT TIL VIEW ***");
         return "forretningsudvikler";
     }
 
@@ -56,7 +101,12 @@ public class BilController {
             return "redirect:/login";
         }
 
-        bilService.addBil(bil);
+        try {
+            bilService.addBil(bil);
+        } catch (Exception e) {
+            System.out.println("FEJL ved oprettelse af bil: " + e.getMessage());
+        }
+
         return "redirect:/biloverblik";
     }
 
