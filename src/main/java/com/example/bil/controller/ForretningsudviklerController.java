@@ -17,6 +17,12 @@ public class ForretningsudviklerController {
     @Autowired
     protected ForretningsudviklerService forretningsudviklerService;
 
+    // TILFØJET: Mapping for /biloverblik
+    @GetMapping("/biloverblik")
+    public String visBiloverblik(HttpSession session, Model model) {
+        return visForretningsudviklerSide(session, model);
+    }
+
     @GetMapping("/forretningsudvikler")
     public String visForretningsudviklerSide(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
