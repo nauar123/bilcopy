@@ -352,6 +352,173 @@ form {
     margin: 0 auto;
 }
 
+/* Din eksisterende CSS + nye tilføjelser */
+
+/* Bil Grid Layout */
+.bil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+    padding: 10px 0;
+}
+
+/* Bil Card Styling */
+.bil-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.bil-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Status Badge */
+.bil-status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.udlejet-badge {
+    background-color: #ff4444;
+    color: white;
+}
+
+.ledig-badge {
+    background-color: #44cc44;
+    color: white;
+}
+
+/* Bil Card States */
+.bil-card.udlejet {
+    border-color: #ff4444;
+    background: linear-gradient(135deg, #fff 0%, #ffe6e6 100%);
+}
+
+.bil-card.ledig {
+    border-color: #44cc44;
+    background: linear-gradient(135deg, #fff 0%, #e6ffe6 100%);
+}
+
+/* Bil Images */
+.bil-card img {
+    width: 100%;
+    max-width: 200px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 10px 0 15px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Bil Info */
+.bil-info h4 {
+    margin: 10px 0 15px 0;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.bil-info p {
+    margin: 8px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.bil-info strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Status Text Colors */
+.status-udlejet {
+    color: #ff4444;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-ledig {
+    color: #44cc44;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Indtægt styling */
+.indtaegt-tal {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #2c5530;
+    margin: 15px 0;
+}
+
+/* Container og boks styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.boks {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 0;
+    border-left: 5px solid #007bff;
+}
+
+.boks h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.udlejede-biler {
+    border-left-color: #ff4444;
+}
+
+.ledige-biler {
+    border-left-color: #44cc44;
+}
+
+.samlet-indtaegt {
+    border-left-color: #ffa500;
+    text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .bil-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .bil-card {
+        padding: 15px;
+    }
+
+    .bil-card img {
+        height: 100px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+}
 
 
 

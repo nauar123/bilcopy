@@ -59,23 +59,45 @@
     <!-- Udlejede biler sektion -->
     <div class="boks udlejede-biler">
         <h2>Udlejede biler</h2>
-        <ul>
-            <li th:each="bil : ${udlejedeBiler}" th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</li>
-        </ul>
+        <div class="bil-grid">
+            <div th:each="bil : ${udlejedeBiler}" class="bil-card udlejet">
+                <div class="bil-status-badge udlejet-badge">UDLEJET</div>
+                <!-- Billede baseret på bilmærke og ID -->
+                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase()} + ${bil.bilId} + '.jpg'}"
+                     th:alt="${bil.maerke + ' ' + bil.model}"
+                     onerror="this.src='/images/default_car.jpg'">
+                <div class="bil-info">
+                    <h4 th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</h4>
+                    <p><strong>ID:</strong> <span th:text="${bil.bilId}">ID</span></p>
+                    <p><strong>Status:</strong> <span class="status-udlejet" th:text="${bil.status}">Status</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Ledige biler sektion -->
     <div class="boks ledige-biler">
         <h2>Biler klar til udlejning</h2>
-        <ul>
-            <li th:each="bil : ${ledigeBiler}" th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</li>
-        </ul>
+        <div class="bil-grid">
+            <div th:each="bil : ${ledigeBiler}" class="bil-card ledig">
+                <div class="bil-status-badge ledig-badge">LEDIG</div>
+                <!-- Billede baseret på bilmærke og ID -->
+                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase()} + ${bil.bilId} + '.jpg'}"
+                     th:alt="${bil.maerke + ' ' + bil.model}"
+                     onerror="this.src='/images/default_car.jpg'">
+                <div class="bil-info">
+                    <h4 th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</h4>
+                    <p><strong>ID:</strong> <span th:text="${bil.bilId}">ID</span></p>
+                    <p><strong>Status:</strong> <span class="status-ledig" th:text="${bil.status}">Status</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Samlet indtægt boks -->
     <div class="boks samlet-indtaegt">
         <h2>Samlet indtægt</h2>
-        <p th:text="${samletIndtaegt + ' kr.'}">0 kr.</p>
+        <p class="indtaegt-tal" th:text="${samletIndtaegt + ' kr.'}">0 kr.</p>
     </div>
 
 </div>
