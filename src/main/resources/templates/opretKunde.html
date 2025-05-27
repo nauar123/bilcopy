@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -30,14 +30,13 @@
         </li>
 
         <li class="dropdown">
-            <a th:href="@{/kundeOverblik}">Kunder</a>
+            <a th:href="@{/kundeoverblik}">Kunder</a>
             <div class="dropdown-content">
                 <a th:href="@{/kundeOverblik}">Overblik over kunder</a>
                 <a th:href="@{/opretKunde}">Opret kunde</a>
                 <a th:href="@{/updateKunde}">Opdater kunde</a>
             </div>
         </li>
-
 
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
@@ -54,10 +53,6 @@
 </nav>
 <!-- SLUT MENUBAR -->
 
-
-
-
-
 <body>
 
 <div class="intro-opretKunde">
@@ -66,31 +61,29 @@
 
 <div class="tabel-opretKunde">
     <form th:action="@{/opretKunde}" method="post" th:object="${kunde}">
-        <label for="kundeId">Kunde Id</label>
-        <input type="text" id="kundeId" th:field="*{kundeId}" />
+        <!-- FJERNET: kundeId felt hvis I bruger auto-increment -->
+        <!-- <label for="kundeId">Kunde Id</label>
+        <input type="number" id="kundeId" th:field="*{kundeId}" required /> -->
 
         <label for="navn">Navn</label>
-        <input type="text" id="navn" th:field="*{navn}" />
+        <input type="text" id="navn" th:field="*{navn}" required />
 
         <label for="adresse">Adresse</label>
-        <input type="text" id="adresse" th:field="*{adresse}" />
+        <input type="text" id="adresse" th:field="*{adresse}" required />
 
         <label for="telefonnr">Telefonnummer</label>
-        <input type="text" id="telefonnr" th:field="*{telefonnr}" />
+        <input type="text" id="telefonnr" th:field="*{telefonnr}" required />
 
         <label for="email">Email</label>
-        <input type="email" id="email" th:field="*{email}" />
+        <input type="email" id="email" th:field="*{email}" required />
 
         <button type="submit">Opret kunde</button>
     </form>
 </div>
 
-
-
-
-
+<!-- RETTET: Korrekt tilbage-link -->
 <div class="tilbage-knap">
-    <a href="/kundeOversigt"><button>Tilbage</button></a>
+    <a th:href="@{/kundeOverblik}"><button>Tilbage</button></a>
 </div>
 
 </body>
