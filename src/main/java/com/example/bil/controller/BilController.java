@@ -16,14 +16,13 @@ import java.util.List;
 @Controller
 public class BilController {
 
-    //       ---- BIL ----
     @Autowired
     protected BilService bilService;
 
-    @Autowired  // ← TILFØJET @Autowired
+    @Autowired
     protected ForretningsudviklerService forretningsudviklerService;
 
-    // RETTET: Biloverblik side med error handling
+    // SIMPEL TEST VERSION - uden database kald
     @GetMapping("/biloverblik")
     public String forretningsudvikler(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
@@ -31,36 +30,18 @@ public class BilController {
             return "redirect:/login";
         }
 
-        try {
-            // Hent bil data via forretningsudvikler service
-            List<Forretningsudvikler> biler = forretningsudviklerService.findUdlejedeBiler();
-            List<Forretningsudvikler> ledigeBiler = forretningsudviklerService.findAlleLedigeBiler();
-            double samletIndtaegt = forretningsudviklerService.beregnSamletIndtaegt();
+        // HARDCODED TEST DATA - ingen database kald
+        model.addAttribute("biler", new ArrayList<>());
+        model.addAttribute("ledigeBiler", new ArrayList<>());
+        model.addAttribute("samletIndtaegt", 0.0);
 
-            // Sørg for at listerne ikke er null
-            if (biler == null) biler = new ArrayList<>();
-            if (ledigeBiler == null) ledigeBiler = new ArrayList<>();
-
-            model.addAttribute("biler", biler);
-            model.addAttribute("ledigeBiler", ledigeBiler);
-            model.addAttribute("samletIndtaegt", samletIndtaegt);
-
-        } catch (Exception e) {
-            // Log fejlen og send tomme lister
-            System.out.println("Fejl i biloverblik: " + e.getMessage());
-            e.printStackTrace(); // Tilføjet for at se den fulde fejl
-            model.addAttribute("biler", new ArrayList<>());
-            model.addAttribute("ledigeBiler", new ArrayList<>());
-            model.addAttribute("samletIndtaegt", 0.0);
-        }
+        System.out.println("*** BILOVERBLIK KALDT - TEST DATA SENDT ***");
 
         return "forretningsudvikler";
     }
 
-    // TILFØJET: Manglende bil/opret mapping
     @GetMapping("/bil/opret")
     public String opretBil(HttpSession session, Model model) {
-        // Tjek om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -69,10 +50,8 @@ public class BilController {
         return "opretBil";
     }
 
-    // TILFØJ: POST mapping for bil/opret
     @PostMapping("/bil/opret")
     public String gemNyBil(@ModelAttribute Bil bil, HttpSession session) {
-        // Tjek om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -81,28 +60,25 @@ public class BilController {
         return "redirect:/biloverblik";
     }
 
-    // Hent alle biler
+    // REST endpoints
     @GetMapping("/biler")
     @ResponseBody
     public List<Bil> getAllBiler() {
         return bilService.getAllBiler();
     }
 
-    // Hent bil baseret på bil Id
     @GetMapping("/biler/{id}")
     @ResponseBody
     public Bil getBilById(@PathVariable("id") int bilId) {
         return bilService.getBilById(bilId);
     }
 
-    // Add bil
     @PostMapping("/biler")
     @ResponseBody
     public void addBil(@RequestBody Bil bil) {
         bilService.addBil(bil);
     }
 
-    // Opdatér bil
     @PutMapping("/biler/{id}")
     @ResponseBody
     public void updateBil(@PathVariable("id") int bilId, @RequestBody Bil bil) {
@@ -110,7 +86,6 @@ public class BilController {
         bilService.updateBil(bil);
     }
 
-    // Slet bil
     @DeleteMapping("/biler/{id}")
     @ResponseBody
     public void deleteBil(@PathVariable("id") int bilId) {

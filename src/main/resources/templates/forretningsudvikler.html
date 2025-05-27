@@ -2,75 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Forretningsudvikler - Overblik</title>
+    <title>Forretningsudvikler - Test</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<!-- MENUBAR -->
-<nav class="menubar">
-    <ul>
-        <li><a th:href="@{/dashboard}">Dashboard</a></li>
-
-        <li class="dropdown">
-            <a th:href="@{/biloverblik}">Biler</a>
-            <div class="dropdown-content">
-                <a th:href="@{/biloverblik}">Overblik over biler</a>
-                <a th:href="@{/bil/opret}">Opret ny bil</a>
-            </div>
-        </li>
-
-        <li class="dropdown">
-            <a th:href="@{/lejekontraktOverblik}">Lejekontrakter</a>
-            <div class="dropdown-content">
-                <a th:href="@{/lejekontraktOverblik}">Overblik lejekontrakter</a>
-                <a th:href="@{/opretLejekontrakt}">Opret lejekontrakt</a>
-                <a th:href="@{/updateLejekontrakt}">Opdater lejekontrakt</a>
-            </div>
-        </li>
-
-        <li><a th:href="@{/kundeOverblik}">Kunder</a></li>
-
-        <li class="dropdown">
-            <a th:href="@{/tilstandsrapport}">Rapporter</a>
-            <div class="dropdown-content">
-                <a th:href="@{/tilstandsrapport}">Tilstandsrapporter</a>
-                <a th:href="@{/opretTilstandsrapport}">Opret tilstandsrapport</a>
-                <a th:href="@{/skaderapport}">Skaderapporter</a>
-                <a th:href="@{/opretskaderapport}">Opret skaderapport</a>
-            </div>
-        </li>
-
-        <li><a th:href="@{/logout}">Log ud</a></li>
-    </ul>
-</nav>
-<!-- SLUT MENUBAR -->
+<h1>TEST - Forretningsudvikler Side</h1>
 
 <div class="container">
-
-    <!-- ikke ledige biler -->
     <div class="boks udlejede-biler">
         <h2>Udlejede biler</h2>
+        <p>Antal biler: <span th:text="${#lists.size(biler)}">0</span></p>
         <ul>
-            <li th:each="bil : ${udlejedeBiler}" th:text="${bil.model}">Bilnavn</li>
+            <li th:each="bil : ${biler}" th:text="${bil.model}">Ingen biler</li>
         </ul>
     </div>
 
-    <!-- ledige biler -->
     <div class="boks ledige-biler">
         <h2>Biler klar til udlejning</h2>
+        <p>Antal biler: <span th:text="${#lists.size(ledigeBiler)}">0</span></p>
         <ul>
-            <li th:each="bil : ${ledigeBiler}" th:text="${bil.model}">Bilnavn</li>
+            <li th:each="bil : ${ledigeBiler}" th:text="${bil.model}">Ingen biler</li>
         </ul>
     </div>
 
-    <!-- samlet indtaegt -->
     <div class="boks samlet-indtaegt">
         <h2>Samlet indtægt</h2>
-        <p th:text="${indtjening + ' kr.'}">0 kr.</p>
+        <p th:text="${samletIndtaegt + ' kr.'}">0 kr.</p>
     </div>
-
 </div>
+
+<a href="/dashboard">Tilbage til Dashboard</a>
 
 </body>
 </html>
