@@ -27,9 +27,14 @@ public class LejekontraktController {
         }
 
         try {
+            System.out.println("=== HENTER LEJEKONTRAKTER ===");
             List<Lejekontrakt> kontrakter = lejekontraktService.fetchAll();
+            System.out.println("Antal kontrakter fundet: " + (kontrakter != null ? kontrakter.size() : "null"));
+
             if (kontrakter == null) kontrakter = new ArrayList<>();
             model.addAttribute("lejekontraktListe", kontrakter);
+
+            System.out.println("Lejekontrakter sendt til view");
         } catch (Exception e) {
             System.out.println("Fejl i lejekontraktOverblik: " + e.getMessage());
             e.printStackTrace();
@@ -49,7 +54,6 @@ public class LejekontraktController {
         return "opretLejekontrakt";
     }
 
-    // TILFØJET: Fejlhåndtering
     @PostMapping("/opretLejekontrakt")
     public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt, HttpSession session, Model model) {
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
@@ -102,6 +106,13 @@ public class LejekontraktController {
     @PostMapping("/updateLejekontrakt")
     public String opdaterLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt) {
         lejekontraktService.updateLejekontrakt(lejekontrakt);
+        return "redirect:/lejekontraktOverblik";
+    }
+
+    // TILFØJET: Manglende slet-mapping
+    @GetMapping("/slet-lejekontrakt/{id}")
+    public String sletLejekontrakt(@PathVariable("id") int kontraktId) {
+        lejekontraktService.deleteLejekontrakt(kontraktId);
         return "redirect:/lejekontraktOverblik";
     }
 }
