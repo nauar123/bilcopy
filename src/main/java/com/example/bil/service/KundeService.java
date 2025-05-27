@@ -28,6 +28,7 @@ import java.util.List;
             kundeRepo.addKunde(kunde);
         }
 
+
         // Opdaterer eksisterende kunde
         public void opdaterKunde(Kunde kunde) {
             kundeRepo.updateKunde(kunde);

@@ -92,6 +92,4 @@ public class KundeController {
         kundeService.sletKunde(kundeId);
         return "redirect:/kundeOverblik";
     }
-
-
 }
