@@ -10,7 +10,7 @@ public class Skaderapport
     private int prisPrSkade;
     private int prisTotal;
     private String beskrivelse;
-
+public Skaderapport (){}
     public Skaderapport(int skadeId, int tilstandsrapportId, int medarbejderId, int antalSkader, int prisPrSkade, int prisTotal, String beskrivelse){
         this.skadeId = skadeId;
         this.tilstandsrapportId = tilstandsrapportId;
@@ -64,3 +64,4 @@ public class Skaderapport
         this.beskrivelse = beskrivelse;
     }
 }
+
