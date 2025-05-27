@@ -14,22 +14,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
 public class KundeController {
 
-//            -----KUNDE-----
-
     @Autowired
     private KundeService kundeService;
-    // TILFØJET: Kundeoverblik side (matcher menubar URL)
 
+    // TILFØJET: Alternativ mapping for menubar-linket (lille 'o')
+    @GetMapping("/kundeoverblik")
+    public String visKunderAlternativ(HttpSession session, Model model) {
+        return visKunder(session, model);
+    }
+
+    // Eksisterende mapping (stort 'O')
     @GetMapping("/kundeOverblik")
-    public String visKunder(HttpSession session, Model model) //Http et midlertidigt hukommelsesrum for én bestemt bruger varer indtil brugeren logger ud eller lukker browseren.
-    {
+    public String visKunder(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
-        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
-        {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
 
@@ -44,7 +45,6 @@ public class KundeController {
 
         return "kundeOverblik";
     }
-
 
     // Viser kundeoprettelsesformular
     @GetMapping("/opretKunde")
@@ -74,7 +74,6 @@ public class KundeController {
 
     @GetMapping("/updateKunde/{id}")
     public String visOpdaterKundeFormular(@PathVariable("id") int kundeId, Model model) {
-        // @PathVariable binder værdien fra URL'en (fx /updateKunde/5) til metoden parameter kundeId
         Kunde kunde = kundeService.findKundeById(kundeId);
         model.addAttribute("updateKunde", kunde);
         return "updateKunde";
@@ -82,7 +81,6 @@ public class KundeController {
 
     @PostMapping("/updateKunde")
     public String opdaterKunde(@ModelAttribute Kunde kunde) {
-        // @ModelAttribute binder formularens data til et Kunde-objekt
         kundeService.opdaterKunde(kunde);
         return "redirect:/kundeOverblik";
     }
@@ -92,6 +90,4 @@ public class KundeController {
         kundeService.sletKunde(kundeId);
         return "redirect:/kundeOverblik";
     }
-
-
 }

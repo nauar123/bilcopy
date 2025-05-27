@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 
-
+<body>
 
 <!-- MENUBAR -->
 <nav class="menubar">
@@ -40,7 +40,6 @@
             </div>
         </li>
 
-
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
             <div class="dropdown-content">
@@ -56,58 +55,54 @@
 </nav>
 <!-- SLUT MENUBAR -->
 
-
-
 <div class="intro-kundeOverblik">
     <h1>Overblik over kunder</h1>
 </div>
 
+<div class="tabelOversigt-kunder">
+    <table>
+        <thead>
+        <tr>
+            <th>Kunde ID</th>
+            <th>Navn</th>
+            <th>Adresse</th>
+            <th>Telefon Nr</th>
+            <th>Email</th>
+            <th>Handlinger</th> <!-- TILFØJET: Kolonne til handlinger -->
+        </tr>
+        </thead>
 
-<body>
-    <div class="tabelOversigt-kunder">
-       <table>
-           <thead>
-           <tr>
-               <th>Kunde ID</th>
-               <th>Navn</th>
-               <th>Adresse</th>
-               <th>Telefon Nr</th>
-               <th>Email</th>
+        <tbody>
+        <tr th:each="kunde : ${kundeListe}">
+            <td th:text="${kunde.kundeId}"></td>
+            <td th:text="${kunde.navn}"></td>
+            <td th:text="${kunde.adresse}"></td>
+            <!-- RETTET: Korrekt variabelnavn (telefonnr, ikke telefonNr) -->
+            <td th:text="${kunde.telefonnr}"></td>
+            <td th:text="${kunde.email}"></td>
+            <!-- FLYTTET: Slet-knap ind i tabellen -->
+            <td>
+                <form th:action="@{'/slet-kunde/' + ${kunde.kundeId}}" method="get"
+                      onsubmit="return confirm('Er du sikker på, at du vil slette denne kunde?');"
+                      style="display: inline;">
+                    <button type="submit" class="slet-knap">Slet</button>
+                </form>
+                <a th:href="@{'/updateKunde/' + ${kunde.kundeId}}">
+                    <button class="update-knap">Rediger</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-           </tr>
-           </thead>
+<div class="opret-kundeknap">
+    <a th:href="@{/opretKunde}"><button>Opret kunde</button></a>
+</div>
 
-           <tbody>
-           <tr th:each="kunde:${kundeListe}">
-               <td th:text="${kunde.kundeId}"></td>
-               <td th:text="${kunde.navn}"></td>
-               <td th:text ="${kunde.adresse}"></td>
-               <td th:text="${kunde.telefonNr}"></td>
-               <td th:text="${kunde.email}"></td>
-           </tr>
-
-           </tbody>
-       </table>
-    </div>
-
-    <div class="opret-kundeknap">
-        <a href="opretKunde"><button>Opret kunde</button></a>
-    </div>
-
-
-    <div class="update-kundeknap">
-        <a href="updateKunde"><button>Opdater kunde</button></a>
-    </div>
-
-    <div class="slet-knapKunde">
-        <form th:action="@{'/sletKunde/' + ${kunde.kundeId}}" method="get"
-              onsubmit="return confirm('Er du sikker på, at du vil slette denne kunde?');"> <!-- return comfirm er en popup javascript laver-->
-            <button type="submit" class="slet-knap">Slet</button>
-        </form>
-    </div>
-
-
+<div class="update-kundeknap">
+    <a th:href="@{/updateKunde}"><button>Opdater kunde</button></a>
+</div>
 
 </body>
-
 </html>
