@@ -104,3 +104,4 @@ public class LejekontraktController {
         lejekontraktService.updateLejekontrakt(lejekontrakt);
         return "redirect:/lejekontraktOverblik";
     }
+}
