@@ -45,11 +45,11 @@ public Skaderapport (){}
     public void setSkadeId(int skadeId){
         this.skadeId = skadeId;
     }
-    public void setTilstandsrapport(int tilstandsrapport){
-        this.tilstandsrapportId = tilstandsrapport;
+    public void setTilstandsrapport(int tilstandsrapportId){
+        this.tilstandsrapportId = tilstandsrapportId;
     }
-    public void setMedarbejder(int medarbejder){
-        this.medarbejderId = medarbejder;
+    public void setMedarbejderid(int medarbejderId){
+        this.medarbejderId = medarbejderId;
     }
     public void setAntalSkader(int antalSkader){
         this.antalSkader = antalSkader;
