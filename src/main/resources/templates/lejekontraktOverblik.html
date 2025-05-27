@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link rel="stylesheet" th:href="@{/static/style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <meta charset="UTF-8">
     <title>Overblik over lejekontrakterne</title>
 </head>
@@ -12,38 +12,38 @@
 <!-- MENUBAR -->
 <nav class="menubar">
     <ul>
-        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a th:href="@{/dashboard}">Dashboard</a></li>
 
         <li class="dropdown">
-            <a href="/biloverblik">Biler</a>
+            <a th:href="@{/biloverblik}">Biler</a>
             <div class="dropdown-content">
-                <a href="/biloverblik">Overblik over biler</a>
-                <a href="/bil/opret">Opret ny bil</a>
+                <a th:href="@{/biloverblik}">Overblik over biler</a>
+                <a th:href="@{/bil/opret}">Opret ny bil</a>
             </div>
         </li>
 
         <li class="dropdown">
-            <a href="/lejekontraktOverblik">Lejekontrakter</a>
+            <a th:href="@{/lejekontraktOverblik}">Lejekontrakter</a>
             <div class="dropdown-content">
-                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
-                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
-                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
+                <a th:href="@{/lejekontraktOverblik}">Overblik lejekontrakter</a>
+                <a th:href="@{/opretLejekontrakt}">Opret lejekontrakt</a>
+                <a th:href="@{/updateLejekontrakt}">Opdater lejekontrakt</a>
             </div>
         </li>
 
-        <li><a href="/kundeoverblik">Kunder</a></li>
+        <li><a th:href="@{/kundeoverblik}">Kunder</a></li>
 
         <li class="dropdown">
-            <a href="/tilstandsrapport">Rapporter</a>
+            <a th:href="@{/tilstandsrapport}">Rapporter</a>
             <div class="dropdown-content">
-                <a href="/tilstandsrapport">Tilstandsrapporter</a>
-                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
-                <a href="/skaderapport">Skaderapporter</a>
-                <a href="/opretskaderapport">Opret skaderapport</a>
+                <a th:href="@{/tilstandsrapport}">Tilstandsrapporter</a>
+                <a th:href="@{/opretTilstandsrapport}">Opret tilstandsrapport</a>
+                <a th:href="@{/skaderapport}">Skaderapporter</a>
+                <a th:href="@{/opretskaderapport}">Opret skaderapport</a>
             </div>
         </li>
 
-        <li><a href="/logout">Log ud</a></li>
+        <li><a th:href="@{/logout}">Log ud</a></li>
     </ul>
 </nav>
 <!-- SLUT MENUBAR -->
@@ -67,10 +67,10 @@
         </thead>
 
         <tbody>
-        <tr th:each="lejekontrakt : ${lejekontraktListe}"><!-- Det er en slags for loop bare i HTML den kører listen igennen-->
-            <td th:text="${lejekontrakt.kontraktId}"></td> <!-- Erstatter tekstindholdet i et HTML-element med den værdi, der er angivet i udtrykket.-->
-            <td th:text="${lejekontrakt.kundeId}"></td> <!-- $ betyder thymeleaf henter data fra modelobjekterne og indsætter det i HTML. -->
-            <td th:text="${lejekontrakt.bilId}"></td> <!-- ${lejekontrakt.bilId en expression, der henter id'et fra det enkelte lejekontrakt-objekt.}-->
+        <tr th:each="lejekontrakt : ${lejekontraktListe}">
+            <td th:text="${lejekontrakt.kontraktId}"></td>
+            <td th:text="${lejekontrakt.kundeId}"></td>
+            <td th:text="${lejekontrakt.bilId}"></td>
             <td th:text="${lejekontrakt.startDato}"></td>
             <td th:text="${lejekontrakt.slutDato}"></td>
             <td th:text="${lejekontrakt.abonnementType ? 'Limeted' : 'onlimeted'}"></td>
@@ -82,22 +82,22 @@
 
 <!-- opret lejekontrakt knappen-->
 <div class="opret-knaplejekontrakt">
-    <a href="/opretLejekontrakt">
+    <a th:href="@{/opretLejekontrakt}">
         <button class="opret-knap">Opret ny lejekontrakt</button>
     </a>
 </div>
 
 <!-- Opdater knappen-->
 <div class="update-knapLejekontrakt">
-    <a href="/updateLejekontrakt">
+    <a th:href="@{/updateLejekontrakt}">
         <button class="update-knap">Opdater en lejekontrakt</button>
     </a>
 </div>
 
-<!--slet knappen, th:action er en Thymeleaf-attribut angiver, hvor formularen skal sende data hen (altså til hvilken URL, den sender det via getmetodden-->
+<!--slet knappen-->
 <div class="slet-knapLejekontrakt">
     <form th:action="@{'/slet-lejekontrakt/' + ${lejekontrakt.kontraktId}}" method="get"
-          onsubmit="return confirm('Er du sikker på, at du vil slette denne lejekontrakt?');"> <!-- return comfirm er en popup javascript laver-->
+          onsubmit="return confirm('Er du sikker på, at du vil slette denne lejekontrakt?');">
         <button type="submit" class="slet-knap">Slet</button>
     </form>
 </div>
