@@ -70,6 +70,7 @@
             <th>Slut dato</th>
             <th>Abonnementstype</th>
             <th>Pris</th>
+            <th>Medarbejder ID</th>
             <th>Handlinger</th> <!-- TILFØJET: Kolonne til handlinger -->
         </tr>
         </thead>
@@ -81,10 +82,10 @@
             <td th:text="${lejekontrakt.bilId}"></td>
             <td th:text="${lejekontrakt.startDato}"></td>
             <td th:text="${lejekontrakt.slutDato}"></td>
-            <!-- RETTET: Korrekt håndtering af enum -->
             <td th:text="${lejekontrakt.abonnementType == T(com.example.bil.model.Lejekontrakt.AbonnementType).limited ? 'Limited' : 'Unlimited'}"></td>
             <td th:text="${lejekontrakt.pris}"></td>
-            <!-- FLYTTET: Slet-knap ind i tabellen -->
+            <td th:text="${lejekontrakt.medarbejderId}"></td>
+
             <td>
                 <form th:action="@{'/slet-lejekontrakt/' + ${lejekontrakt.kontraktId}}" method="get"
                       onsubmit="return confirm('Er du sikker på, at du vil slette denne lejekontrakt?');"

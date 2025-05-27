@@ -28,9 +28,11 @@ public class LejekontraktRepo {
                 "l.slutDato, " +
                 "l.abonnementType, " +
                 "l.pris " +
+                "l.medarbejderId," +
                 "FROM lejekontrakt l " +
                 "JOIN kunde k ON l.kundeId = k.kundeId " +
-                "JOIN bil b ON l.bilId = b.bilId";
+                "JOIN bil b ON l.bilId = b.bilId" +
+                "JOIN medarbejderId m ON l.medarbejderId = m.medarbejderId";
 
         return template.query(sql, new BeanPropertyRowMapper<>(Lejekontrakt.class));
     }
@@ -39,15 +41,15 @@ public class LejekontraktRepo {
     // Oprette en ny lejekontrakt / gemme lejekontrakt
     public void addLejekontrakt(Lejekontrakt l)
     {
-        String sql = "INSERT INTO Lejekontrakt(kontraktId, kundeId, bilId, startDato, slutDato, abonnementType, pris) VALUES(?,?,?,?,?,?,?)";
-        template.update(sql, l.getKontraktId(), l.getKundeId(), l.getBilId(), l.getStartDato(), l.getSlutDato(), l.getAbonnementType(), l.getPris());
+        String sql = "INSERT INTO Lejekontrakt(kontraktId, kundeId, bilId, startDato, slutDato, abonnementType, pris, medarbejderId) VALUES(?,?,?,?,?,?,?)";
+        template.update(sql, l.getKontraktId(), l.getKundeId(), l.getBilId(), l.getStartDato(), l.getSlutDato(), l.getAbonnementType(), l.getPris(), l.getMedarbejderId());
     }
 
 
     //  opdatere en eksisterende lejekontrakt
     public void updateLejekontrakt(Lejekontrakt l)
     {
-        String sql = "UPDATE Lejekontrakt SET kundeId = ?, bilId = ?, startDato = ?, slutDato = ?, abonnementType = ?, pris = ? WHERE kontraktId = ?";
+        String sql = "UPDATE Lejekontrakt SET kundeId = ?, bilId = ?, startDato = ?, slutDato = ?, abonnementType = ?, pris = ?, medarbejderId = ? WHERE kontraktId = ?";
         template.update(sql,
                 l.getKundeId(),
                 l.getBilId(),
@@ -55,12 +57,13 @@ public class LejekontraktRepo {
                 l.getSlutDato(),
                 l.getAbonnementType(),
                 l.getPris(),
-                l.getKontraktId()); // Her bruger du kontraktId til at finde rækken, men du ændrer det ikke.
+                l.getMedarbejderId(),
+                l.getKontraktId());
     }
 
     // Find lejekontrakt på kontraktID
     public Lejekontrakt findLejekontraktById(int kontraktId) {
-        String sql = "SELECT kontraktId, kundeId, bilId, startDato, slutDato, abonnementType, pris " +
+        String sql = "SELECT kontraktId, kundeId, bilId, startDato, slutDato, abonnementType, pris,medarbejderId " +
                 "FROM lejekontrakt WHERE kontraktId = ?";
         return template.queryForObject(sql, new BeanPropertyRowMapper<>(Lejekontrakt.class), kontraktId);
     }
@@ -72,7 +75,7 @@ public class LejekontraktRepo {
 
     //// Søger efter lejekontrakter hvor søgeordet matcher kontrakt ID, kundens navn eller abonnementstype
     public List<Lejekontrakt> searchLejekontrakter(String soegeord) {
-        String sql = "SELECT l.kontraktId, l.kundeId, l.bilId, l.startDato, l.slutDato, l.abonnementType, l.pris " +
+        String sql = "SELECT l.kontraktId, l.kundeId, l.bilId, l.startDato, l.slutDato, l.abonnementType, l.pris, l.medarbejderId " +
                 "FROM Lejekontrakt l " +
                 "JOIN Kunde k ON l.kundeId = k.kundeId " +
                 "WHERE CAST(l.kontraktId AS CHAR) LIKE ? " + // Ved at CASTe det til CHAR, kan du søge i ID’er som tekst.

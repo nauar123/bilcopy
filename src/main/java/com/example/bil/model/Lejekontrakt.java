@@ -10,6 +10,9 @@ public class Lejekontrakt {
     private LocalDate slutDato;
     private AbonnementType abonnementType;
     private double pris;
+    private int medarbejderId;
+
+
 
     public enum AbonnementType {
         limited, unlimited
@@ -18,7 +21,7 @@ public class Lejekontrakt {
     public Lejekontrakt() {}
 
     public Lejekontrakt(int kontraktId, int kundeId, int bilId, LocalDate startDato,
-                        LocalDate slutDato, AbonnementType abonnementType, double pris) {
+                        LocalDate slutDato, AbonnementType abonnementType, double pris, int medarbejderId) {
         this.kontraktId = kontraktId;
         this.kundeId = kundeId;
         this.bilId = bilId;
@@ -26,6 +29,7 @@ public class Lejekontrakt {
         this.slutDato = slutDato;
         this.abonnementType = abonnementType;
         this.pris = pris;
+        this.medarbejderId = medarbejderId;
     }
 
     // Getters
@@ -57,7 +61,11 @@ public class Lejekontrakt {
         return pris;
     }
 
-    // Setters - FIXED: Consistent naming
+   public int getMedarbejderId()
+   {
+       return medarbejderId;
+   }
+
     public void setKontraktId(int kontraktId) {
         this.kontraktId = kontraktId;
     }
@@ -69,6 +77,7 @@ public class Lejekontrakt {
     public void setBilId(int bilId) {
         this.bilId = bilId;
     }
+
 
     public void setStartDato(LocalDate startDato) {
         this.startDato = startDato;
@@ -85,4 +94,11 @@ public class Lejekontrakt {
     public void setAbonnementType(AbonnementType abonnementType) {
         this.abonnementType = abonnementType;
     }
+
+    public void setMedarbejderId(int medarbejderId)
+    {
+        this.medarbejderId=medarbejderId;
+    }
+
+
 }
