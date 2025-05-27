@@ -3,23 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bilabonnement A/S</title>
+    <title>Opret Kunde</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
+
+<body>
 
 <!-- MENUBAR -->
 <nav class="menubar">
     <ul>
         <li><a th:href="@{/dashboard}">Dashboard</a></li>
-
         <li class="dropdown">
-            <a th:href="@{/biloverblik}">Biler</a>
+            <a th:href="@{/forretningsudvikler}">Biler</a>
             <div class="dropdown-content">
-                <a th:href="@{/biloverblik}">Overblik over biler</a>
+                <a th:href="@{/forretningsudvikler}">Overblik over biler</a>
                 <a th:href="@{/bil/opret}">Opret ny bil</a>
             </div>
         </li>
-
         <li class="dropdown">
             <a th:href="@{/lejekontraktOverblik}">Lejekontrakter</a>
             <div class="dropdown-content">
@@ -28,53 +28,52 @@
                 <a th:href="@{/updateLejekontrakt}">Opdater lejekontrakt</a>
             </div>
         </li>
-
-        <li><a th:href="@{/kundeoverblik}">Kunder</a></li>
-
+        <li><a th:href="@{/kundeOverblik}">Kunder</a></li>
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
             <div class="dropdown-content">
                 <a th:href="@{/tilstandsrapport}">Tilstandsrapporter</a>
                 <a th:href="@{/opretTilstandsrapport}">Opret tilstandsrapport</a>
                 <a th:href="@{/skaderapport}">Skaderapporter</a>
-                <a th:href="@{/opretskaderapport}">Opret skaderapport</a>
+                <a th:href="@{/opretSkaderapport}">Opret skaderapport</a>
             </div>
         </li>
-
         <li><a th:href="@{/logout}">Log ud</a></li>
     </ul>
 </nav>
 <!-- SLUT MENUBAR -->
 
-<body>
-
 <div class="intro-opretKunde">
-    <h1>Opret kunde</h1>
+    <h1>Opret Ny Kunde</h1>
 </div>
 
 <div class="tabel-opretKunde">
-    <form th:action="@{/opretKunde}" method="post" th:object="${kunde}">
-        <label for="kundeId">Kunde Id</label>
-        <input type="text" id="kundeId" th:field="*{kundeId}" />
+    <form th:action="@{/opretKunde}" th:object="${kunde}" method="post">
 
-        <label for="navn">Navn</label>
-        <input type="text" id="navn" th:field="*{navn}" />
+        <label>Kunde ID</label>
+        <input type="number" th:field="*{kundeId}" required><br>
 
-        <label for="adresse">Adresse</label>
-        <input type="text" id="adresse" th:field="*{adresse}" />
+        <label>Navn</label>
+        <input type="text" th:field="*{navn}" required><br>
 
-        <label for="telefonnr">Telefonnummer</label>
-        <input type="text" id="telefonnr" th:field="*{telefonnr}" />
+        <label>Adresse</label>
+        <input type="text" th:field="*{adresse}" required><br>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" th:field="*{email}" />
+        <label>Telefonnummer</label>
+        <input type="text" th:field="*{telefonnr}" required><br>
 
-        <button type="submit">Opret kunde</button>
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required><br>
+
+        <button type="submit">Opret Kunde</button>
+
     </form>
 </div>
 
 <div class="tilbage-knap">
-    <a th:href="@{/kundeOversigt}"><button>Tilbage</button></a>
+    <a th:href="@{/kundeOverblik}">
+        <button>Tilbage til oversigt</button>
+    </a>
 </div>
 
 </body>

@@ -70,7 +70,7 @@
             <td th:text="${kunde.kundeId}"></td>
             <td th:text="${kunde.navn}"></td>
             <td th:text="${kunde.adresse}"></td>
-            <td th:text="${kunde.telefonnr}"></td> <!-- FIXED: Correct field name -->
+            <td th:text="${kunde.telefonnr}"></td>
             <td th:text="${kunde.email}"></td>
             <td>
                 <a th:href="@{'/updateKunde/' + ${kunde.kundeId}}">
@@ -86,9 +86,9 @@
     </table>
 </div>
 
-<div class="opret-kundeknap">
+<div class="kunde-handlinger">
     <a th:href="@{/opretKunde}">
-        <button class="opret-knap">Opret kunde</button>
+        <button class="opret-knap">Opret ny kunde</button>
     </a>
 </div>
 
