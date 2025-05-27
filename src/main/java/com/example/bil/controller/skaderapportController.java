@@ -11,80 +11,121 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
 public class skaderapportController {
 
-    //      ---- SKADERAPPORT ----
     @Autowired
     protected SkaderapportService skaderapportService;
 
-    // RETTET: Matcher menubar URL "/skaderapport"
+    // Vis alle skaderapporter
     @GetMapping("/skaderapport")
-    public String visAlleRapporter(HttpSession session, Model model)
-    {
+    public String visAlleRapporter(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
-        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
-        {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
 
         try {
+            System.out.println("=== HENTER ALLE SKADERAPPORTER ===");
             List<Skaderapport> rapporter = skaderapportService.getAllSkaderapporter();
             if (rapporter == null) rapporter = new ArrayList<>();
+            System.out.println("Antal rapporter fundet: " + rapporter.size());
             model.addAttribute("rapporter", rapporter);
         } catch (Exception e) {
-            System.out.println("Fejl i skaderapport: " + e.getMessage());
+            System.out.println("FEJL i skaderapport: " + e.getMessage());
+            e.printStackTrace();
             model.addAttribute("rapporter", new ArrayList<>());
         }
 
         return "skaderapport";
     }
 
-    // RETTET: Matcher menubar URL "/opretskaderapport"
+    // Vis opret skade form
     @GetMapping("/opretskaderapport")
-    public String visOpretSkadeForm(HttpSession session, Model model)
-    {
+    public String visOpretSkadeForm(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
-        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
-        {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
 
-        model.addAttribute("skaderapport", new Skaderapport(0, 0, 0, 0, 0, 0, ""));
+        System.out.println("=== VISER OPRET SKADERAPPORT FORM ===");
+        model.addAttribute("skaderapport", new Skaderapport());
         return "opretSkaderapport";
     }
 
-    // Gem skaderapport
+    // Gem skaderapport - RETTET POST mapping
     @PostMapping("/skaderapport/gem")
-    public String opretSkaderapport(@ModelAttribute Skaderapport skaderapport)
-    {
-        skaderapportService.opretSkaderapport(skaderapport);
+    public String opretSkaderapport(@ModelAttribute Skaderapport skaderapport, HttpSession session) {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        try {
+            System.out.println("=== GEMMER SKADERAPPORT ===");
+            System.out.println("Modtaget skaderapport: " + skaderapport.getBeskrivelse());
+            skaderapportService.opretSkaderapport(skaderapport);
+            System.out.println("Skaderapport gemt succesfuldt!");
+        } catch (Exception e) {
+            System.out.println("FEJL ved gemning af skaderapport: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         return "redirect:/skaderapport";
     }
 
-    // Slet skaderapport
+    // Slet skaderapport - RETTET URL mapping
     @PostMapping("/skaderapport/slet")
-    public String sletSkaderapport(@RequestParam("id") int id)
-    {
-        skaderapportService.sletSkaderapport(id);
+    public String sletSkaderapport(@RequestParam("id") int id, HttpSession session) {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        try {
+            System.out.println("=== SLETTER SKADERAPPORT MED ID: " + id + " ===");
+            skaderapportService.sletSkaderapport(id);
+            System.out.println("Skaderapport slettet succesfuldt!");
+        } catch (Exception e) {
+            System.out.println("FEJL ved sletning af skaderapport: " + e.getMessage());
+            e.printStackTrace();
+        }
+
         return "redirect:/skaderapport";
     }
 
     // Opdater skaderapport id
     @GetMapping("/skaderapport/opdater/{id}")
-    public String visOpdaterForm(@PathVariable("id") int id, Model model)
-    {
-        model.addAttribute("rapport", skaderapportService.findById(id));
+    public String visOpdaterForm(@PathVariable("id") int id, Model model, HttpSession session) {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        try {
+            model.addAttribute("rapport", skaderapportService.findById(id));
+        } catch (Exception e) {
+            System.out.println("FEJL ved hentning af skaderapport til opdatering: " + e.getMessage());
+            return "redirect:/skaderapport";
+        }
         return "opdaterSkaderapport";
     }
 
     // Gem opdatering
     @PostMapping("/skaderapport/opdater")
-    public String opdaterSkaderapport(@ModelAttribute Skaderapport skaderapport)
-    {
-        skaderapportService.updateSkaderapport(skaderapport);
+    public String opdaterSkaderapport(@ModelAttribute Skaderapport skaderapport, HttpSession session) {
+        // Tjek om bruger er logget ind
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        try {
+            skaderapportService.updateSkaderapport(skaderapport);
+            System.out.println("Skaderapport opdateret succesfuldt!");
+        } catch (Exception e) {
+            System.out.println("FEJL ved opdatering af skaderapport: " + e.getMessage());
+        }
+
         return "redirect:/skaderapport";
     }
-
 }

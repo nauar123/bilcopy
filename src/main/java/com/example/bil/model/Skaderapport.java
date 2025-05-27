@@ -1,8 +1,6 @@
 package com.example.bil.model;
-import com.example.bil.model.Medarbejder;
 
-public class Skaderapport
-{
+public class Skaderapport {
     private int skadeId;
     private int tilstandsrapportId;
     private int medarbejderId;
@@ -10,8 +8,10 @@ public class Skaderapport
     private int prisPrSkade;
     private int prisTotal;
     private String beskrivelse;
-public Skaderapport (){}
-    public Skaderapport(int skadeId, int tilstandsrapportId, int medarbejderId, int antalSkader, int prisPrSkade, int prisTotal, String beskrivelse){
+
+    public Skaderapport() {}
+
+    public Skaderapport(int skadeId, int tilstandsrapportId, int medarbejderId, int antalSkader, int prisPrSkade, int prisTotal, String beskrivelse) {
         this.skadeId = skadeId;
         this.tilstandsrapportId = tilstandsrapportId;
         this.medarbejderId = medarbejderId;
@@ -21,47 +21,21 @@ public Skaderapport (){}
         this.beskrivelse = beskrivelse;
     }
 
-    public int getSkadeId(){
-        return skadeId;
-    }
-    public int getTilstandsrapportId(){
-        return tilstandsrapportId;
-    }
-    public int getMedarbejderId(){
-        return medarbejderId;
-    }
-    public int getAntalSkader(){
-        return antalSkader;
-    }
-    public int getPrisPrSkade(){
-        return prisPrSkade;
-    }
-    public int getPrisTotal(){
-        return prisTotal;
-    }
-    public String getBeskrivelse(){
-        return beskrivelse;
-    }
-    public void setSkadeId(int skadeId){
-        this.skadeId = skadeId;
-    }
-    public void setTilstandsrapport(int tilstandsrapportId){
-        this.tilstandsrapportId = tilstandsrapportId;
-    }
-    public void setMedarbejderid(int medarbejderId){
-        this.medarbejderId = medarbejderId;
-    }
-    public void setAntalSkader(int antalSkader){
-        this.antalSkader = antalSkader;
-    }
-    public void setPrisPrSkade(int prisPrSkade){
-        this.prisPrSkade = prisPrSkade;
-    }
-    public void setPrisTotal(int prisTotal){
-        this.prisTotal = prisTotal;
-    }
-    public void setBeskrivelse(String beskrivelse){
-        this.beskrivelse = beskrivelse;
-    }
+    // Getters
+    public int getSkadeId() { return skadeId; }
+    public int getTilstandsrapportId() { return tilstandsrapportId; }
+    public int getMedarbejderId() { return medarbejderId; }
+    public int getAntalSkader() { return antalSkader; }
+    public int getPrisPrSkade() { return prisPrSkade; }
+    public int getPrisTotal() { return prisTotal; }
+    public String getBeskrivelse() { return beskrivelse; }
+
+    // RETTEDE SETTERS - nu med korrekte navne
+    public void setSkadeId(int skadeId) { this.skadeId = skadeId; }
+    public void setTilstandsrapportId(int tilstandsrapportId) { this.tilstandsrapportId = tilstandsrapportId; }
+    public void setMedarbejderId(int medarbejderId) { this.medarbejderId = medarbejderId; }
+    public void setAntalSkader(int antalSkader) { this.antalSkader = antalSkader; }
+    public void setPrisPrSkade(int prisPrSkade) { this.prisPrSkade = prisPrSkade; }
+    public void setPrisTotal(int prisTotal) { this.prisTotal = prisTotal; }
+    public void setBeskrivelse(String beskrivelse) { this.beskrivelse = beskrivelse; }
 }
-
