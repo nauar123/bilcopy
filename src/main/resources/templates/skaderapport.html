@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,84 +8,93 @@
 </head>
 <body>
 
-<!-- MENUBAR -->
+
+<!-- MENUBAR- -->
 <nav class="menubar">
     <ul>
-        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+
 
         <li class="dropdown">
-            <a th:href="@{/biloverblik}">Biler</a>
+            <a href="/biloverblik">Biler</a>
             <div class="dropdown-content">
-                <a th:href="@{/biloverblik}">Overblik over biler</a>
-                <a th:href="@{/bil/opret}">Opret ny bil</a>
+                <a href="/biloverblik">Overblik over biler</a>
+                <a href="/bil/opret">Opret ny bil</a>
             </div>
         </li>
 
+
         <li class="dropdown">
-            <a th:href="@{/lejekontraktOverblik}">Lejekontrakter</a>
+            <a href="/lejekontraktOverblik">Lejekontrakter</a>
             <div class="dropdown-content">
-                <a th:href="@{/lejekontraktOverblik}">Overblik lejekontrakter</a>
-                <a th:href="@{/opretLejekontrakt}">Opret lejekontrakt</a>
-                <a th:href="@{/updateLejekontrakt}">Opdater lejekontrakt</a>
+                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
+                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
+                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
             </div>
         </li>
 
-        <li><a th:href="@{/kundeoverblik}">Kunder</a></li>
+
+        <li><a href="/kundeoverblik">Kunder</a></li>
+
 
         <li class="dropdown">
-            <a th:href="@{/tilstandsrapport}">Rapporter</a>
+            <a href="/tilstandsrapport">Rapporter</a>
             <div class="dropdown-content">
-                <a th:href="@{/tilstandsrapport}">Tilstandsrapporter</a>
-                <a th:href="@{/opretTilstandsrapport}">Opret tilstandsrapport</a>
-                <a th:href="@{/skaderapport}">Skaderapporter</a>
-                <a th:href="@{/opretskaderapport}">Opret skaderapport</a>
+                <a href="/tilstandsrapport">Tilstandsrapporter</a>
+                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
+                <a href="/skaderapport">Skaderapporter</a>
+                <a href="/opretskaderapport">Opret skaderapport</a>
             </div>
         </li>
 
-        <li><a th:href="@{/logout}">Log ud</a></li>
+
+        <li><a href="/logout">Log ud</a></li>
     </ul>
 </nav>
-<!-- SLUT MENUBAR -->
 
-<h1>Skaderapporter</h1>
+<!-- SLUT MENUBAR- -->
+<div class="intro-sr">
+    <h1>Skaderapporter</h1>
+</div>
+<a href="opretskaderapport" class="button">Opret ny skaderapport</a>
 
-<a th:href="@{/opretskaderapport}" class="button">Opret ny skaderapport</a>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Tilstandsrapport ID</th>
-        <th>Medarbejder ID</th>
-        <th>Antal skader</th>
-        <th>Pris pr. skade</th>
-        <th>Total pris</th>
-        <th>Beskrivelse</th>
-        <th>Handlinger</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="rapport : ${rapporter}">
-        <td th:text="${rapport.skadeId}"></td>
-        <td th:text="${rapport.tilstandsrapportId}"></td>
-        <td th:text="${rapport.medarbejderId}"></td>
-        <td th:text="${rapport.antalSkader}"></td>
-        <td th:text="${rapport.prisPrSkade}"></td>
-        <td th:text="${rapport.prisTotal}"></td>
-        <td th:text="${rapport.beskrivelse}"></td>
-        <td>
-            <form th:action="@{/skaderapport/slet}" method="post">
-                <input type="hidden" name="id" th:value="${rapport.skadeId}" />
-                <button type="submit" class="delete-btn">Slet</button>
-                <a th:href="@{'/skaderapport/opdater/' + ${rapport.skadeId}}"
-                   class="button" style="background-color: #ffc107; padding: 6px 12px; border-radius: 4px; color: black; text-decoration:none;">
-                    Opdater
-                </a>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+<div class="sr-oversigt">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tilstandsrapport ID</th>
+            <th>Medarbejder ID</th>
+            <th>Antal skader</th>
+            <th>Pris pr. skade</th>
+            <th>Total pris</th>
+            <th>Beskrivelse</th>
+            <th>Handlinger</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rapport : ${rapporter}">
+            <td th:text="${rapport.skadeId}"></td>
+            <td th:text="${rapport.tilstandsrapportId}"></td>
+            <td th:text="${rapport.medarbejderId}"></td>
+            <td th:text="${rapport.antalSkader}"></td>
+            <td th:text="${rapport.prisPrSkade}"></td>
+            <td th:text="${rapport.prisTotal}"></td>
+            <td th:text="${rapport.beskrivelse}"></td>
+            <td>
+                <form th:action="@{/skaderapport/slet}" method="post">
+                    <input type="hidden" name="id" th:value="${rapport.skadeId}" />
+                    <button type="submit" class="delete-btn">Slet</button>
+                    <a th:href="@{'/skaderapport/opdater/' + ${rapport.skadeId}}"
+                       class="button" style="background-color: #ffc107; padding: 6px 12px; border-radius: 4px; color: black; text-decoration:none;">
+                        Opdater
+                    </a>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
