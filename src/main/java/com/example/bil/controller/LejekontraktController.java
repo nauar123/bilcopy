@@ -20,16 +20,8 @@ public class LejekontraktController {
     @Autowired
     private LejekontraktService lejekontraktService;
 
-    // TILFØJET: Alternativ mapping for menubar-linket
-    @GetMapping("/lejekontrakter")
-    public String visLejekontrakterAlternativ(HttpSession session, Model model) {
-        return visLejekontrakter(session, model);
-    }
-
-    // Eksisterende mapping
     @GetMapping("/lejekontraktOverblik")
     public String visLejekontrakter(HttpSession session, Model model) {
-        // Tjekker om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -40,16 +32,15 @@ public class LejekontraktController {
             model.addAttribute("lejekontraktListe", kontrakter);
         } catch (Exception e) {
             System.out.println("Fejl i lejekontraktOverblik: " + e.getMessage());
+            e.printStackTrace();
             model.addAttribute("lejekontraktListe", new ArrayList<>());
         }
 
         return "lejekontraktOverblik";
     }
 
-    // OpretLejekontrakt
     @GetMapping("/opretLejekontrakt")
     public String visOpretFormular(HttpSession session, Model model) {
-        // Tjekker om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -58,21 +49,45 @@ public class LejekontraktController {
         return "opretLejekontrakt";
     }
 
+    // TILFØJET: Fejlhåndtering
     @PostMapping("/opretLejekontrakt")
-    public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt) {
-        lejekontraktService.addLejekontrakt(lejekontrakt);
-        return "redirect:/lejekontraktOverblik";
-    }
-
-    // UpdateLejekontrakt
-    @GetMapping("/updateLejekontrakt")
-    public String updateLejekontraktOversigt(HttpSession session, Model model) {
-        // Tjekker om bruger er logget ind
+    public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt, HttpSession session, Model model) {
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
 
-        // Vis en tom form eller en liste til at vælge kontrakt at opdatere
+        try {
+            System.out.println("=== DEBUGGER LEJEKONTRAKT OPRETTELSE ===");
+            System.out.println("Kontrakt ID: " + lejekontrakt.getKontraktId());
+            System.out.println("Kunde ID: " + lejekontrakt.getKundeId());
+            System.out.println("Bil ID: " + lejekontrakt.getBilId());
+            System.out.println("Start dato: " + lejekontrakt.getStartDato());
+            System.out.println("Slut dato: " + lejekontrakt.getSlutDato());
+            System.out.println("Abonnement type: " + lejekontrakt.getAbonnementType());
+            System.out.println("Pris: " + lejekontrakt.getPris());
+            System.out.println("Medarbejder ID: " + lejekontrakt.getMedarbejderId());
+
+            lejekontraktService.addLejekontrakt(lejekontrakt);
+            System.out.println("Lejekontrakt oprettet succesfuldt!");
+            return "redirect:/lejekontraktOverblik";
+        } catch (Exception e) {
+            System.out.println("=== FEJL VED OPRETTELSE AF LEJEKONTRAKT ===");
+            System.out.println("Fejltype: " + e.getClass().getSimpleName());
+            System.out.println("Fejlbesked: " + e.getMessage());
+            e.printStackTrace();
+
+            model.addAttribute("error", "Der opstod en fejl ved oprettelse af lejekontrakt: " + e.getMessage());
+            model.addAttribute("lejekontrakt", lejekontrakt);
+            return "opretLejekontrakt";
+        }
+    }
+
+    @GetMapping("/updateLejekontrakt")
+    public String updateLejekontraktOversigt(HttpSession session, Model model) {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("updateLejekontrakt", new Lejekontrakt());
         return "updateLejekontrakt";
     }
@@ -89,10 +104,3 @@ public class LejekontraktController {
         lejekontraktService.updateLejekontrakt(lejekontrakt);
         return "redirect:/lejekontraktOverblik";
     }
-
-    @GetMapping("/slet-lejekontrakt/{id}")
-    public String sletLejekontrakt(@PathVariable("id") int kontraktId) {
-        lejekontraktService.deleteLejekontrakt(kontraktId);
-        return "redirect:/lejekontraktOverblik";
-    }
-}

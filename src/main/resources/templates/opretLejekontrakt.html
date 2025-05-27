@@ -40,7 +40,6 @@
             </div>
         </li>
 
-
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
             <div class="dropdown-content">
@@ -59,17 +58,19 @@
 <div class="intro-opretKontrakt">
     <h1>Opret ny lejekontrakt</h1>
 </div>
+
 <div class="tabel-opretLejekontrakt">
-    <form th:action="@{/opret-lejekontrakt}" method="post" th:object="${lejekontrakt}">
+    <!-- RETTET: Form action til korrekt URL -->
+    <form th:action="@{/opretLejekontrakt}" method="post" th:object="${lejekontrakt}">
 
         <label for="kontraktId">Lejekontrakt ID</label>
-        <input type="text" id="kontraktId" th:field="*{kontraktId}" required>
+        <input type="number" id="kontraktId" th:field="*{kontraktId}" required>
 
         <label for="kundeId">Kunde ID</label>
-        <input type="text" id="kundeId" th:field="*{kundeId}" required>
+        <input type="number" id="kundeId" th:field="*{kundeId}" required>
 
         <label for="bilId">Bil ID</label>
-        <input type="text" id="bilId" th:field="*{bilId}" required>
+        <input type="number" id="bilId" th:field="*{bilId}" required>
 
         <label for="startDato">Start dato</label>
         <input type="date" id="startDato" th:field="*{startDato}" required>
@@ -77,18 +78,22 @@
         <label for="slutDato">Slut dato</label>
         <input type="date" id="slutDato" th:field="*{slutDato}" required>
 
+        <!-- RETTET: Dropdown i stedet for text input -->
         <label for="abonnementType">Abonnementstype</label>
-        <input type="text" id="abonnementType" th:field="*{abonnementType}" required>
+        <select id="abonnementType" th:field="*{abonnementType}" required>
+            <option value="">Vælg abonnementstype</option>
+            <option value="limited">Limited</option>
+            <option value="unlimited">Unlimited</option>
+        </select>
 
         <label for="pris">Pris</label>
         <input type="number" id="pris" th:field="*{pris}" step="0.01" required>
 
-        <label for="medarbejderId">MedarbejderId</label>
-        <input type="text" id="medarbejderId" th:field="*{medarbejderId}" required>
+        <label for="medarbejderId">Medarbejder ID</label>
+        <input type="number" id="medarbejderId" th:field="*{medarbejderId}" required>
 
-        <input type="submit" value="Opret">
+        <button type="submit">Opret</button>
     </form>
-
 </div>
 
 <div class="tilbage-knap">
@@ -96,5 +101,4 @@
 </div>
 
 </body>
-
 </html>
