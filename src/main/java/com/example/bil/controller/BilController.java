@@ -13,16 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
 public class BilController {
-
 
     //       ---- BIL ----
     @Autowired
     protected BilService bilService;
-    protected ForretningsudviklerService forretningsudviklerService;
 
+    @Autowired  // ← TILFØJET @Autowired
+    protected ForretningsudviklerService forretningsudviklerService;
 
     // RETTET: Biloverblik side med error handling
     @GetMapping("/biloverblik")
@@ -49,6 +48,7 @@ public class BilController {
         } catch (Exception e) {
             // Log fejlen og send tomme lister
             System.out.println("Fejl i biloverblik: " + e.getMessage());
+            e.printStackTrace(); // Tilføjet for at se den fulde fejl
             model.addAttribute("biler", new ArrayList<>());
             model.addAttribute("ledigeBiler", new ArrayList<>());
             model.addAttribute("samletIndtaegt", 0.0);
@@ -66,7 +66,7 @@ public class BilController {
         }
 
         model.addAttribute("bil", new Bil());
-        return "opretBil"; // Du skal oprette opretBil.html fil
+        return "opretBil";
     }
 
     // TILFØJ: POST mapping for bil/opret
@@ -80,7 +80,6 @@ public class BilController {
         bilService.addBil(bil);
         return "redirect:/biloverblik";
     }
-
 
     // Hent alle biler
     @GetMapping("/biler")
