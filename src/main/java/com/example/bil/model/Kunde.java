@@ -8,7 +8,7 @@ public class Kunde {
     private String telefonnr;
     private String email;
 
-
+//F
 
     public Kunde(){}
     public Kunde (int kundeId, String navn, String adresse, String telefonnr,String email)
