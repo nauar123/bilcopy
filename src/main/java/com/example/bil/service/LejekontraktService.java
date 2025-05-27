@@ -2,6 +2,8 @@ package com.example.bil.service;
 
 import com.example.bil.model.Lejekontrakt;
 import com.example.bil.repository.LejekontraktRepo;
+import com.example.bil.repository.BilRepo;
+import com.example.bil.model.Bil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class LejekontraktService {
     LejekontraktRepo lejekontraktRepo;
 
     @Autowired
-    BilService bilService;  // TILFØJET: For at opdatere bil status
+    BilRepo bilRepo;  // ÆNDRET: Inject BilRepo direkte i stedet for BilService
 
     // Henter alle lejekontrakter fra databasen.
     public List<Lejekontrakt> fetchAll() {
@@ -24,17 +26,22 @@ public class LejekontraktService {
     // OPDATERET: Tilføjer en ny lejekontrakt og opdaterer bil status
     public void addLejekontrakt(Lejekontrakt l) {
         try {
-            System.out.println("=== OPRETTER LEJEKONTRAKT ===");
+            System.out.println("=== OPRETTER LEJEKONTRAKT I SERVICE ===");
             System.out.println("Bil ID: " + l.getBilId());
             System.out.println("Kunde ID: " + l.getKundeId());
 
-            // Opret lejekontrakten
+            // Opret lejekontrakten først
             lejekontraktRepo.addLejekontrakt(l);
             System.out.println("✓ Lejekontrakt oprettet i database");
 
-            // Opdater bil status til udlejet
-            bilService.setBilUdlejet(l.getBilId());
-            System.out.println("✓ Bil " + l.getBilId() + " markeret som udlejet");
+            // Opdater bil status til udlejet DIREKTE via BilRepo
+            if (l.getBilId() > 0) {
+                System.out.println("Opdaterer bil " + l.getBilId() + " til UDLEJET status...");
+                bilRepo.updateBilStatus(l.getBilId(), Bil.Status.udlejet);
+                System.out.println("✓ Bil " + l.getBilId() + " markeret som UDLEJET");
+            } else {
+                System.out.println("⚠️ Ugyldig bil ID: " + l.getBilId());
+            }
 
         } catch (Exception e) {
             System.out.println("❌ FEJL ved oprettelse af lejekontrakt: " + e.getMessage());
@@ -66,9 +73,12 @@ public class LejekontraktService {
             lejekontraktRepo.deleteLejekontrakt(kontraktId);
             System.out.println("✓ Lejekontrakt " + kontraktId + " slettet");
 
-            // Sæt bil tilbage til ledig
-            bilService.setBilLedig(bilId);
-            System.out.println("✓ Bil " + bilId + " sat tilbage til ledig");
+            // Sæt bil tilbage til ledig DIREKTE via BilRepo
+            if (bilId > 0) {
+                System.out.println("Opdaterer bil " + bilId + " til LEDIG status...");
+                bilRepo.updateBilStatus(bilId, Bil.Status.ledig);
+                System.out.println("✓ Bil " + bilId + " sat tilbage til LEDIG");
+            }
 
         } catch (Exception e) {
             System.out.println("❌ FEJL ved sletning af lejekontrakt: " + e.getMessage());
