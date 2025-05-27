@@ -26,7 +26,7 @@ public class BilController {
 
     // RETTET: Biloverblik side med error handling
     @GetMapping("/biloverblik")
-    public String biloverblik(HttpSession session, Model model) {
+    public String forretningsudvikler(HttpSession session, Model model) {
         // Tjek om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
@@ -54,7 +54,7 @@ public class BilController {
             model.addAttribute("samletIndtaegt", 0.0);
         }
 
-        return "biloverblik";
+        return "forretningsudvikler";
     }
 
     // TILFØJET: Manglende bil/opret mapping
