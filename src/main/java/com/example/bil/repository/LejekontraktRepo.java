@@ -12,38 +12,51 @@ public class LejekontraktRepo {
     @Autowired
     JdbcTemplate template;
 
-    // RETTET: SQL fejl fixet
+    // RETTET: Bruger korrekte kolonnenavne med underscores og aliases
     public List<Lejekontrakt> fetchAll() {
         String sql = "SELECT " +
-                "l.kontraktId, " +
-                "l.kundeId, " +
-                "l.bilId, " +
-                "l.startDato, " +
-                "l.slutDato, " +
-                "l.abonnementType, " +
-                "l.pris, " +
-                "l.medarbejderId " +
-                "FROM lejekontrakt l";
+                "kontrakt_id as kontraktId, " +
+                "kunde_id as kundeId, " +
+                "bil_id as bilId, " +
+                "start_dato as startDato, " +
+                "slut_dato as slutDato, " +
+                "abonnement_type as abonnementType, " +
+                "pris, " +
+                "medarbejder_id as medarbejderId " +
+                "FROM lejekontrakt";
 
         return template.query(sql, new BeanPropertyRowMapper<>(Lejekontrakt.class));
     }
 
-    // RETTET: Korrekt antal parametre i SQL
+    // RETTET: Bruger korrekte kolonnenavne
     public void addLejekontrakt(Lejekontrakt l) {
-        String sql = "INSERT INTO lejekontrakt(kontraktId, kundeId, bilId, startDato, slutDato, abonnementType, pris, medarbejderId) VALUES(?,?,?,?,?,?,?,?)";
-        template.update(sql,
-                l.getKontraktId(),
-                l.getKundeId(),
-                l.getBilId(),
-                l.getStartDato(),
-                l.getSlutDato(),
-                l.getAbonnementType().name(),
-                l.getPris(),
-                l.getMedarbejderId());
+        System.out.println("=== REPO: Forsøger at indsætte lejekontrakt ===");
+
+        try {
+            String sql = "INSERT INTO lejekontrakt(kontrakt_id, kunde_id, bil_id, start_dato, slut_dato, abonnement_type, pris, medarbejder_id) VALUES(?,?,?,?,?,?,?,?)";
+            System.out.println("Repo - SQL: " + sql);
+
+            int rowsAffected = template.update(sql,
+                    l.getKontraktId(),
+                    l.getKundeId(),
+                    l.getBilId(),
+                    l.getStartDato(),
+                    l.getSlutDato(),
+                    l.getAbonnementType().name(),
+                    l.getPris(),
+                    l.getMedarbejderId());
+
+            System.out.println("Repo - Rækker påvirket: " + rowsAffected);
+        } catch (Exception e) {
+            System.out.println("=== REPO FEJL ===");
+            System.out.println("Fejl: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public void updateLejekontrakt(Lejekontrakt l) {
-        String sql = "UPDATE lejekontrakt SET kundeId = ?, bilId = ?, startDato = ?, slutDato = ?, abonnementType = ?, pris = ?, medarbejderId = ? WHERE kontraktId = ?";
+        String sql = "UPDATE lejekontrakt SET kunde_id = ?, bil_id = ?, start_dato = ?, slut_dato = ?, abonnement_type = ?, pris = ?, medarbejder_id = ? WHERE kontrakt_id = ?";
         template.update(sql,
                 l.getKundeId(),
                 l.getBilId(),
@@ -56,21 +69,37 @@ public class LejekontraktRepo {
     }
 
     public Lejekontrakt findLejekontraktById(int kontraktId) {
-        String sql = "SELECT kontraktId, kundeId, bilId, startDato, slutDato, abonnementType, pris, medarbejderId " +
-                "FROM lejekontrakt WHERE kontraktId = ?";
+        String sql = "SELECT " +
+                "kontrakt_id as kontraktId, " +
+                "kunde_id as kundeId, " +
+                "bil_id as bilId, " +
+                "start_dato as startDato, " +
+                "slut_dato as slutDato, " +
+                "abonnement_type as abonnementType, " +
+                "pris, " +
+                "medarbejder_id as medarbejderId " +
+                "FROM lejekontrakt WHERE kontrakt_id = ?";
         return template.queryForObject(sql, new BeanPropertyRowMapper<>(Lejekontrakt.class), kontraktId);
     }
 
     public void deleteLejekontrakt(int kontraktId) {
-        String sql = "DELETE FROM lejekontrakt WHERE kontraktId = ?";
+        String sql = "DELETE FROM lejekontrakt WHERE kontrakt_id = ?";
         template.update(sql, kontraktId);
     }
 
     public List<Lejekontrakt> searchLejekontrakter(String soegeord) {
-        String sql = "SELECT l.kontraktId, l.kundeId, l.bilId, l.startDato, l.slutDato, l.abonnementType, l.pris, l.medarbejderId " +
-                "FROM lejekontrakt l " +
-                "WHERE CAST(l.kontraktId AS CHAR) LIKE ? " +
-                "OR l.abonnementType LIKE ?";
+        String sql = "SELECT " +
+                "kontrakt_id as kontraktId, " +
+                "kunde_id as kundeId, " +
+                "bil_id as bilId, " +
+                "start_dato as startDato, " +
+                "slut_dato as slutDato, " +
+                "abonnement_type as abonnementType, " +
+                "pris, " +
+                "medarbejder_id as medarbejderId " +
+                "FROM lejekontrakt " +
+                "WHERE CAST(kontrakt_id AS CHAR) LIKE ? " +
+                "OR abonnement_type LIKE ?";
 
         return template.query(sql,
                 new BeanPropertyRowMapper<>(Lejekontrakt.class),
