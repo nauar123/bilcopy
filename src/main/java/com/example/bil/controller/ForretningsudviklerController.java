@@ -1,7 +1,7 @@
 package com.example.bil.controller;
 
-import com.example.bil.model.Forretningsudvikler;
-import com.example.bil.service.ForretningsudviklerService;
+import com.example.bil.model.Bil;
+import com.example.bil.service.BilService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ForretningsudviklerController {
 
     @Autowired
-    protected ForretningsudviklerService forretningsudviklerService;
+    protected BilService bilService;
 
-    // TILFØJET: Mapping for /biloverblik
     @GetMapping("/biloverblik")
     public String visBiloverblik(HttpSession session, Model model) {
         return visForretningsudviklerSide(session, model);
@@ -31,58 +31,50 @@ public class ForretningsudviklerController {
         }
 
         // Start med tomme lister som fallback
-        List<Forretningsudvikler> udlejedeBiler = new ArrayList<>();  // ÆNDRET: biler -> udlejedeBiler
-        List<Forretningsudvikler> ledigeBiler = new ArrayList<>();
+        List<Bil> udlejedeBiler = new ArrayList<>();
+        List<Bil> ledigeBiler = new ArrayList<>();
         double samletIndtaegt = 0.0;
 
         try {
-            System.out.println("*** STARTER FORRETNINGSUDVIKLER DATA HENTNING ***");
+            System.out.println("*** STARTER BIL DATA HENTNING ***");
 
-            // Hent data med fejlhåndtering
-            try {
-                udlejedeBiler = forretningsudviklerService.findUdlejedeBiler();  // ÆNDRET: biler -> udlejedeBiler
-                System.out.println("✓ Udlejede biler hentet: " + (udlejedeBiler != null ? udlejedeBiler.size() : "null"));
-            } catch (Exception e) {
-                System.out.println("FEJL ved hentning af udlejede biler: " + e.getMessage());
-                e.printStackTrace();
-                udlejedeBiler = new ArrayList<>();  // ÆNDRET: biler -> udlejedeBiler
-            }
+            // Hent alle biler fra databasen
+            List<Bil> alleBiler = bilService.getAllBiler();
+            System.out.println("✓ Alle biler hentet: " + alleBiler.size());
 
-            try {
-                ledigeBiler = forretningsudviklerService.findAlleLedigeBiler();
-                System.out.println("✓ Ledige biler hentet: " + (ledigeBiler != null ? ledigeBiler.size() : "null"));
-            } catch (Exception e) {
-                System.out.println("FEJL ved hentning af ledige biler: " + e.getMessage());
-                e.printStackTrace();
-                ledigeBiler = new ArrayList<>();
-            }
+            // Filtrer biler efter status
+            udlejedeBiler = alleBiler.stream()
+                    .filter(bil -> bil.getStatus() == Bil.Status.udlejet)
+                    .collect(Collectors.toList());
 
-            try {
-                samletIndtaegt = forretningsudviklerService.beregnSamletIndtaegt();
-                System.out.println("✓ Samlet indtægt beregnet: " + samletIndtaegt);
-            } catch (Exception e) {
-                System.out.println("FEJL ved beregning af indtægt: " + e.getMessage());
-                e.printStackTrace();
-                samletIndtaegt = 0.0;
-            }
+            ledigeBiler = alleBiler.stream()
+                    .filter(bil -> bil.getStatus() == Bil.Status.ledig)
+                    .collect(Collectors.toList());
+
+            System.out.println("✓ Udlejede biler: " + udlejedeBiler.size());
+            System.out.println("✓ Ledige biler: " + ledigeBiler.size());
+
+            // Beregn samlet indtægt (eksempel - skal tilpasses jeres lejekontrakt logik)
+            samletIndtaegt = udlejedeBiler.stream()
+                    .mapToDouble(bil -> bil.getRegAfgift()) // Eller anden pris logik
+                    .sum();
+
+            System.out.println("✓ Samlet indtægt beregnet: " + samletIndtaegt);
 
         } catch (Exception e) {
-            System.out.println("GENEREL FEJL i forretningsudvikler: " + e.getMessage());
+            System.out.println("FEJL i bil data hentning: " + e.getMessage());
             e.printStackTrace();
+            udlejedeBiler = new ArrayList<>();
+            ledigeBiler = new ArrayList<>();
+            samletIndtaegt = 0.0;
         }
 
-        // Sørg for at listerne aldrig er null
-        if (udlejedeBiler == null) udlejedeBiler = new ArrayList<>();  // ÆNDRET: biler -> udlejedeBiler
-        if (ledigeBiler == null) ledigeBiler = new ArrayList<>();
-
-        // ÆNDRET: Sender nu udlejedeBiler i stedet for biler
+        // Send data til template
         model.addAttribute("udlejedeBiler", udlejedeBiler);
         model.addAttribute("ledigeBiler", ledigeBiler);
         model.addAttribute("samletIndtaegt", samletIndtaegt);
 
-        System.out.println("*** FORRETNINGSUDVIKLER DATA SENDT TIL VIEW ***");
-
-        // Returnerer forretningsudvikler template (som er det rigtige "bil overblik")
+        System.out.println("*** BIL DATA SENDT TIL VIEW ***");
         return "forretningsudvikler";
     }
 }
