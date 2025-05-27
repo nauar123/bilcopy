@@ -31,7 +31,15 @@
             </div>
         </li>
 
-        <li><a th:href="@{/kundeoverblik}">Kunder</a></li>
+        <li class="dropdown">
+            <a th:href="@{/kundeoverblik}">Kunder</a>
+            <div class="dropdown-content">
+                <a th:href="@{/kundeOverblik}">Overblik over kunder</a>
+                <a th:href="@{/opretKunde}">Opret kunde</a>
+                <a th:href="@{/updateKunde}">Opdater kunde</a>
+            </div>
+        </li>
+
 
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>

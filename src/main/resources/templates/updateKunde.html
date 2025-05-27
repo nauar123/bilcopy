@@ -7,6 +7,55 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 
+<!-- MENUBAR -->
+<nav class="menubar">
+    <ul>
+        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+
+        <li class="dropdown">
+            <a th:href="@{/biloverblik}">Biler</a>
+            <div class="dropdown-content">
+                <a th:href="@{/biloverblik}">Overblik over biler</a>
+                <a th:href="@{/bil/opret}">Opret ny bil</a>
+            </div>
+        </li>
+
+        <li class="dropdown">
+            <a th:href="@{/lejekontraktOverblik}">Lejekontrakter</a>
+            <div class="dropdown-content">
+                <a th:href="@{/lejekontraktOverblik}">Overblik lejekontrakter</a>
+                <a th:href="@{/opretLejekontrakt}">Opret lejekontrakt</a>
+                <a th:href="@{/updateLejekontrakt}">Opdater lejekontrakt</a>
+            </div>
+        </li>
+
+        <li class="dropdown">
+            <a th:href="@{/kundeoverblik}">Kunder</a>
+            <div class="dropdown-content">
+                <a th:href="@{/kundeOverblik}">Overblik over kunder</a>
+                <a th:href="@{/opretKunde}">Opret kunde</a>
+                <a th:href="@{/updateKunde}">Opdater kunde</a>
+            </div>
+        </li>
+
+
+        <li class="dropdown">
+            <a th:href="@{/tilstandsrapport}">Rapporter</a>
+            <div class="dropdown-content">
+                <a th:href="@{/tilstandsrapport}">Tilstandsrapporter</a>
+                <a th:href="@{/opretTilstandsrapport}">Opret tilstandsrapport</a>
+                <a th:href="@{/skaderapport}">Skaderapporter</a>
+                <a th:href="@{/opretskaderapport}">Opret skaderapport</a>
+            </div>
+        </li>
+
+        <li><a th:href="@{/logout}">Log ud</a></li>
+    </ul>
+</nav>
+<!-- SLUT MENUBAR -->
+
+
+
 <body>
 <div class="intro-updateKunde">
     <h1>Opdater Kunde</h1>

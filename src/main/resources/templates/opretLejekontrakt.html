@@ -32,13 +32,14 @@
         </li>
 
         <li class="dropdown">
-            <a href="/kundeoverblik">Kunder</a>
+            <a th:href="@{/kundeoverblik}">Kunder</a>
             <div class="dropdown-content">
-                <a href="/kundeOverblik">Overblik over kunder</a>
-                <a href="/opretKunde">Opret kunde</a>
-                <a href="/updateKunde">Opdater kunde</a>
+                <a th:href="@{/kundeOverblik}">Overblik over kunder</a>
+                <a th:href="@{/opretKunde}">Opret kunde</a>
+                <a th:href="@{/updateKunde}">Opdater kunde</a>
             </div>
         </li>
+
 
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
