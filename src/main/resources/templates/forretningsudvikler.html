@@ -37,7 +37,6 @@
             </div>
         </li>
 
-
         <li class="dropdown">
             <a th:href="@{/tilstandsrapport}">Rapporter</a>
             <div class="dropdown-content">
@@ -53,33 +52,30 @@
 </nav>
 <!-- SLUT MENUBAR -->
 
-
-
-
 <body>
 
 <div class="container">
 
-    <!-- ikke ledige biler -->
+    <!-- RETTET: Bruger nu ${biler} i stedet for ${udlejedeBiler} -->
     <div class="boks udlejede-biler">
         <h2>Udlejede biler</h2>
         <ul>
-            <li th:each="bil : ${udlejedeBiler}" th:text="${bil.model}">Bilnavn</li>
+            <li th:each="bil : ${biler}" th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</li>
         </ul>
     </div>
 
-    <!-- ledige biler -->
+    <!-- Denne var allerede korrekt -->
     <div class="boks ledige-biler">
         <h2>Biler klar til udlejning</h2>
         <ul>
-            <li th:each="bil : ${ledigeBiler}" th:text="${bil.model}">Bilnavn</li>
+            <li th:each="bil : ${ledigeBiler}" th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</li>
         </ul>
     </div>
 
-    <!-- samlet indtaegt -->
+    <!-- RETTET: Bruger nu ${samletIndtaegt} i stedet for ${indtjening} -->
     <div class="boks samlet-indtaegt">
         <h2>Samlet indtægt</h2>
-        <p th:text="${indtjening + ' kr.'}">0 kr.</p>
+        <p th:text="${samletIndtaegt + ' kr.'}">0 kr.</p>
     </div>
 
 </div>
