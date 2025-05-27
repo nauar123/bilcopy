@@ -4,93 +4,105 @@
 <head>
     <meta charset="UTF-8">
     <title>Kunde Overblik</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/static/style.css}">
 </head>
 
-<body>
+
 
 <!-- MENUBAR -->
 <nav class="menubar">
     <ul>
-        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
 
         <li class="dropdown">
-            <a th:href="@{/forretningsudvikler}">Biler</a>
+            <a href="/biloverblik">Biler</a>
             <div class="dropdown-content">
-                <a th:href="@{/forretningsudvikler}">Overblik over biler</a>
-                <a th:href="@{/bil/opret}">Opret ny bil</a>
+                <a href="/biloverblik">Overblik over biler</a>
+                <a href="/bil/opret">Opret ny bil</a>
             </div>
         </li>
 
         <li class="dropdown">
-            <a th:href="@{/lejekontraktOverblik}">Lejekontrakter</a>
+            <a href="/lejekontraktOverblik">Lejekontrakter</a>
             <div class="dropdown-content">
-                <a th:href="@{/lejekontraktOverblik}">Overblik lejekontrakter</a>
-                <a th:href="@{/opretLejekontrakt}">Opret lejekontrakt</a>
-                <a th:href="@{/updateLejekontrakt}">Opdater lejekontrakt</a>
+                <a href="/lejekontraktOverblik">Overblik lejekontrakter</a>
+                <a href="/opretLejekontrakt">Opret lejekontrakt</a>
+                <a href="/updateLejekontrakt">Opdater lejekontrakt</a>
             </div>
         </li>
 
-        <li><a th:href="@{/kundeOverblik}">Kunder</a></li>
+        <li><a href="/kundeoverblik">Kunder</a></li>
 
         <li class="dropdown">
-            <a th:href="@{/tilstandsrapport}">Rapporter</a>
+            <a href="/tilstandsrapport">Rapporter</a>
             <div class="dropdown-content">
-                <a th:href="@{/tilstandsrapport}">Tilstandsrapporter</a>
-                <a th:href="@{/opretTilstandsrapport}">Opret tilstandsrapport</a>
-                <a th:href="@{/skaderapport}">Skaderapporter</a>
-                <a th:href="@{/opretSkaderapport}">Opret skaderapport</a>
+                <a href="/tilstandsrapport">Tilstandsrapporter</a>
+                <a href="/opretTilstandsrapport">Opret tilstandsrapport</a>
+                <a href="/skaderapport">Skaderapporter</a>
+                <a href="/opretskaderapport">Opret skaderapport</a>
             </div>
         </li>
 
-        <li><a th:href="@{/logout}">Log ud</a></li>
+        <li><a href="/logout">Log ud</a></li>
     </ul>
 </nav>
 <!-- SLUT MENUBAR -->
+
+
 
 <div class="intro-kundeOverblik">
     <h1>Overblik over kunder</h1>
 </div>
 
-<div class="tabelOversigt-kunder">
-    <table>
-        <thead>
-        <tr>
-            <th>Kunde ID</th>
-            <th>Navn</th>
-            <th>Adresse</th>
-            <th>Telefon Nr</th>
-            <th>Email</th>
-            <th>Handlinger</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr th:each="kunde : ${kundeListe}">
-            <td th:text="${kunde.kundeId}"></td>
-            <td th:text="${kunde.navn}"></td>
-            <td th:text="${kunde.adresse}"></td>
-            <td th:text="${kunde.telefonnr}"></td>
-            <td th:text="${kunde.email}"></td>
-            <td>
-                <a th:href="@{'/updateKunde/' + ${kunde.kundeId}}">
-                    <button class="update-knap">Opdater</button>
-                </a>
-                <a th:href="@{'/slet-kunde/' + ${kunde.kundeId}}"
-                   onclick="return confirm('Er du sikker på, at du vil slette denne kunde?');">
-                    <button class="slet-knap">Slet</button>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<body>
+    <div class="tabelOversigt-kunder">
+       <table>
+           <thead>
+           <tr>
+               <th>Kunde ID</th>
+               <th>Navn</th>
+               <th>Adresse</th>
+               <th>Telefon Nr</th>
+               <th>Email</th>
 
-<div class="kunde-handlinger">
-    <a th:href="@{/opretKunde}">
-        <button class="opret-knap">Opret ny kunde</button>
-    </a>
-</div>
+           </tr>
+           </thead>
+
+           <tbody>
+           <tr th:each="kunde:${kundeListe}">
+               <td th:text="${kunde.kundeId}"></td>
+               <td th:text="${kunde.navn}"></td>
+               <td th:text ="${kunde.adresse}"></td>
+               <td th:text="${kunde.telefonNr}"></td>
+               <td th:text="${kunde.email}"></td>
+           </tr>
+
+           </tbody>
+       </table>
+    </div>
+
+    <div class="opret-kundeknap">
+        <a href="opretKunde"><button>Opret kunde</button></a>
+    </div>
+
+
+    <div class="update-kundeknap">
+        <a href="updateKunde"><button>Opdater kunde</button></a>
+    </div>
+
+    <div class="slet-knapKunde">
+        <form th:action="@{'/sletKunde/' + ${kunde.kundeId}}" method="get"
+              onsubmit="return confirm('Er du sikker på, at du vil slette denne kunde?');"> <!-- return comfirm er en popup javascript laver-->
+            <button type="submit" class="slet-knap">Slet</button>
+        </form>
+    </div>
+
+
+
+
+
 
 </body>
+
 </html>

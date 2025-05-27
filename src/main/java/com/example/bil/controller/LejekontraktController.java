@@ -23,11 +23,13 @@ public class LejekontraktController {
     @Autowired
     private LejekontraktService lejekontraktService;
 
-    // RETTET: lejekontraktOverblik med error handling
+
+    //LejekontraktOverblik
     @GetMapping("/lejekontraktOverblik")
     public String visLejekontrakter(HttpSession session, Model model)
     {
-        // Tjek om bruger er logget ind
+
+        // Tjekker om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
         {
             return "redirect:/login";
@@ -45,10 +47,11 @@ public class LejekontraktController {
         return "lejekontraktOverblik";
     }
 
+    // OpretLejekontrakt
     @GetMapping("/opretLejekontrakt")
     public String visOpretFormular(HttpSession session, Model model)
     {
-        // Tjek om bruger er logget ind
+        // Tjekker om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
         {
             return "redirect:/login";
@@ -65,11 +68,11 @@ public class LejekontraktController {
         return "redirect:/lejekontraktOverblik";
     }
 
-    // TILFØJET: Generel updateLejekontrakt side (matcher menubar URL)
+    // UpdateLejekontrakt
     @GetMapping("/updateLejekontrakt")
     public String updateLejekontraktOversigt(HttpSession session, Model model)
     {
-        // Tjek om bruger er logget ind
+        // Tjekker om bruger er logget ind
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn"))
         {
             return "redirect:/login";
