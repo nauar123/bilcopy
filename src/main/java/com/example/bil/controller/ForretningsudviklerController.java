@@ -31,7 +31,7 @@ public class ForretningsudviklerController {
         }
 
         // Start med tomme lister som fallback
-        List<Forretningsudvikler> biler = new ArrayList<>();
+        List<Forretningsudvikler> udlejedeBiler = new ArrayList<>();  // ÆNDRET: biler -> udlejedeBiler
         List<Forretningsudvikler> ledigeBiler = new ArrayList<>();
         double samletIndtaegt = 0.0;
 
@@ -40,12 +40,12 @@ public class ForretningsudviklerController {
 
             // Hent data med fejlhåndtering
             try {
-                biler = forretningsudviklerService.findUdlejedeBiler();
-                System.out.println("✓ Udlejede biler hentet: " + (biler != null ? biler.size() : "null"));
+                udlejedeBiler = forretningsudviklerService.findUdlejedeBiler();  // ÆNDRET: biler -> udlejedeBiler
+                System.out.println("✓ Udlejede biler hentet: " + (udlejedeBiler != null ? udlejedeBiler.size() : "null"));
             } catch (Exception e) {
                 System.out.println("FEJL ved hentning af udlejede biler: " + e.getMessage());
                 e.printStackTrace();
-                biler = new ArrayList<>();
+                udlejedeBiler = new ArrayList<>();  // ÆNDRET: biler -> udlejedeBiler
             }
 
             try {
@@ -72,14 +72,17 @@ public class ForretningsudviklerController {
         }
 
         // Sørg for at listerne aldrig er null
-        if (biler == null) biler = new ArrayList<>();
+        if (udlejedeBiler == null) udlejedeBiler = new ArrayList<>();  // ÆNDRET: biler -> udlejedeBiler
         if (ledigeBiler == null) ledigeBiler = new ArrayList<>();
 
-        model.addAttribute("biler", biler);
+        // ÆNDRET: Sender nu udlejedeBiler i stedet for biler
+        model.addAttribute("udlejedeBiler", udlejedeBiler);
         model.addAttribute("ledigeBiler", ledigeBiler);
         model.addAttribute("samletIndtaegt", samletIndtaegt);
 
         System.out.println("*** FORRETNINGSUDVIKLER DATA SENDT TIL VIEW ***");
+
+        // Returnerer forretningsudvikler template (som er det rigtige "bil overblik")
         return "forretningsudvikler";
     }
 }
