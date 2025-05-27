@@ -34,7 +34,14 @@
         </li>
 
 
-        <li><a href="/kundeoverblik">Kunder</a></li>
+        <li class="dropdown">
+            <a href="/kundeoverblik">Kunder</a>
+            <div class="dropdown-content">
+                <a href="/kundeOverblik">Overblik over kunder</a>
+                <a href="/opretKunde">Opret kunde</a>
+                <a href="/updateKunde">Opdater kunde</a>
+            </div>
+        </li>
 
 
         <li class="dropdown">
@@ -56,8 +63,10 @@
 <div class="intro-sr">
     <h1>Skaderapporter</h1>
 </div>
-<a href="opretskaderapport" class="button">Opret ny skaderapport</a>
 
+<div class="opret-skadeRapport">
+<a href="opretskaderapport" class="button">Opret ny skaderapport</a>
+</div>
 
 <div class="sr-oversigt">
     <table>
@@ -83,14 +92,13 @@
             <td th:text="${rapport.prisTotal}"></td>
             <td th:text="${rapport.beskrivelse}"></td>
             <td>
-                <form th:action="@{/skaderapport/slet}" method="post">
-                    <input type="hidden" name="id" th:value="${rapport.skadeId}" />
-                    <button type="submit" class="delete-btn">Slet</button>
-                    <a th:href="@{'/skaderapport/opdater/' + ${rapport.skadeId}}"
-                       class="button" style="background-color: #ffc107; padding: 6px 12px; border-radius: 4px; color: black; text-decoration:none;">
-                        Opdater
-                    </a>
+                <div class="slet-knapSkaderapport">
+                <form th:action="@{'/skaderapport/slet/' + ${rapport.skadeId}}" method="get"
+                      onsubmit="return confirm('Er du sikker på, at du vil slette denne skaderapport?');">
+                    <button type="submit" class="slet-knap">Slet</button>
                 </form>
+            </div>
+
             </td>
         </tr>
         </tbody>

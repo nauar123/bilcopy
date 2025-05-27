@@ -34,7 +34,14 @@
         </li>
 
 
-        <li><a href="/kundeoverblik">Kunder</a></li>
+        <li class="dropdown">
+            <a href="/kundeoverblik">Kunder</a>
+            <div class="dropdown-content">
+                <a href="/kundeOverblik">Overblik over kunder</a>
+                <a href="/opretKunde">Opret kunde</a>
+                <a href="/updateKunde">Opdater kunde</a>
+            </div>
+        </li>
 
 
         <li class="dropdown">
@@ -60,9 +67,9 @@
     <h1>Tilstandsrapporter</h1>
 </div>
 
-
+<div class="opret-tilstandsrapport">
 <a href="opretTilstandsrapport" class="button">Opret ny tilstandsrapport</a>
-
+</div>
 
 <div class="ts-oversigt">
     <table>
@@ -88,12 +95,20 @@
             <td th:text="${rapport.medarbejderId}"></td>
             <td th:text="${rapport.erSkadet ? 'Ja' : 'Nej'}"></td>
             <td>
+
+
+
+
+
                 <div class="slet-knapTilstandsrapport">
                     <form th:action="@{'/tilstandsrapport/slet/' + ${rapport.tilstandsrapportId}}" method="get"
                           onsubmit="return confirm('Er du sikker på, at du vil slette denne tilstandsrapport?');">
                         <button type="submit" class="slet-knap">Slet</button>
                     </form>
                 </div>
+
+
+
             </td>
         </tr>
         </tbody>

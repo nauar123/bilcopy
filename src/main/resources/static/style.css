@@ -302,7 +302,7 @@ th {
     color: white;
 }
 
-a.button {
+.opret-tilstandsrapport, .opret-skadeRapport,.opret-kundeknap, .opret-knaplejekontrakt  {
     display: inline-block;
     margin: 20px 0;
     padding: 10px 15px;
@@ -312,7 +312,7 @@ a.button {
     border-radius: 5px;
 }
 
-a.button:hover {
+.opret-tilstandsrapport:hover, .opret-skadeRapport:hover, .opret-kundeknap:hover, .opret-knaplejekontrakt:hover {
     background-color: #218838;
 }
 
@@ -320,7 +320,20 @@ form {
     display: inline;
 }
 
-button.delete-btn {
+.update-kundeknap, .update-knapLejekontrakt{
+    background-color: orange;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.update-kundeknap:hover, .update-knapLejekontrakt:hover{
+    background-color:orange;
+}
+
+.slet-knapTilstandsrapport, .slet-knapKunde, .slet-knapLejekontrakt, .slet-knapSkaderapport {
     background-color: #dc3545;
     border: none;
     color: white;
@@ -329,7 +342,7 @@ button.delete-btn {
     border-radius: 4px;
 }
 
-button.delete-btn:hover {
+.slet-knapTilstandsrapport:hover,.slet-knapKunde:hover, .slet-knapLejekontrakt:hover, .slet-knapSkaderapport:hover {
     background-color: #c82333;
 }
 
