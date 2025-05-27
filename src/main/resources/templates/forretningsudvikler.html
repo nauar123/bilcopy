@@ -62,10 +62,10 @@
         <div class="bil-grid">
             <div th:each="bil : ${udlejedeBiler}" class="bil-card udlejet">
                 <div class="bil-status-badge udlejet-badge">UDLEJET</div>
-                <!-- RETTET: Bedre håndtering af special characters og fallback -->
-                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase().replace('ë', 'e').replace('ö', 'o').replace('å', 'a').replace('æ', 'ae').replace('ø', 'o')} + ${bil.bilId} + '.jpg'}"
+                <!-- RETTET: Opdateret sti til images/images/ mappe -->
+                <img th:src="@{'/images/images/' + ${bil.maerke.toLowerCase().replace('ë', 'e').replace('ö', 'o').replace('å', 'a').replace('æ', 'ae').replace('ø', 'o')} + ${bil.bilId} + '.jpg'}"
                      th:alt="${bil.maerke + ' ' + bil.model}"
-                     onerror="this.src='/images/default_car.jpg'"
+                     onerror="this.src='/images/images/default_car.jpg'"
                      loading="lazy">
                 <div class="bil-info">
                     <h4 th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</h4>
@@ -82,10 +82,10 @@
         <div class="bil-grid">
             <div th:each="bil : ${ledigeBiler}" class="bil-card ledig">
                 <div class="bil-status-badge ledig-badge">LEDIG</div>
-                <!-- RETTET: Bedre håndtering af special characters og fallback -->
-                <img th:src="@{'/images/' + ${bil.maerke.toLowerCase().replace('ë', 'e').replace('ö', 'o').replace('å', 'a').replace('æ', 'ae').replace('ø', 'o')} + ${bil.bilId} + '.jpg'}"
+                <!-- RETTET: Opdateret sti til images/images/ mappe -->
+                <img th:src="@{'/images/images/' + ${bil.maerke.toLowerCase().replace('ë', 'e').replace('ö', 'o').replace('å', 'a').replace('æ', 'ae').replace('ø', 'o')} + ${bil.bilId} + '.jpg'}"
                      th:alt="${bil.maerke + ' ' + bil.model}"
-                     onerror="this.src='/images/default_car.jpg'"
+                     onerror="this.src='/images/images/default_car.jpg'"
                      loading="lazy">
                 <div class="bil-info">
                     <h4 th:text="${bil.maerke + ' ' + bil.model}">Bilnavn</h4>
