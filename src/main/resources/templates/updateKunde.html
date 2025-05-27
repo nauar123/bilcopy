@@ -11,6 +11,7 @@
 <div class="intro-updateKunde">
     <h1>Opdater Kunde</h1>
 </div>
+
 <div class="tabel-updateKunde">
     <form th:action="@{/updateKunde}" th:object="${updateKunde}" method="post">
 
@@ -35,9 +36,8 @@
 </div>
 
 <div class="tilbage-knap">
-    <a th:href="@{/kundeOversigt}"><button>Tilbage</button></a>
+    <a th:href="@{/kundeOverblik}"><button>Tilbage</button></a> <!-- FIXED: Correct URL -->
 </div>
 
 </body>
-
 </html>

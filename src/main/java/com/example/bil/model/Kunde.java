@@ -8,11 +8,9 @@ public class Kunde {
     private String telefonnr;
     private String email;
 
+    public Kunde() {}
 
-
-    public Kunde(){}
-    public Kunde (int kundeId, String navn, String adresse, String telefonnr,String email)
-    {
+    public Kunde(int kundeId, String navn, String adresse, String telefonnr, String email) {
         this.kundeId = kundeId;
         this.navn = navn;
         this.adresse = adresse;
@@ -20,55 +18,45 @@ public class Kunde {
         this.email = email;
     }
 
-
-    public int getKundeId()
-    {
+    // Getters
+    public int getKundeId() {
         return kundeId;
     }
-    public String getNavn()
-    {
+
+    public String getNavn() {
         return navn;
     }
-    public String getAdresse()
-    {
+
+    public String getAdresse() {
         return adresse;
     }
-    public String getTelefonnr()
-    {
+
+    public String getTelefonnr() {
         return telefonnr;
     }
-    public String getEmail ()
-    {
+
+    public String getEmail() {
         return email;
     }
 
-
-    public void setKundeId()
-    {
+    // FIXED: Setters with parameters
+    public void setKundeId(int kundeId) {
         this.kundeId = kundeId;
     }
 
-
-    public void setNavn()
-    {
+    public void setNavn(String navn) {
         this.navn = navn;
     }
 
-
-    public void setAdresse()
-    {
+    public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
 
-
-    public void setTelefonnr() {
+    public void setTelefonnr(String telefonnr) {
         this.telefonnr = telefonnr;
     }
 
-
-    public void setEmail()
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 }
-
