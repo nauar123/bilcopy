@@ -41,6 +41,21 @@ public class BilController {
         return "redirect:/forretningsudvikler"; // Ændret til korrekt URL
     }
 
+    // TILFØJET: Test endpoint til bil status debug
+    @GetMapping("/test-bil-status/{bilId}")
+    @ResponseBody
+    public String testBilStatus(@PathVariable int bilId) {
+        try {
+            System.out.println("=== TESTER BIL STATUS OPDATERING ===");
+            bilService.setBilUdlejet(bilId);
+            return "SUCCESS: Bil " + bilId + " sat til udlejet";
+        } catch (Exception e) {
+            System.out.println("ERROR ved bil status test: " + e.getMessage());
+            e.printStackTrace();
+            return "ERROR: " + e.getMessage();
+        }
+    }
+
     // REST endpoints
     @GetMapping("/biler")
     @ResponseBody
