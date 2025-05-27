@@ -2,6 +2,7 @@ package com.example.bil.controller;
 
 import com.example.bil.model.Bil;
 import com.example.bil.service.BilService;
+import com.example.bil.service.LejekontraktService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ public class ForretningsudviklerController {
 
     @Autowired
     protected BilService bilService;
+
+    @Autowired
+    protected LejekontraktService lejekontraktService;  // TILFØJET: For at beregne rigtig indtægt
 
     @GetMapping("/biloverblik")
     public String visBiloverblik(HttpSession session, Model model) {
@@ -54,12 +58,19 @@ public class ForretningsudviklerController {
             System.out.println("✓ Udlejede biler: " + udlejedeBiler.size());
             System.out.println("✓ Ledige biler: " + ledigeBiler.size());
 
-            // Beregn samlet indtægt (eksempel - skal tilpasses jeres lejekontrakt logik)
-            samletIndtaegt = udlejedeBiler.stream()
-                    .mapToDouble(bil -> bil.getRegAfgift()) // Eller anden pris logik
-                    .sum();
-
-            System.out.println("✓ Samlet indtægt beregnet: " + samletIndtaegt);
+            // OPDATERET: Beregn samlet indtægt fra aktive lejekontrakter
+            try {
+                samletIndtaegt = lejekontraktService.fetchAll().stream()
+                        .mapToDouble(kontrakt -> kontrakt.getPris())
+                        .sum();
+                System.out.println("✓ Samlet indtægt fra lejekontrakter: " + samletIndtaegt);
+            } catch (Exception e) {
+                System.out.println("⚠️ Kunne ikke beregne indtægt fra lejekontrakter: " + e.getMessage());
+                // Fallback til regAfgift
+                samletIndtaegt = udlejedeBiler.stream()
+                        .mapToDouble(bil -> bil.getRegAfgift())
+                        .sum();
+            }
 
         } catch (Exception e) {
             System.out.println("FEJL i bil data hentning: " + e.getMessage());
