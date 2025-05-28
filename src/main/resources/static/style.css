@@ -470,35 +470,15 @@ tbody tr:hover {
     box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
 }
 
-.opret-tilstandsrapport:hover, .opret-skadeRapport:hover, .opret-kundeknap:hover, .opret-knaplejekontrakt:hover {
+.opret-tilstandsrapport:hover, .opret-skadeRapport:hover, .opret-kundeknap:hover, .opret-knaplejekontrakt:hover,
+.opret-knaplejekontrakt a:hover, .update-knapLejekontrakt a:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
 }
 
-/* Update knapper */
-.update-kundeknap, .update-knapLejekontrakt {
-    background: linear-gradient(135deg, #ffc107, #e0a800);
-    border: none;
-    color: white;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(255, 193, 7, 0.3);
-    margin: 5px;
-}
-
-.update-kundeknap:hover, .update-knapLejekontrakt:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-}
-
-/* Slet knapper */
+/* Slet knapper - ALLE RØDE */
 .slet-knapTilstandsrapport, .slet-knapKunde, .slet-knapLejekontrakt, .slet-knapSkaderapport,
-.slet-knap {
+.slet-knap, .update-knap, .update-kundeknap, .update-knapLejekontrakt {
     background: linear-gradient(135deg, #dc3545, #c82333);
     border: none;
     color: white;
@@ -514,7 +494,8 @@ tbody tr:hover {
 }
 
 .slet-knapTilstandsrapport:hover, .slet-knapKunde:hover, .slet-knapLejekontrakt:hover,
-.slet-knapSkaderapport:hover, .slet-knap:hover {
+.slet-knapSkaderapport:hover, .slet-knap:hover, .update-knap:hover, .update-kundeknap:hover,
+.update-knapLejekontrakt:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
 }
@@ -522,9 +503,14 @@ tbody tr:hover {
 /* ===== TABEL CONTAINERE ===== */
 .sr-oversigt, .ts-oversigt, .tabelOversigt-lejekontrakt, .tabelOversigt-kunde,
 .tabelOverskrift-lejekontrakt, .tabelOversigt-kunder {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px auto;
     max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* ===== BIL GRID LAYOUT ===== */
