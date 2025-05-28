@@ -52,3 +52,4 @@ public class Bil {
     public void setCo2Udledning(double co2Udledning) { this.co2Udledning = co2Udledning; }
     public void setRegAfgift(double regAfgift) { this.regAfgift = regAfgift; }
 }
+

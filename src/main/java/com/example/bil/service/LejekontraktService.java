@@ -2,9 +2,8 @@ package com.example.bil.service;
 
 import com.example.bil.model.Lejekontrakt;
 import com.example.bil.repository.LejekontraktRepo;
-import com.example.bil.repository.BilRepo;
-import com.example.bil.model.Bil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,68 +15,63 @@ public class LejekontraktService {
     LejekontraktRepo lejekontraktRepo;
 
     @Autowired
-    BilRepo bilRepo;  // ÆNDRET: Inject BilRepo direkte i stedet for BilService
+    JdbcTemplate jdbcTemplate;  // TILFØJET: Direkte database opdatering
 
-    // Henter alle lejekontrakter fra databasen.
     public List<Lejekontrakt> fetchAll() {
         return lejekontraktRepo.fetchAll();
     }
 
-    // OPDATERET: Tilføjer en ny lejekontrakt og opdaterer bil status
+    // OPDATERET: Automatisk bil status opdatering
     public void addLejekontrakt(Lejekontrakt l) {
         try {
-            System.out.println("=== OPRETTER LEJEKONTRAKT I SERVICE ===");
+            System.out.println("=== OPRETTER LEJEKONTRAKT ===");
             System.out.println("Bil ID: " + l.getBilId());
             System.out.println("Kunde ID: " + l.getKundeId());
 
-            // Opret lejekontrakten først
+            // 1. Opret lejekontrakten
             lejekontraktRepo.addLejekontrakt(l);
-            System.out.println("✓ Lejekontrakt oprettet i database");
+            System.out.println("✓ Lejekontrakt oprettet");
 
-            // Opdater bil status til udlejet DIREKTE via BilRepo
+            // 2. Opdater bil status DIREKTE i database
             if (l.getBilId() > 0) {
-                System.out.println("Opdaterer bil " + l.getBilId() + " til UDLEJET status...");
-                bilRepo.updateBilStatus(l.getBilId(), Bil.Status.udlejet);
-                System.out.println("✓ Bil " + l.getBilId() + " markeret som UDLEJET");
-            } else {
-                System.out.println("⚠️ Ugyldig bil ID: " + l.getBilId());
+                String sql = "UPDATE bil SET status = 'udlejet' WHERE bil_id = ?";
+                int rowsAffected = jdbcTemplate.update(sql, l.getBilId());
+                System.out.println("✓ Bil " + l.getBilId() + " sat til UDLEJET (rækker påvirket: " + rowsAffected + ")");
             }
 
         } catch (Exception e) {
-            System.out.println("❌ FEJL ved oprettelse af lejekontrakt: " + e.getMessage());
+            System.out.println("❌ FEJL ved lejekontrakt oprettelse: " + e.getMessage());
             e.printStackTrace();
-            throw e; // Re-throw så controller kan håndtere fejlen
+            throw e;
         }
     }
 
-    // Opdaterer en eksisterende lejekontrakt
     public void updateLejekontrakt(Lejekontrakt l) {
         lejekontraktRepo.updateLejekontrakt(l);
     }
 
-    // Finder én lejekontrakt ud fra kontraktId
     public Lejekontrakt findLejekontraktById(int kontraktId) {
         return lejekontraktRepo.findLejekontraktById(kontraktId);
     }
 
-    // OPDATERET: Sletter en lejekontrakt og sætter bil tilbage til ledig
+    // OPDATERET: Sæt bil tilbage til ledig når kontrakt slettes
     public void deleteLejekontrakt(int kontraktId) {
         try {
             System.out.println("=== SLETTER LEJEKONTRAKT " + kontraktId + " ===");
 
-            // Hent lejekontrakten først for at få bil ID
+            // 1. Hent bil ID først
             Lejekontrakt lejekontrakt = lejekontraktRepo.findLejekontraktById(kontraktId);
             int bilId = lejekontrakt.getBilId();
 
-            // Slet lejekontrakten
+            // 2. Slet kontrakten
             lejekontraktRepo.deleteLejekontrakt(kontraktId);
-            System.out.println("✓ Lejekontrakt " + kontraktId + " slettet");
+            System.out.println("✓ Lejekontrakt slettet");
 
-            // Sæt bil tilbage til ledig DIREKTE via BilRepo
+            // 3. Sæt bil tilbage til ledig
             if (bilId > 0) {
-                System.out.println("Opdaterer bil " + bilId + " til LEDIG status...");
-                bilRepo.updateBilStatus(bilId, Bil.Status.ledig);
-                System.out.println("✓ Bil " + bilId + " sat tilbage til LEDIG");
+                String sql = "UPDATE bil SET status = 'ledig' WHERE bil_id = ?";
+                int rowsAffected = jdbcTemplate.update(sql, bilId);
+                System.out.println("✓ Bil " + bilId + " sat tilbage til LEDIG (rækker påvirket: " + rowsAffected + ")");
             }
 
         } catch (Exception e) {
@@ -87,7 +81,6 @@ public class LejekontraktService {
         }
     }
 
-    // Søger lejekontrakter baseret på søgeord
     public List<Lejekontrakt> searchLejekontrakter(String soegeord) {
         return lejekontraktRepo.searchLejekontrakter(soegeord);
     }
