@@ -2,11 +2,13 @@ package com.example.bil.controller;
 
 import com.example.bil.model.Lejekontrakt;
 import com.example.bil.service.LejekontraktService;
+import com.example.bil.service.BilService; // TILFØJ DENNE IMPORT
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes; // TILFØJ DENNE IMPORT
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ public class LejekontraktController {
 
     @Autowired
     private LejekontraktService lejekontraktService;
+
+    @Autowired
+    private BilService bilService; // TILFØJET: For at opdatere bil-data
 
     @GetMapping("/lejekontraktOverblik")
     public String visLejekontrakter(HttpSession session, Model model) {
@@ -52,7 +57,8 @@ public class LejekontraktController {
     }
 
     @PostMapping("/opretLejekontrakt")
-    public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt, HttpSession session, Model model) {
+    public String opretLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt, HttpSession session,
+                                    Model model, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -70,6 +76,11 @@ public class LejekontraktController {
 
             lejekontraktService.addLejekontrakt(lejekontrakt);
             System.out.println("Lejekontrakt oprettet succesfuldt!");
+
+            // TILFØJ: Opdater session med friske bil-data
+            opdaterBilDataISession(session);
+
+            redirectAttributes.addFlashAttribute("successMessage", "Lejekontrakt oprettet succesfuldt!");
             return "redirect:/lejekontraktOverblik";
         } catch (Exception e) {
             System.out.println("=== FEJL VED OPRETTELSE AF LEJEKONTRAKT ===");
@@ -101,14 +112,26 @@ public class LejekontraktController {
     }
 
     @PostMapping("/updateLejekontrakt")
-    public String opdaterLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt) {
+    public String opdaterLejekontrakt(@ModelAttribute Lejekontrakt lejekontrakt, HttpSession session,
+                                      RedirectAttributes redirectAttributes) {
+        // TILFØJ: Session check
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
         lejekontraktService.updateLejekontrakt(lejekontrakt);
+
+        // TILFØJ: Opdater session med friske bil-data
+        opdaterBilDataISession(session);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Lejekontrakt opdateret succesfuldt!");
         return "redirect:/lejekontraktOverblik";
     }
 
     // GET mapping (original)
     @GetMapping("/slet-lejekontrakt/{id}")
-    public String sletLejekontrakt(@PathVariable("id") int kontraktId, HttpSession session) {
+    public String sletLejekontrakt(@PathVariable("id") int kontraktId, HttpSession session,
+                                   RedirectAttributes redirectAttributes) {
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -117,17 +140,24 @@ public class LejekontraktController {
             System.out.println("=== GET CONTROLLER: SLETTER LEJEKONTRAKT " + kontraktId + " ===");
             lejekontraktService.deleteLejekontrakt(kontraktId);
             System.out.println("✓ GET Controller: Lejekontrakt " + kontraktId + " slettet succesfuldt");
+
+            // VIGTIG TILFØJELSE: Opdater bil-data i session
+            opdaterBilDataISession(session);
+
+            redirectAttributes.addFlashAttribute("successMessage", "Lejekontrakt slettet succesfuldt!");
             return "redirect:/lejekontraktOverblik";
         } catch (Exception e) {
             System.out.println("❌ GET CONTROLLER FEJL ved sletning af lejekontrakt " + kontraktId + ": " + e.getMessage());
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Fejl ved sletning af lejekontrakt!");
             return "redirect:/lejekontraktOverblik";
         }
     }
 
     // TILFØJET: POST mapping for slet lejekontrakt
     @PostMapping("/slet-lejekontrakt")
-    public String sletLejekontraktPost(@RequestParam("id") int kontraktId, HttpSession session) {
+    public String sletLejekontraktPost(@RequestParam("id") int kontraktId, HttpSession session,
+                                       RedirectAttributes redirectAttributes) {
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
@@ -136,11 +166,47 @@ public class LejekontraktController {
             System.out.println("=== POST CONTROLLER: SLETTER LEJEKONTRAKT " + kontraktId + " ===");
             lejekontraktService.deleteLejekontrakt(kontraktId);
             System.out.println("✓ POST Controller: Lejekontrakt " + kontraktId + " slettet succesfuldt");
+
+            // VIGTIG TILFØJELSE: Opdater bil-data i session
+            opdaterBilDataISession(session);
+
+            redirectAttributes.addFlashAttribute("successMessage", "Lejekontrakt slettet succesfuldt!");
             return "redirect:/lejekontraktOverblik";
         } catch (Exception e) {
             System.out.println("❌ POST CONTROLLER FEJL ved sletning af lejekontrakt " + kontraktId + ": " + e.getMessage());
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Fejl ved sletning af lejekontrakt!");
             return "redirect:/lejekontraktOverblik";
+        }
+    }
+
+    // NYE HJÆLPE-METODE: Opdater bil-data i session
+    private void opdaterBilDataISession(HttpSession session) {
+        try {
+            System.out.println("=== OPDATERER BIL-DATA I SESSION ===");
+
+            // Hent friske bil-data fra BilService
+            List<Bil> alleBiler = bilService.getAllBiler();
+            List<Bil> udlejdeBiler = bilService.getUdlejdeBiler();
+            List<Bil> ledigeBiler = bilService.getLedigeBiler();
+            double samletIndtaegt = bilService.beregnSamletIndtaegt();
+
+            // Opdater session med friske data
+            session.setAttribute("alleBiler", alleBiler);
+            session.setAttribute("udlejdeBiler", udlejdeBiler);
+            session.setAttribute("ledigeBiler", ledigeBiler);
+            session.setAttribute("samletIndtaegt", samletIndtaegt);
+
+            // Debug print
+            System.out.println("✓ Session opdateret med friske bil-data");
+            System.out.println("  - Alle biler: " + alleBiler.size());
+            System.out.println("  - Udlejede: " + udlejdeBiler.size());
+            System.out.println("  - Ledige: " + ledigeBiler.size());
+            System.out.println("  - Samlet indtægt: " + samletIndtaegt + " kr");
+
+        } catch (Exception e) {
+            System.out.println("❌ FEJL ved opdatering af bil-data i session: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
