@@ -109,10 +109,24 @@ public class LejekontraktController {
         return "redirect:/lejekontraktOverblik";
     }
 
-    // TILFØJET: Manglende slet-mapping
+    // OPDATERET: Slet-mapping med fejlhåndtering
     @GetMapping("/slet-lejekontrakt/{id}")
-    public String sletLejekontrakt(@PathVariable("id") int kontraktId) {
-        lejekontraktService.deleteLejekontrakt(kontraktId);
-        return "redirect:/lejekontraktOverblik";
+    public String sletLejekontrakt(@PathVariable("id") int kontraktId, HttpSession session) {
+        // Tjek login
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        try {
+            System.out.println("=== CONTROLLER: SLETTER LEJEKONTRAKT " + kontraktId + " ===");
+            lejekontraktService.deleteLejekontrakt(kontraktId);
+            System.out.println("✓ Controller: Lejekontrakt " + kontraktId + " slettet succesfuldt");
+            return "redirect:/lejekontraktOverblik";
+        } catch (Exception e) {
+            System.out.println("❌ CONTROLLER FEJL ved sletning af lejekontrakt " + kontraktId + ": " + e.getMessage());
+            e.printStackTrace();
+            // Redirect tilbage selvom der er fejl
+            return "redirect:/lejekontraktOverblik";
+        }
     }
 }
