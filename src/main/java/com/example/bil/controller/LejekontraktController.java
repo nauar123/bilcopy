@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,23 +106,40 @@ public class LejekontraktController {
         return "redirect:/lejekontraktOverblik";
     }
 
-    // OPDATERET: Slet-mapping med fejlhåndtering
+    // GET mapping (original)
     @GetMapping("/slet-lejekontrakt/{id}")
     public String sletLejekontrakt(@PathVariable("id") int kontraktId, HttpSession session) {
-        // Tjek login
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
             return "redirect:/login";
         }
 
         try {
-            System.out.println("=== CONTROLLER: SLETTER LEJEKONTRAKT " + kontraktId + " ===");
+            System.out.println("=== GET CONTROLLER: SLETTER LEJEKONTRAKT " + kontraktId + " ===");
             lejekontraktService.deleteLejekontrakt(kontraktId);
-            System.out.println("✓ Controller: Lejekontrakt " + kontraktId + " slettet succesfuldt");
+            System.out.println("✓ GET Controller: Lejekontrakt " + kontraktId + " slettet succesfuldt");
             return "redirect:/lejekontraktOverblik";
         } catch (Exception e) {
-            System.out.println("❌ CONTROLLER FEJL ved sletning af lejekontrakt " + kontraktId + ": " + e.getMessage());
+            System.out.println("❌ GET CONTROLLER FEJL ved sletning af lejekontrakt " + kontraktId + ": " + e.getMessage());
             e.printStackTrace();
-            // Redirect tilbage selvom der er fejl
+            return "redirect:/lejekontraktOverblik";
+        }
+    }
+
+    // TILFØJET: POST mapping for slet lejekontrakt
+    @PostMapping("/slet-lejekontrakt")
+    public String sletLejekontraktPost(@RequestParam("id") int kontraktId, HttpSession session) {
+        if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
+            return "redirect:/login";
+        }
+
+        try {
+            System.out.println("=== POST CONTROLLER: SLETTER LEJEKONTRAKT " + kontraktId + " ===");
+            lejekontraktService.deleteLejekontrakt(kontraktId);
+            System.out.println("✓ POST Controller: Lejekontrakt " + kontraktId + " slettet succesfuldt");
+            return "redirect:/lejekontraktOverblik";
+        } catch (Exception e) {
+            System.out.println("❌ POST CONTROLLER FEJL ved sletning af lejekontrakt " + kontraktId + ": " + e.getMessage());
+            e.printStackTrace();
             return "redirect:/lejekontraktOverblik";
         }
     }
