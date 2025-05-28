@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes; // TILFØJ DENNE IMPORT
+import com.example.bil.model.Bil; // TILFØJ DENNE LINJE
 
 import java.util.ArrayList;
 import java.util.List;
