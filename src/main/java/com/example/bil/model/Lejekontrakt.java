@@ -3,7 +3,7 @@ package com.example.bil.model;
 import java.time.LocalDate;
 
 public class Lejekontrakt {
-    private int kontraktId; // FIXED: Consistent casing
+    private int kontraktId;
     private int kundeId;
     private int bilId;
     private LocalDate startDato;
@@ -15,7 +15,7 @@ public class Lejekontrakt {
 
 
     public enum AbonnementType {
-        limited, unlimited
+        LIMITED, UNLIMITED
     }
 
     public Lejekontrakt() {}

@@ -1,6 +1,7 @@
 package com.example.bil.model;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import com.example.bil.model.Medarbejder;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,7 +11,7 @@ public class Tilstandsrapport
     private int tilstandsrapportId;
     private int bilId;
     private int kontraktId;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate tilstandsrapportDato;
     private Date tilstandsrapportDato;
     private int medarbejderId;
     private boolean erSkadet;
@@ -18,7 +19,7 @@ public class Tilstandsrapport
 
     public Tilstandsrapport(){}
 
-    public Tilstandsrapport (int tilstandsrapportId, int bilId, int kontraktId, Date tilstandsrapportDato, int medarbejderId, Boolean erSkadet )
+    public Tilstandsrapport (int tilstandsrapportId, int bilId, int kontraktId, LocalDate tilstandsrapportDato, int medarbejderId, Boolean erSkadet )
     {
         this.tilstandsrapportId = tilstandsrapportId;
         this.bilId = bilId;

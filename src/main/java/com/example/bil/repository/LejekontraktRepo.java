@@ -15,7 +15,7 @@ public class LejekontraktRepo {
     @Autowired
     JdbcTemplate template;
 
-    // RETTET: Custom RowMapper til at håndtere enum conversion
+    // der blevet lavet en Custom RowMapper fordi beanpropperty ikke kan håndtere enum.
     public List<Lejekontrakt> fetchAll() {
         String sql = "SELECT " +
                 "kontrakt_id, " +

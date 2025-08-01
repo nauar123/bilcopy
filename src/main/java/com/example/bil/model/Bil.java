@@ -11,7 +11,7 @@ public class Bil {
     private double regAfgift;
     private double co2Udledning;
 
-    // RETTET: Konsistent enum naming der matcher database
+    // enum er faste værdier der ikke kan ændres og der skal vælges mellem en af dem.
     public enum Status {
         ledig,
         udlejet,
@@ -33,23 +33,71 @@ public class Bil {
     }
 
     // Getters
-    public int getBilId() { return bilId; }
-    public String getStelNr() { return stelNr; }
-    public String getMaerke() { return maerke; }
-    public String getModel() { return model; }
-    public String getUdstyrsniveau() { return udstyrsniveau; }
-    public Status getStatus() { return status; }
-    public Double getRegAfgift() { return regAfgift; }
-    public Double getCo2Udledning() { return co2Udledning; }
+    public int getBilId()
+    {
+        return bilId;
+    }
+    public String getStelNr()
+    {
+        return stelNr;
+    }
+    public String getMaerke()
+    {
+        return maerke;
+    }
+    public String getModel()
+    {
+        return model;
+    }
+    public String getUdstyrsniveau()
+    {
+        return udstyrsniveau;
+    }
+    public Status getStatus()
+    {
+        return status;
+    }
+    public Double getRegAfgift()
+    {
+        return regAfgift;
+    }
+    public Double getCo2Udledning()
+    {
+        return co2Udledning;
+    }
 
     // Setters
-    public void setBilId(int bilId) { this.bilId = bilId; }
-    public void setStelNr(String stelNr) { this.stelNr = stelNr; }
-    public void setMaerke(String maerke) { this.maerke = maerke; }
-    public void setModel(String model) { this.model= model; }
-    public void setUdstyrsniveau(String udstyrsniveau) { this.udstyrsniveau = udstyrsniveau; }
-    public void setStatus(Status status) { this.status = status; }
-    public void setCo2Udledning(double co2Udledning) { this.co2Udledning = co2Udledning; }
-    public void setRegAfgift(double regAfgift) { this.regAfgift = regAfgift; }
+    public void setBilId(int bilId)
+    {
+        this.bilId = bilId;
+    }
+    public void setStelNr(String stelNr)
+    {
+        this.stelNr = stelNr;
+    }
+    public void setMaerke(String maerke)
+    {
+        this.maerke = maerke;
+    }
+    public void setModel(String model)
+    {
+        this.model= model;
+    }
+    public void setUdstyrsniveau(String udstyrsniveau)
+    {
+        this.udstyrsniveau = udstyrsniveau;
+    }
+    public void setStatus(Status status)
+    {
+        this.status = status;
+    }
+    public void setCo2Udledning(double co2Udledning)
+    {
+        this.co2Udledning = co2Udledning;
+    }
+    public void setRegAfgift(double regAfgift)
+    {
+        this.regAfgift = regAfgift;
+    }
 }
 
