@@ -16,6 +16,9 @@ public class BilController {
     @Autowired
     protected BilService bilService;
 
+
+
+
     @GetMapping("/bil/opret")
     public String opretBil(HttpSession session, Model model) {
         if (session.getAttribute("loggedIn") == null || !(boolean) session.getAttribute("loggedIn")) {
