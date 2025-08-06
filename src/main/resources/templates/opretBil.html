@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 </head>
 <body>
+
 <!-- MENUBAR -->
 <nav class="menubar">
   <ul>
@@ -58,9 +59,11 @@
 
 
 
-
 <h1>Opret ny bil</h1>
+
+
 <form th:action="@{/bil/opret}" th:object="${bil}" method="post">
+
   <label for="stelNr">Stelnummer:</label>
   <input type="text" id="stelNr" th:field="*{stelNr}" required>
 
